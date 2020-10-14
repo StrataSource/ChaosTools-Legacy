@@ -7,6 +7,14 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="steam_appid.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="steam_appid.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.9.11" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
@@ -18,6 +26,5 @@
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_api64.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
-    <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_appid.txt&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
   </Target>
 </Project>
