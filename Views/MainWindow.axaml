@@ -7,7 +7,7 @@
         x:Class="SDKLauncher.Views.MainWindow"
 		Width="300" Height="450"
 		CanResize="False"
-		Icon="/Assets/avalonia-logo.ico"
+		Icon="/Assets/p2ce_logo.png"
         Title="Portal 2: Community Edition - SDK">
 
     <Design.DataContext>
