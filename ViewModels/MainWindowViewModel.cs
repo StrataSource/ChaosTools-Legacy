@@ -1,8 +1,6 @@
 ﻿using SDKLauncher.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.IO;
 
 namespace SDKLauncher.ViewModels
 {
@@ -11,17 +9,20 @@ namespace SDKLauncher.ViewModels
         public ObservableCollection<Mod> Mods { get; set; }
         public Mod CurrentMod { get; set; }
 
+        public AppConfig Config { get; set; }
+
         public MainWindowViewModel()
         {
-            Mods = new ObservableCollection<Mod>
+            try
             {
-                new Mod() {
-                    Name = "Portal 2: Community Edition"
-                },
-                new Mod() {
-                    Name = "Portal: Revolution"
-                }
-            };
+                Config = AppConfig.LoadConfig();
+            } catch (FileNotFoundException ex)
+            {
+                Config = AppConfig.CreateDefaultConfig();
+                Config.Save();
+            }
+
+            Mods = new ObservableCollection<Mod>(Config.Mods);
             CurrentMod = Mods[0];
         }
     }
