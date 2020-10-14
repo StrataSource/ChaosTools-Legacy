@@ -1,4 +1,5 @@
 ﻿using SDKLauncher.Models;
+using Steamworks;
 using System.Collections.ObjectModel;
 using System.IO;
 
@@ -13,6 +14,9 @@ namespace SDKLauncher.ViewModels
 
         public MainWindowViewModel()
         {
+
+            SteamAPI.Init();
+
             try
             {
                 Config = AppConfig.LoadConfig();

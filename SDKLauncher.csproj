@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,4 +11,13 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Steamworks.NET">
+      <HintPath>Lib\Steamworks.NET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_api64.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
+    <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_appid.txt&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
+  </Target>
 </Project>

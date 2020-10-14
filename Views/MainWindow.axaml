@@ -26,7 +26,7 @@
 			<Button>Create Mod</Button>
 		</StackPanel>
 
-		<Panel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+		<StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
 			<ComboBox Items="{Binding Mods}" SelectedItem="{Binding CurrentMod}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
@@ -34,7 +34,8 @@
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
-		</Panel>
+			<TextBlock Text="{Binding CurrentMod.Path}" TextWrapping="Wrap"/>
+		</StackPanel>
 	</DockPanel>
 
 </Window>
