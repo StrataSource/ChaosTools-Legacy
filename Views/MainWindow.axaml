@@ -21,21 +21,38 @@
 	</Window.Styles>
 
 	<DockPanel>
-		<StackPanel DockPanel.Dock="Top" VerticalAlignment="Top" >
+		<StackPanel DockPanel.Dock="Top" VerticalAlignment="Top">
 			<Button>Hammer World Editor</Button>
 			<Button>Create Mod</Button>
 		</StackPanel>
 
-		<StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-			<ComboBox Items="{Binding Mods}" SelectedItem="{Binding CurrentMod}">
+		<Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			
+			<ComboBox Grid.Row="0"
+					  Grid.Column="0"
+					  Items="{Binding Mods}" 
+					  SelectedItem="{Binding CurrentMod}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Name}"/>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
-			<TextBlock Text="{Binding CurrentMod.Path}" TextWrapping="Wrap"/>
-		</StackPanel>
+
+			<Button Grid.Row="0" Grid.Column="1">Configure...</Button>
+			
+			<TextBlock Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentMod.Path}" TextWrapping="Wrap"/>
+		</Grid>
 	</DockPanel>
 
 </Window>
