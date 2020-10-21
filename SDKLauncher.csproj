@@ -2,6 +2,10 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	<RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -23,6 +27,11 @@
     <Reference Include="Steamworks.NET">
       <HintPath>Lib\Steamworks.NET.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ModOptionsWindow.axaml.cs">
+      <DependentUpon>ModOptionsWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_api64.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />

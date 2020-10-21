@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "SDKLauncher": {
+      "commandName": "Executable"
+    }
+  }
+}
