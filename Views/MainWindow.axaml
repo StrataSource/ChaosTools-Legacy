@@ -21,9 +21,9 @@
 	</Window.Styles>
 
 	<DockPanel>
-		<StackPanel DockPanel.Dock="Top" VerticalAlignment="Top">
-			<Button>Hammer World Editor</Button>
-			<Button>Create Mod</Button>
+		<StackPanel DockPanel.Dock="Top" 
+					VerticalAlignment="Top">
+			<Button Command="{Binding OnClickHammer}">Hammer World Editor</Button>
 		</StackPanel>
 
 		<Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
@@ -48,10 +48,18 @@
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
 			</ComboBox>
-
-			<Button Grid.Row="0" Grid.Column="1">Configure...</Button>
 			
-			<TextBlock Margin="4" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CurrentMod.Path}" TextWrapping="Wrap"/>
+			<Button Grid.Row="0" 
+					Grid.Column="1" 
+					Command="{Binding OnClickModOptions}">
+				Configure...
+			</Button>
+			<Button Grid.Row="0" 
+					Grid.Column="1" 
+					Grid.ColumnSpan="2"
+					Command="{Binding OnClickCreateMod}">
+				Create Mod
+			</Button>
 		</Grid>
 	</DockPanel>
 
