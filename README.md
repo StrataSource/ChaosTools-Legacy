@@ -14,6 +14,10 @@ At this time, the program is in a work in progress state and not ready for produ
 
 ## Technologies used
 
+This program is written in C# using .NET Core 3.1.
+
+Frameworks:
+
 - [Avalonia](https://avaloniaui.net/) (UI-Framework)
 
 - [Steamworks.net](https://steamworks.github.io/) (SteamAPI Wrapper)
