@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Class="SDKLauncher.Views.ProfileConfigWindow"
-		Width="800" Height="450"
+		Width="800" MinHeight="450"
+		SizeToContent="Height"
 		CanResize="False"
 		Icon="/Assets/p2ce_logo.png"
         Title="Profile Configuration">
@@ -86,45 +87,45 @@
 					<RowDefinition Height="auto"/>
 				</Grid.RowDefinitions>
 
-				<!--
-				<ListBox Grid.Row="0"
-						 Grid.Column="1"
-						 Items="{Binding CurrentProfile.Mounts}"
-						 SelectedItem="{Binding CurrentMount}">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="auto"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
-								
-								<TextBlock Grid.Column="0" 
-										   Grid.Row="0"
-										   Text="{Binding AppId}"/>
-								<TextBlock Grid.Column="1"
-										   Grid.Row="0"
-										   Text="{Binding Path}"
-										   TextWrapping="NoWrap"/>
-								
-							</Grid>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-				-->
-
 				<TreeView Grid.Row="0"
 						  Grid.Column="1"
 						  Items="{Binding CurrentProfile.Mounts}"
-						  SelectedItem="{Binding CurrentMount}">
+						  SelectedItem="{Binding CurrentMount}"
+						  MinHeight="200">
 					<TreeView.DataTemplates>
 						
 						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding Namespaces}">
 
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding AppId}"/>
-								<TextBlock Text="{Binding Path}"/>
-							</StackPanel>
+							<Grid Background="Transparent">
+								<!-- Context menu won't work without some kind of background assigned. No idea why -->
+
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="100"/>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="auto"/>
+								</Grid.ColumnDefinitions>
+								
+								<TextBlock Grid.Column="0" 
+										   Text="{Binding AppId}"
+										   VerticalAlignment="Center"/>
+								<TextBlock Grid.Column="1" 
+										   Text="{Binding Path}"
+										   VerticalAlignment="Center"/>
+								<CheckBox Grid.Column="2" 
+										  IsChecked="{Binding IsRequired}"
+										  Content="Required"/>
+
+								<Grid.ContextMenu>
+									<ContextMenu>
+										<MenuItem Header="Add Namespace">
+											<MenuItem.Icon>
+												<Image Source="/Assets/Add_white_16x.png"/>
+											</MenuItem.Icon>
+										</MenuItem>
+									</ContextMenu>
+								</Grid.ContextMenu>
+
+							</Grid>
 
 						</TreeDataTemplate>
 						
@@ -135,11 +136,20 @@
 				<StackPanel Grid.Row="0"
 							Grid.Column="0" 
 							Orientation="Vertical"
-							VerticalAlignment="Top">
+							VerticalAlignment="Top"
+							Margin="0,0,4,0">
 					
-					<Button Command="{Binding OnClickMountAdd}">+</Button>
+					<Button Command="{Binding OnClickMountAdd}"
+							Classes="SmallButton"
+							Margin="0,0,0,4">
+						<Image Source="/Assets/Add_white_16x.png"></Image>
+					</Button>
 					<Button Command="{Binding OnClickMountRemove}"
-							IsEnabled="{Binding !!CurrentProfile.Mounts.Count}">-</Button>
+							IsEnabled="{Binding !!CurrentProfile.Mounts.Count}"
+							Classes="SmallButton"
+							Margin="0">
+						<Image Source="/Assets/Remove_white_16x.png"></Image>
+					</Button>
 				
 				</StackPanel>
 

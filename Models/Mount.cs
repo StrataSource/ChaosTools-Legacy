@@ -1,5 +1,4 @@
-﻿using Avalonia.Data;
-using Steamworks;
+﻿using Steamworks;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,7 +12,7 @@ namespace SDKLauncher.Models
 
         public Mount()
         {
-
+            Namespaces = new ObservableCollection<string>();
         }
 
         public Mount(uint appid)

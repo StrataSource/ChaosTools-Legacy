@@ -6,8 +6,8 @@
 
             <Color x:Key="ThemeAccentColor">#FFFF7B02</Color>
             <Color x:Key="ThemeAccentColor2">#FFFF7B02</Color>
-            <Color x:Key="ThemeAccentColor3">#66FF7B02</Color>
-            <Color x:Key="ThemeAccentColor4">#33FF7B02</Color>
+            <Color x:Key="ThemeAccentColor3">#66303030</Color>
+            <Color x:Key="ThemeAccentColor4">#33303030</Color>
 
             <Color x:Key="ThemeBackgroundColor">#FF101010</Color>
             <Color x:Key="ThemeBorderLowColor">#FF3C3C3C</Color>
@@ -16,8 +16,8 @@
             <Color x:Key="ThemeControlLowColor">#FF343434</Color>
             <Color x:Key="ThemeControlMidColor">#FF505050</Color>
             <Color x:Key="ThemeControlHighColor">#FF808080</Color>
-            <Color x:Key="ThemeControlHighlightLowColor">#FFA8A8A8</Color>
-            <Color x:Key="ThemeControlHighlightMidColor">#FF828282</Color>
+            <Color x:Key="ThemeControlHighlightLowColor">#FF383838</Color>
+            <Color x:Key="ThemeControlHighlightMidColor">#FF424242</Color>
             <Color x:Key="ThemeControlHighlightHighColor">#FF505050</Color>
             <Color x:Key="ThemeForegroundColor">#FFDEDEDE</Color>
             <Color x:Key="ThemeForegroundLowColor">#FF808080</Color>
@@ -68,9 +68,29 @@
 	<Style Selector="Button, TextBox, TextBlock, ComboBox, ListBox, CheckBox">
 		<Setter Property="Margin" Value="4"/>
 	</Style>
-
+	
 	<Style Selector="Button:hover">
 		<Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+	</Style>
+
+	<Style Selector="Button.SmallButton">
+		<Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
+		<Setter Property="MinWidth" Value="16"/>
+		<Setter Property="MinHeight" Value="16"/>
+		<Setter Property="Width" Value="24"/>
+		<Setter Property="Height" Value="24"/>
+	</Style>
+
+	<Style Selector="Button.SmallButton > Image">
+		<Setter Property="Width" Value="12"/>
+		<Setter Property="Height" Value="12"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
+	
+	<Style Selector="Button.SmallButton:pressed">
+		<Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}"/>
 	</Style>
 
 </Styles>

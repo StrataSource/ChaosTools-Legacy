@@ -9,6 +9,8 @@ namespace SDKLauncher.Views
 
         public bool UseAppId { get; set; } = true;
         public Mount Mount { get; set; }
+        public string SelectedNamespace { get; set; }
+
 
         public AddMountDialog()
         {
@@ -22,5 +24,11 @@ namespace SDKLauncher.Views
         {
             Close(Mount);
         }
+
+        public void OnClickAddNamespace()
+        {
+            Mount.Namespaces.Add("New Namespace");
+        }
+
     }
 }

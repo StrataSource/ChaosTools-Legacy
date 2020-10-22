@@ -1,8 +1,10 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
+		xmlns:i="clr-namespace:Avalonia.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+		xmlns:ia="clr-namespace:Avalonia.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         mc:Ignorable="d"
         x:Class="SDKLauncher.Views.AddMountDialog"
 		WindowStartupLocation="CenterOwner"
@@ -27,7 +29,17 @@
 		<TextBox Watermark="Path" 
 				 IsEnabled="{Binding !IsChecked, ElementName=UseAppId}"
 				 Text="{Binding Mount.Path}"/>
-		
+
+		<ListBox Items="{Binding Mount.Namespaces}"
+				 SelectedItem="{Binding SelectedNamespace}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<TextBox Text="{Binding this}"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+
+		<Button Command="{Binding OnClickAddNamespace}">Add</Button>
 		
 		<Button Command="{Binding OnClickOk}">Ok</Button>
 	
