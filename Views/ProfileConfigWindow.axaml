@@ -1,65 +1,156 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
+		xmlns:models="clr-namespace:SDKLauncher.Models;assembly=SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         x:Class="SDKLauncher.Views.ProfileConfigWindow"
-		Width="500" Height="450"
+		Width="800" Height="450"
 		CanResize="False"
 		Icon="/Assets/p2ce_logo.png"
-        Title="Mod options">
+        Title="Profile Configuration">
 
-	<Window.Styles>
-		<Style Selector="TextBox">
-			<Setter Property="Margin" Value="4"/>
-		</Style>
-	</Window.Styles>
+	<StackPanel Orientation="Vertical">
 
-	<Grid>
-
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
-
-		<Grid.RowDefinitions>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-		</Grid.RowDefinitions>
-
-		<TextBlock Grid.Row="0" 
-				   Grid.Column="0"
-				   Grid.ColumnSpan="2" 
-				   Text="Profile Name"/>
-		<TextBox Grid.Row="1"
-				 Grid.Column="0"
-				 Grid.ColumnSpan="2"
-				 Text="{Binding CurrentProfile.Name}" 
+		<TextBlock Text="Profile Name"/>
+		<TextBox Text="{Binding CurrentProfile.Name}" 
 				 Watermark="Name"/>
-
-		<TextBlock Grid.Row="2"
-					Grid.Column="0"
-					Text="Steam App ID"/>
-		<TextBox Grid.Row="3"
-					Grid.Column="0"
-					Text="{Binding CurrentProfile.Mod.Mount.AppId}"
-					Watermark="App ID"/>
-
-		<TextBlock Grid.Row="2"
-					Grid.Column="1"
-					Text="Path"/>
-		<TextBox Grid.Row="3"
-					Grid.Column="1"
-					Text="{Binding CurrentProfile.Mod.Mount.Path}"
-					Watermark="Path"/>
-	
 		
-		
-			
-	</Grid>
-	
+		<TextBlock Text="Mod"/>
+		<Border Classes="SectionBorder">
+			<Grid>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="auto"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0"
+						   Grid.Column="0"
+						   Text="Steam App ID"/>
+				<TextBox Grid.Row="1"
+						 Grid.Column="0"
+						 Text="{Binding CurrentProfile.Mod.Mount.AppId}"
+						 Watermark="App ID"
+						 Name="MountAppId"/>
+
+				<TextBlock Grid.Row="0"
+						   Grid.Column="1"
+						   Text="Path"/>
+				<TextBox Grid.Row="1"
+						 Grid.Column="1"
+						 Text="{Binding CurrentProfile.Mod.Mount.Path}"
+						 Watermark="Path"
+						 Name="MountPath"
+						 IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}"/>
+
+				<Button Grid.Row="1"
+						Grid.Column="2"
+						Command="{Binding OnClickBrowseModMountPath}"
+						IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}">
+					...
+				</Button>
+
+				<TextBlock Grid.Row="2"
+						   Grid.Column="0"
+						   Grid.ColumnSpan="2"
+						   Text="Primary Namespace"/>
+				<TextBox Grid.Row="3"
+						 Grid.Column="0"
+						 Grid.ColumnSpan="2"
+						 Text="{Binding CurrentProfile.Mod.Mount.PrimaryNamespace}"
+						 Watermark="Primary Namespace"/>
+				
+			</Grid>
+		</Border>
+
+		<TextBlock Text="Additional Mounts"/>
+		<Border Classes="SectionBorder">
+			<Grid>
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+				</Grid.RowDefinitions>
+
+				<!--
+				<ListBox Grid.Row="0"
+						 Grid.Column="1"
+						 Items="{Binding CurrentProfile.Mounts}"
+						 SelectedItem="{Binding CurrentMount}">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="auto"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
+								
+								<TextBlock Grid.Column="0" 
+										   Grid.Row="0"
+										   Text="{Binding AppId}"/>
+								<TextBlock Grid.Column="1"
+										   Grid.Row="0"
+										   Text="{Binding Path}"
+										   TextWrapping="NoWrap"/>
+								
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+				-->
+
+				<TreeView Grid.Row="0"
+						  Grid.Column="1"
+						  Items="{Binding CurrentProfile.Mounts}"
+						  SelectedItem="{Binding CurrentMount}">
+					<TreeView.DataTemplates>
+						
+						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding Namespaces}">
+
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding AppId}"/>
+								<TextBlock Text="{Binding Path}"/>
+							</StackPanel>
+
+						</TreeDataTemplate>
+						<!--
+						<DataTemplate DataType="models:Namespace">
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>-->
+						
+					</TreeView.DataTemplates>
+										
+				</TreeView>
+
+				<StackPanel Grid.Row="0"
+							Grid.Column="0" 
+							Orientation="Vertical"
+							VerticalAlignment="Top">
+					
+					<Button Command="{Binding OnClickMountAdd}">+</Button>
+					<Button Command="{Binding OnClickMountRemove}"
+							IsEnabled="{Binding !!CurrentProfile.Mounts.Count}">-</Button>
+				
+				</StackPanel>
+
+
+			</Grid>
+		</Border>
+
+	</StackPanel>
 
 </Window>

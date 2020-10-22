@@ -1,9 +1,14 @@
-﻿using Steamworks;
+﻿using Avalonia.Data;
+using Steamworks;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace SDKLauncher.Models
 {
-    public class Mount
+    public class Mount : INotifyPropertyChanged
     {
 
         public Mount()
@@ -21,7 +26,19 @@ namespace SDKLauncher.Models
             Path = path;
         }
 
+        // -------------------------------------------------------------------------------------
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        // -------------------------------------------------------------------------------------
+
         private string _path;
+
         public string Path
         {
             get
@@ -36,9 +53,26 @@ namespace SDKLauncher.Models
 
                 return dir;
             }
-            set => _path = value;
+            set {
+                _path = value;
+                NotifyPropertyChanged(nameof(Path));
+            }
         }
-        public uint? AppId { get; set; }
+        private uint? _appId;
+        public uint? AppId 
+        {
+            get => _appId;
+            set
+            {
+                _appId = value;
+                NotifyPropertyChanged(nameof(Path));
+            }
+        }
+
+        public string PrimaryNamespace { get; set; }
+        public bool IsRequired { get; set; }
+        //public ObservableCollection<Namespace> Namespaces { get; set; }
+        public ObservableCollection<string> Namespaces { get; set; }
 
         public string GetBinDirectory()
         {

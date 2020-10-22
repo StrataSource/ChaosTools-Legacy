@@ -1,0 +1,36 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="SDKLauncher.Views.AddMountDialog"
+		WindowStartupLocation="CenterOwner"
+		Width="320"
+		SizeToContent="Height"
+		CanResize="False"
+		Icon="/Assets/p2ce_logo.png"
+        Title="New Mount">
+
+	<StackPanel Orientation="Vertical">
+		
+		<CheckBox IsChecked="{Binding UseAppId}" Name="UseAppId">
+			Use App ID
+		</CheckBox>
+	
+		<TextBlock Text="Steam App ID"/>
+		<TextBox Watermark="App ID"
+				 IsEnabled="{Binding IsChecked, ElementName=UseAppId}"
+				 Text="{Binding Mount.AppId}"/>
+		
+		<TextBlock Text="Path"/>
+		<TextBox Watermark="Path" 
+				 IsEnabled="{Binding !IsChecked, ElementName=UseAppId}"
+				 Text="{Binding Mount.Path}"/>
+		
+		
+		<Button Command="{Binding OnClickOk}">Ok</Button>
+	
+	</StackPanel>
+	
+</Window>

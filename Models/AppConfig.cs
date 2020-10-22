@@ -51,16 +51,9 @@ namespace SDKLauncher.Models
         {
             return new AppConfig()
             {
-                Profiles = new List<Profile> {
-                    new Profile()
-                    {
-                        Name = "P2CE - Default",
-                        Mod = new Mod
-                        {
-                            Name = "Portal 2: Community Edition",
-                            Mount = new Mount(440000)
-                        }
-                    }
+                Profiles = new List<Profile>
+                {
+                    Profile.GetDefaultProfile()
                 }
             };
 

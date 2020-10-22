@@ -33,6 +33,9 @@
       <DependentUpon>ProfileConfigWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validation\" />
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_api64.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
   </Target>
