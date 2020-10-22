@@ -30,16 +30,48 @@
 				 IsEnabled="{Binding !IsChecked, ElementName=UseAppId}"
 				 Text="{Binding Mount.Path}"/>
 
-		<ListBox Items="{Binding Mount.Namespaces}"
-				 SelectedItem="{Binding SelectedNamespace}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<TextBox Text="{Binding this}"/>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+		<Border Classes="SectionBorder">	
+		
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
 
-		<Button Command="{Binding OnClickAddNamespace}">Add</Button>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+				</Grid.RowDefinitions>
+			
+				<ComboBox Grid.Row="0"
+						  Grid.Column="0"
+						  Grid.ColumnSpan="2" 
+						  Items="{Binding Mount.AvailableNamespaces}"
+						  SelectedItem="{Binding SelectedNamespace}"/>
+
+				<StackPanel Grid.Row="1"
+							Grid.Column="0">
+					<Button Command="{Binding OnClickNamespaceAdd}"
+							Classes="SmallButton"
+							Margin="4">
+						<Image Source="/Assets/Add_white_16x.png"></Image>
+					</Button>
+					<Button Command="{Binding OnClickNamespaceRemove}"
+							IsEnabled="{Binding !!Mount.Namespaces.Count}"
+							Classes="SmallButton"
+							Margin="4,0,4,4">
+						<Image Source="/Assets/Remove_white_16x.png"></Image>
+					</Button>
+				</StackPanel>
+			
+				<ListBox Grid.Row="1"
+						 Grid.Column="1"
+						 Items="{Binding Mount.Namespaces}"
+						 SelectedItem="{Binding SelectedNamespace}">
+				</ListBox>
+			</Grid>
+		
+		</Border>
 		
 		<Button Command="{Binding OnClickOk}">Ok</Button>
 	

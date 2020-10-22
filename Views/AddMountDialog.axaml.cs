@@ -1,6 +1,13 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using SDKLauncher.Models;
+using SDKLauncher.ViewModels;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 
 namespace SDKLauncher.Views
 {
@@ -9,6 +16,7 @@ namespace SDKLauncher.Views
 
         public bool UseAppId { get; set; } = true;
         public Mount Mount { get; set; }
+
         public string SelectedNamespace { get; set; }
 
 
@@ -28,6 +36,20 @@ namespace SDKLauncher.Views
         public void OnClickAddNamespace()
         {
             Mount.Namespaces.Add("New Namespace");
+        }
+
+        public void OnClickNamespaceAdd()
+        {
+            if (!string.IsNullOrWhiteSpace(SelectedNamespace) && !Mount.Namespaces.Contains(SelectedNamespace))
+            {   
+                Mount.Namespaces.Add(SelectedNamespace);
+            }
+
+        }
+
+        public void OnClickNamespaceRemove()
+        {
+
         }
 
     }

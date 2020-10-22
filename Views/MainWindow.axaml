@@ -9,7 +9,7 @@
 		CanResize="False"
 		WindowStartupLocation="CenterScreen"
 		Icon="/Assets/p2ce_logo.png"
-        Title="Portal 2: Community Edition - SDK">
+        Title="SDK Launcher">
 
 	<Design.DataContext>
         <vm:MainWindowViewModel/>

@@ -1,8 +1,10 @@
 ﻿using Steamworks;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace SDKLauncher.Models
@@ -55,6 +57,7 @@ namespace SDKLauncher.Models
             set {
                 _path = value;
                 NotifyPropertyChanged(nameof(Path));
+                NotifyPropertyChanged(nameof(AvailableNamespaces));
             }
         }
         private uint? _appId;
@@ -65,6 +68,7 @@ namespace SDKLauncher.Models
             {
                 _appId = value;
                 NotifyPropertyChanged(nameof(Path));
+                NotifyPropertyChanged(nameof(AvailableNamespaces));
             }
         }
 
@@ -94,6 +98,19 @@ namespace SDKLauncher.Models
                 case System.PlatformID.Unix: return $"linux{arch}";
                 default: return null;
             }
+        }
+
+        // Don't you love it? :)
+        public List<string> AvailableNamespaces
+        {
+            get =>
+                string.IsNullOrWhiteSpace(Path) ? new List<string>() :
+                Directory.GetDirectories(Path)
+                .Where(d => File.Exists($"{d}/gameinfo.txt"))
+                .Where(d => !Namespaces.Contains(System.IO.Path.GetDirectoryName(d)))
+                .Select(d => d.Split(System.IO.Path.DirectorySeparatorChar).Last())
+                .ToList();
+
         }
     }
 }
