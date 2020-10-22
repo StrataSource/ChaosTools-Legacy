@@ -14,7 +14,22 @@ namespace SDKLauncher.Models
             WriteIndented = true
         };
 
-        public List<Mod> Mods { get; set; }
+        // ============================================
+
+        public List<Profile> Profiles { get; set; }
+        private int _defaultProfileIndex;
+        public int DefaultProfileIndex { 
+            get
+            {
+                return Math.Clamp(_defaultProfileIndex, 0, Profiles.Count - 1);
+            }
+            set
+            {
+                _defaultProfileIndex = Math.Clamp(value, 0, Profiles.Count - 1);
+            }
+        }
+
+        // ============================================
 
         public void Save()
         {
@@ -36,11 +51,15 @@ namespace SDKLauncher.Models
         {
             return new AppConfig()
             {
-                Mods = new List<Mod> {
-                    new Mod()
+                Profiles = new List<Profile> {
+                    new Profile()
                     {
-                        Name = "Portal 2: Community Edition",
-                        AppId = 440000
+                        Name = "P2CE - Default",
+                        Mod = new Mod
+                        {
+                            Name = "Portal 2: Community Edition",
+                            Mount = new Mount(440000)
+                        }
                     }
                 }
             };

@@ -4,10 +4,10 @@ using Avalonia.Markup.Xaml;
 
 namespace SDKLauncher.Views
 {
-    class ModOptionsWindow : Window
+    class ProfileConfigWindow : Window
     {
 
-        public ModOptionsWindow()
+        public ProfileConfigWindow()
         {
             InitializeComponent();
 #if DEBUG

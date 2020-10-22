@@ -4,14 +4,15 @@ using SDKLauncher.Models;
 using SDKLauncher.Views;
 using Steamworks;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 
 namespace SDKLauncher.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ObservableCollection<Mod> Mods { get; set; }
-        public Mod CurrentMod { get; set; }
+        public ObservableCollection<Profile> Profiles { get; set; }
+        public Profile CurrentProfile { get; set; }
 
         public AppConfig Config { get; set; }
         
@@ -29,13 +30,15 @@ namespace SDKLauncher.ViewModels
                 Config.Save();
             }
 
-            Mods = new ObservableCollection<Mod>(Config.Mods);
-            CurrentMod = Mods[0];
+            Profiles = new ObservableCollection<Profile>(Config.Profiles);
+            CurrentProfile = Profiles[Config.DefaultProfileIndex];
         }
+
+        // ====================================
 
         public void OnClickHammer()
         {
-
+            LaunchTool("hammer");
         }
         
         public void OnClickCreateMod()
@@ -47,10 +50,35 @@ namespace SDKLauncher.ViewModels
 
         public void OnClickModOptions()
         {
-            ModOptionsWindow modOptions = new ModOptionsWindow();
+            ProfileConfigWindow modOptions = new ProfileConfigWindow();
             modOptions.DataContext = this;
             
             modOptions.ShowDialog( ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).MainWindow );
+        }
+
+        // ====================================
+
+        private void LaunchTool(string executableName)
+        {
+
+            string extension;
+
+            switch (System.Environment.OSVersion.Platform)
+            {
+                case System.PlatformID.Win32NT: 
+                    extension = ".exe";
+                break;
+                default:
+                    extension = "";
+                break;
+            }
+
+            string binDir = CurrentProfile.Mod.Mount.GetBinDirectory();
+
+            string executablePath = $"{binDir}/{executableName}{extension}";
+
+            Process.Start(executablePath);
+
         }
 
     }

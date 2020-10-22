@@ -1,0 +1,65 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="SDKLauncher.Views.ProfileConfigWindow"
+		Width="500" Height="450"
+		CanResize="False"
+		Icon="/Assets/p2ce_logo.png"
+        Title="Mod options">
+
+	<Window.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="Margin" Value="4"/>
+		</Style>
+	</Window.Styles>
+
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Row="0" 
+				   Grid.Column="0"
+				   Grid.ColumnSpan="2" 
+				   Text="Profile Name"/>
+		<TextBox Grid.Row="1"
+				 Grid.Column="0"
+				 Grid.ColumnSpan="2"
+				 Text="{Binding CurrentProfile.Name}" 
+				 Watermark="Name"/>
+
+		<TextBlock Grid.Row="2"
+					Grid.Column="0"
+					Text="Steam App ID"/>
+		<TextBox Grid.Row="3"
+					Grid.Column="0"
+					Text="{Binding CurrentProfile.Mod.Mount.AppId}"
+					Watermark="App ID"/>
+
+		<TextBlock Grid.Row="2"
+					Grid.Column="1"
+					Text="Path"/>
+		<TextBox Grid.Row="3"
+					Grid.Column="1"
+					Text="{Binding CurrentProfile.Mod.Mount.Path}"
+					Watermark="Path"/>
+	
+		
+		
+			
+	</Grid>
+	
+
+</Window>

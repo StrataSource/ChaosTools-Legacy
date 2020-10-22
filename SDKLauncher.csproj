@@ -29,8 +29,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ModOptionsWindow.axaml.cs">
-      <DependentUpon>ModOptionsWindow.axaml</DependentUpon>
+    <Compile Update="Views\ProfileConfigWindow.axaml.cs">
+      <DependentUpon>ProfileConfigWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

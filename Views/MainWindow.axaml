@@ -24,6 +24,8 @@
 		<StackPanel DockPanel.Dock="Top" 
 					VerticalAlignment="Top">
 			<Button Command="{Binding OnClickHammer}">Hammer World Editor</Button>
+			<Button Command="{Binding OnClickToolsMode}">Launch Game (Tools Mode)</Button>
+			<Button Command="{Binding OnClickModelViewer}">Model Viewer</Button>
 		</StackPanel>
 
 		<Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
@@ -40,8 +42,8 @@
 			
 			<ComboBox Grid.Row="0"
 					  Grid.Column="0"
-					  Items="{Binding Mods}" 
-					  SelectedItem="{Binding CurrentMod}">
+					  Items="{Binding Profiles}" 
+					  SelectedItem="{Binding CurrentProfile}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Name}"/>
@@ -54,11 +56,15 @@
 					Command="{Binding OnClickModOptions}">
 				Configure...
 			</Button>
-			<Button Grid.Row="0" 
-					Grid.Column="1" 
-					Grid.ColumnSpan="2"
+			<Button Grid.Row="1" 
+					Grid.Column="0"
 					Command="{Binding OnClickCreateMod}">
 				Create Mod
+			</Button>
+			<Button Grid.Row="1" 
+					Grid.Column="1"
+					Command="{Binding OnClickCreateProfile}">
+				New Profile
 			</Button>
 		</Grid>
 	</DockPanel>

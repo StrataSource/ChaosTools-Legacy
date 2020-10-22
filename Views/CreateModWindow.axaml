@@ -1,0 +1,42 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="SDKLauncher.Views.CreateModWindow"
+		Width="300" Height="450"
+		CanResize="False"
+		Icon="/Assets/p2ce_logo.png"
+        Title="Create Mod">
+
+	<Design.DataContext>
+		<vm:CreateModViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="Button,ComboBox,TextBox">
+			<Setter Property="Margin" Value="4"/>
+		</Style>
+	</Window.Styles>
+
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+		</Grid.RowDefinitions>
+
+
+		<TextBox Grid.Row="0" Grid.Column="0" Watermark="Mod Name"/>
+		<TextBox Grid.Row="0" Grid.Column="1" Watermark="Namespace name"/>
+		
+	
+	</Grid>
+	
+</Window>
