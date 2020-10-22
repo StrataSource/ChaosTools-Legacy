@@ -127,10 +127,6 @@
 							</StackPanel>
 
 						</TreeDataTemplate>
-						<!--
-						<DataTemplate DataType="models:Namespace">
-							<TextBlock Text="{Binding Name}"/>
-						</DataTemplate>-->
 						
 					</TreeView.DataTemplates>
 										

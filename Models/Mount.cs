@@ -71,7 +71,6 @@ namespace SDKLauncher.Models
 
         public string PrimaryNamespace { get; set; }
         public bool IsRequired { get; set; }
-        //public ObservableCollection<Namespace> Namespaces { get; set; }
         public ObservableCollection<string> Namespaces { get; set; }
 
         public string GetBinDirectory()
