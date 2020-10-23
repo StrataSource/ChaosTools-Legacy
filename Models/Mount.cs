@@ -17,16 +17,6 @@ namespace SDKLauncher.Models
             Namespaces = new ObservableCollection<string>();
         }
 
-        public Mount(uint appid)
-        {
-            AppId = appid;
-        }
-        
-        public Mount(string path)
-        {
-            Path = path;
-        }
-
         // -------------------------------------------------------------------------------------
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -91,11 +81,11 @@ namespace SDKLauncher.Models
         // TODO: GetPlatformString doesn't detect mac yet! (mac gets treated the same as linux...)
         private string GetPlatformString()
         {
-            string arch = System.Environment.Is64BitOperatingSystem ? "64" : "32";
-            switch(System.Environment.OSVersion.Platform)
+            string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
+            switch(Environment.OSVersion.Platform)
             {
-                case System.PlatformID.Win32NT: return $"win{arch}";
-                case System.PlatformID.Unix: return $"linux{arch}";
+                case PlatformID.Win32NT: return $"win{arch}";
+                case PlatformID.Unix: return $"linux{arch}";
                 default: return null;
             }
         }
@@ -107,7 +97,7 @@ namespace SDKLauncher.Models
                 string.IsNullOrWhiteSpace(Path) ? new List<string>() :
                 Directory.GetDirectories(Path)
                 .Where(d => File.Exists($"{d}/gameinfo.txt"))
-                .Where(d => !Namespaces.Contains(System.IO.Path.GetDirectoryName(d)))
+                .Where(d => !Namespaces.Contains(System.IO.Path.GetDirectoryName(d) ?? ""))
                 .Select(d => d.Split(System.IO.Path.DirectorySeparatorChar).Last())
                 .ToList();
 

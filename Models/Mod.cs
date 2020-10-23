@@ -1,6 +1,4 @@
-﻿using Steamworks;
-
-namespace SDKLauncher.Models
+﻿namespace SDKLauncher.Models
 {
     public class Mod
     {

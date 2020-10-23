@@ -9,7 +9,7 @@ namespace SDKLauncher.Models
     {
 
         private static readonly string CONFIG_NAME = "config.json";
-        private static readonly JsonSerializerOptions JSON_SERIALIZER_OPTIONS = new JsonSerializerOptions()
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true
         };
@@ -19,21 +19,15 @@ namespace SDKLauncher.Models
         public List<Profile> Profiles { get; set; }
         private int _defaultProfileIndex;
         public int DefaultProfileIndex { 
-            get
-            {
-                return Math.Clamp(_defaultProfileIndex, 0, Profiles.Count - 1);
-            }
-            set
-            {
-                _defaultProfileIndex = Math.Clamp(value, 0, Profiles.Count - 1);
-            }
+            get => Math.Clamp(_defaultProfileIndex, 0, Profiles.Count - 1);
+            set => _defaultProfileIndex = Math.Clamp(value, 0, Profiles.Count - 1);
         }
 
         // ============================================
 
         public void Save()
         {
-            string jsonString = JsonSerializer.Serialize(this, JSON_SERIALIZER_OPTIONS);
+            string jsonString = JsonSerializer.Serialize(this, JsonSerializerOptions);
             File.WriteAllText(CONFIG_NAME, jsonString);
         }
         

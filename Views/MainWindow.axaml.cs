@@ -26,7 +26,7 @@ namespace SDKLauncher.Views
         {
             // Accessing the viewmodel from here. Janky hack mate
             MainWindowViewModel vm = DataContext as MainWindowViewModel;
-            vm.Config.Save();
+            vm?.Config.Save();
         }
     }
 }

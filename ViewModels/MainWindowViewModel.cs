@@ -1,16 +1,15 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Interactivity;
-using SDKLauncher.Models;
-using SDKLauncher.Views;
-using Steamworks;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using SDKLauncher.Models;
+using SDKLauncher.Views;
+using Steamworks;
 
 namespace SDKLauncher.ViewModels
 {
@@ -32,7 +31,7 @@ namespace SDKLauncher.ViewModels
             {
                 Config = AppConfig.LoadConfig();
             } 
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
                 Config = AppConfig.CreateDefaultConfig();
                 Config.Save();
@@ -122,9 +121,9 @@ namespace SDKLauncher.ViewModels
 
             string extension;
 
-            switch (System.Environment.OSVersion.Platform)
+            switch (Environment.OSVersion.Platform)
             {
-                case System.PlatformID.Win32NT: 
+                case PlatformID.Win32NT: 
                     extension = ".exe";
                 break;
                 default:
