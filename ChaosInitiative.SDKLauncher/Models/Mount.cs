@@ -1,11 +1,11 @@
-﻿using Steamworks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Steamworks;
 
 namespace SDKLauncher.Models
 {
@@ -15,6 +15,7 @@ namespace SDKLauncher.Models
         public Mount()
         {
             Namespaces = new ObservableCollection<string>();
+            PrimaryNamespace = string.Empty;
         }
 
         // -------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ namespace SDKLauncher.Models
         {
             get
             {
-                if (AppId == null) return _path;
+                if (AppId == 0) return _path;
 
                 AppId_t appid = new AppId_t((uint)AppId);
                 if (!SteamApps.BIsAppInstalled(appid)) return null;
@@ -50,8 +51,8 @@ namespace SDKLauncher.Models
                 NotifyPropertyChanged(nameof(AvailableNamespaces));
             }
         }
-        private uint? _appId;
-        public uint? AppId 
+        private long _appId;
+        public long AppId 
         {
             get => _appId;
             set
@@ -91,16 +92,12 @@ namespace SDKLauncher.Models
         }
 
         // Don't you love it? :)
-        public List<string> AvailableNamespaces
-        {
-            get =>
-                string.IsNullOrWhiteSpace(Path) ? new List<string>() :
+        public List<string> AvailableNamespaces =>
+            string.IsNullOrWhiteSpace(Path) ? new List<string>() :
                 Directory.GetDirectories(Path)
-                .Where(d => File.Exists($"{d}/gameinfo.txt"))
-                .Where(d => !Namespaces.Contains(System.IO.Path.GetDirectoryName(d) ?? ""))
-                .Select(d => d.Split(System.IO.Path.DirectorySeparatorChar).Last())
-                .ToList();
-
-        }
+                    .Where(d => File.Exists($"{d}/gameinfo.txt"))
+                    .Where(d => !Namespaces.Contains(System.IO.Path.GetDirectoryName(d) ?? ""))
+                    .Select(d => d.Split(System.IO.Path.DirectorySeparatorChar).Last())
+                    .ToList();
     }
 }

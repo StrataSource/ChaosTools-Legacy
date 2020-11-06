@@ -2,15 +2,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SDKLauncher.Views;assembly=ChaosInitiative.SDKLauncher"
         mc:Ignorable="d"
         x:Class="SDKLauncher.Views.AddMountDialog"
 		WindowStartupLocation="CenterOwner"
-		Width="320"
+        Width="320"
 		SizeToContent="Height"
 		CanResize="False"
 		Icon="/Assets/p2ce_logo.png"
         Title="New Mount">
 
+	<Design.DataContext>
+		<vm:AddMountDialog/>
+	</Design.DataContext>
+	
 	<StackPanel Orientation="Vertical">
 		
 		<CheckBox IsChecked="{Binding UseAppId}" Name="UseAppId">
@@ -18,9 +23,14 @@
 		</CheckBox>
 	
 		<TextBlock Text="Steam App ID"/>
-		<TextBox Watermark="App ID"
-				 IsEnabled="{Binding IsChecked, ElementName=UseAppId}"
-				 Text="{Binding Mount.AppId}"/>
+		<NumericUpDown Watermark="App ID"
+		               IsEnabled="{Binding IsChecked, ElementName=UseAppId}"
+		               ShowButtonSpinner="False"
+		               AllowSpin="False"
+		               Minimum="0"
+		               Maximum="1000000"
+		               Increment="1"
+		               Value="{Binding Mount.AppId}"/>
 		
 		<TextBlock Text="Path"/>
 		<TextBox Watermark="Path" 
@@ -44,7 +54,8 @@
 						  Grid.Column="0"
 						  Grid.ColumnSpan="2" 
 						  Items="{Binding Mount.AvailableNamespaces}"
-						  SelectedItem="{Binding SelectedNamespace}"/>
+						  SelectedItem="{Binding SelectedNamespace}"
+						  SelectedIndex="0"/>
 
 				<StackPanel Grid.Row="1"
 							Grid.Column="0">

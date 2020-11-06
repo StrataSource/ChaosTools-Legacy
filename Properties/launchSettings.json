@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "SDKLauncher": {
-      "commandName": "Executable",
-      "executablePath": "E:\\Open\\SDKLauncher\\bin\\Debug\\netcoreapp3.1\\SDKLauncher.exe"
-    }
-  }
-}

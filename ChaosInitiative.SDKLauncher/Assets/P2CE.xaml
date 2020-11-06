@@ -9,9 +9,9 @@
             <Color x:Key="ThemeAccentColor3">#66303030</Color>
             <Color x:Key="ThemeAccentColor4">#33303030</Color>
 
-            <Color x:Key="ThemeBackgroundColor">#FF101010</Color>
-            <Color x:Key="ThemeBorderLowColor">#FF3C3C3C</Color>
-            <Color x:Key="ThemeBorderMidColor">#FF3C3C3C</Color>
+            <Color x:Key="ThemeBackgroundColor">#FF242424</Color>
+            <Color x:Key="ThemeBorderLowColor">#FF4C4C4C</Color>
+            <Color x:Key="ThemeBorderMidColor">#FF4C4C4C</Color>
             <Color x:Key="ThemeBorderHighColor">#FFFF7B02</Color>
             <Color x:Key="ThemeControlLowColor">#FF343434</Color>
             <Color x:Key="ThemeControlMidColor">#FF505050</Color>
@@ -69,6 +69,14 @@
 		<Setter Property="Margin" Value="4"/>
 	</Style>
 	
+	<Style Selector="ComboBox">
+		<Setter Property="MinHeight" Value="32"/>
+	</Style>
+	<!--
+	<Style Selector="NumericUpDown, TextBox">
+		<Setter Property="Height" Value="48"/>
+	</Style>
+	-->
 	<Style Selector="Button:hover">
 		<Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
 	</Style>

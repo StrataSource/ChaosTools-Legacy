@@ -16,13 +16,16 @@ namespace SDKLauncher.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         public ObservableCollection<Profile> Profiles { get; set; }
-        public Profile CurrentProfile { get; set; }
+        //public Profile CurrentProfile { get; set; }
+        public int CurrentProfileIndex { get; set; }
+        public Profile CurrentProfile => Profiles[CurrentProfileIndex];
         public Mount CurrentMount { get; set; }
         public AppConfig Config { get; set; }
 
         private Window MainWindow => ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).MainWindow;
 
-
+        private readonly ProfileConfigWindow _modOptions;
+        
         public MainWindowViewModel()
         {
             SteamAPI.Init();
@@ -38,7 +41,10 @@ namespace SDKLauncher.ViewModels
             }
 
             Profiles = new ObservableCollection<Profile>(Config.Profiles);
-            CurrentProfile = Profiles[Config.DefaultProfileIndex];
+            CurrentProfileIndex = Config.DefaultProfileIndex;
+            
+            _modOptions = new ProfileConfigWindow();
+            _modOptions.DataContext = this;
         }
 
         // ====================================
@@ -68,16 +74,19 @@ namespace SDKLauncher.ViewModels
             if(!string.IsNullOrWhiteSpace(path))
             {
                 CurrentProfile.Mod.Mount.Path = path;
+                //CurrentProfile.Mod.Mount.Path = path;
             } 
 
         }
 
-        public void OnClickProfileConfig()
+        public void OnClickOpenProfileConfig()
         {
-            ProfileConfigWindow modOptions = new ProfileConfigWindow();
-            modOptions.DataContext = this;
-            
-            modOptions.ShowDialog(MainWindow);
+            _modOptions.Show();
+        }
+
+        public void OnClickCloseProfileConfig()
+        {
+            _modOptions.Close();
         }
 
         public void OnClickCreateProfile()
@@ -89,8 +98,7 @@ namespace SDKLauncher.ViewModels
                 return;
             
             Profiles.Add(profile);
-            CurrentProfile = profile;
-            
+            CurrentProfileIndex = Config.DefaultProfileIndex;
         }
 
         public async Task OnClickMountAdd()
@@ -99,9 +107,13 @@ namespace SDKLauncher.ViewModels
 
             Mount result = await dialog.ShowDialog<Mount>(MainWindow);
 
+//            if(result != null && !CurrentProfile.Mounts.ToList().Any(m => m.AppId == result.AppId || m.Path == result.Path) )
+//            {
+//                CurrentProfile.Mounts.Add(result);
+//            }
             if(result != null && !CurrentProfile.Mounts.ToList().Any(m => m.AppId == result.AppId || m.Path == result.Path) )
             {
-                CurrentProfile.Mounts.Add(result);
+                Profiles[CurrentProfileIndex].Mounts.Add(result);
             }
            
         }
@@ -112,6 +124,11 @@ namespace SDKLauncher.ViewModels
             {
                 CurrentProfile.Mounts.Remove(CurrentMount);
             }
+        }
+
+        public void OnClickSaveConfig()
+        {
+            Config.Save();
         }
 
         // ====================================

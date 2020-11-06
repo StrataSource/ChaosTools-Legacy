@@ -1,7 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=SDKLauncher"
-		xmlns:models="clr-namespace:SDKLauncher.Models;assembly=SDKLauncher"
+        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=ChaosInitiative.SDKLauncher"
+		xmlns:models="clr-namespace:SDKLauncher.Models;assembly=ChaosInitiative.SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
@@ -38,11 +38,16 @@
 				<TextBlock Grid.Row="0"
 						   Grid.Column="0"
 						   Text="Steam App ID"/>
-				<TextBox Grid.Row="1"
-						 Grid.Column="0"
-						 Text="{Binding CurrentProfile.Mod.Mount.AppId}"
-						 Watermark="App ID"
-						 Name="MountAppId"/>
+				<NumericUpDown Grid.Row="1"
+				               Grid.Column="0"
+				               ShowButtonSpinner="False"
+				               AllowSpin="False"
+				               Minimum="0"
+				               Maximum="1000000"
+				               Increment="1"
+				               Value="{Binding CurrentProfile.Mod.Mount.AppId}"
+				               Watermark="App ID"
+				               Name="MountAppId"/>
 
 				<TextBlock Grid.Row="0"
 						   Grid.Column="1"
@@ -56,6 +61,7 @@
 
 				<Button Grid.Row="1"
 						Grid.Column="2"
+						Classes="SmallButton"
 						Command="{Binding OnClickBrowseModMountPath}"
 						IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}">
 					...
@@ -63,13 +69,11 @@
 
 				<TextBlock Grid.Row="2"
 						   Grid.Column="0"
-						   Grid.ColumnSpan="2"
 						   Text="Primary Namespace"/>
-				<TextBox Grid.Row="3"
+				<ComboBox Grid.Row="3"
 						 Grid.Column="0"
-						 Grid.ColumnSpan="2"
-						 Text="{Binding CurrentProfile.Mod.Mount.PrimaryNamespace}"
-						 Watermark="Primary Namespace"/>
+						 SelectedItem="{Binding CurrentProfile.Mod.Mount.PrimaryNamespace}"
+						 Items="{Binding CurrentProfile.Mod.Mount.AvailableNamespaces}"/>
 				
 			</Grid>
 		</Border>
@@ -155,6 +159,11 @@
 
 			</Grid>
 		</Border>
+		
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Command="{Binding OnClickSaveConfig}">Save Config</Button>
+			<Button  Command="{Binding OnClickCloseProfileConfig}">Done</Button>
+		</StackPanel>
 
 	</StackPanel>
 

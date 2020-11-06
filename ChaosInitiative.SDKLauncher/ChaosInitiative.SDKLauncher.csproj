@@ -3,6 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	<RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+	<RootNamespace>SDKLauncher</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath></OutputPath>
@@ -19,9 +20,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.11" />
+    <PackageReference Include="Aura.UI" Version="0.1.2" />
+    <PackageReference Include="Avalonia" Version="0.9.12" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
+    <PackageReference Include="MessageBox.Avalonia" Version="0.9.6.1" />
+    <PackageReference Include="ValveKeyValue" Version="0.5.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Steamworks.NET">
@@ -29,11 +33,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ProfileConfigWindow.axaml.cs">
-      <DependentUpon>ProfileConfigWindow.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="Controls" />
     <Folder Include="Validation\" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
