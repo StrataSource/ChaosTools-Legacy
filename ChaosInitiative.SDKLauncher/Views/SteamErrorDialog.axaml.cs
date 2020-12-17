@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using Avalonia.Markup.Xaml;
-using SDKLauncher.Steam;
+using SDKLauncher.Util;
 
 namespace SDKLauncher.Views
 {

@@ -19,7 +19,7 @@ namespace SDKLauncher.Models
                     Mount = new Mount
                     {
                         AppId = 440000,
-                        PrimaryNamespace = "p2ce"
+                        PrimarySearchPath = "p2ce"
                     }
                 },
                 Mounts =
@@ -28,8 +28,8 @@ namespace SDKLauncher.Models
                     {
                         AppId = 620,
                         IsRequired = true,
-                        PrimaryNamespace = "portal2",
-                        Namespaces =
+                        PrimarySearchPath = "portal2",
+                        SearchPaths =
                         {
                             "portal2",
                             "portal2_dlc1",

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using SDKLauncher.Util;
 using Steamworks;
 
 namespace SDKLauncher.Models
@@ -14,8 +15,8 @@ namespace SDKLauncher.Models
 
         public Mount()
         {
-            Namespaces = new ObservableCollection<string>();
-            PrimaryNamespace = string.Empty;
+            SearchPaths = new ObservableCollection<string>();
+            PrimarySearchPath = string.Empty;
         }
 
         // -------------------------------------------------------------------------------------
@@ -29,13 +30,13 @@ namespace SDKLauncher.Models
 
         // -------------------------------------------------------------------------------------
 
-        private string _path;
+        private string _mountPath;
 
-        public string Path
+        public string MountPath
         {
             get
             {
-                if (AppId == 0) return _path;
+                if (AppId == 0) return _mountPath;
 
                 AppId_t appid = new AppId_t((uint)AppId);
                 if (!SteamApps.BIsAppInstalled(appid)) return null;
@@ -46,9 +47,9 @@ namespace SDKLauncher.Models
                 return dir;
             }
             set {
-                _path = value;
-                NotifyPropertyChanged(nameof(Path));
-                NotifyPropertyChanged(nameof(AvailableNamespaces));
+                _mountPath = value;
+                NotifyPropertyChanged(nameof(MountPath));
+                NotifyPropertyChanged(nameof(AvailableSearchPaths));
             }
         }
         private long _appId;
@@ -58,46 +59,55 @@ namespace SDKLauncher.Models
             set
             {
                 _appId = value;
-                NotifyPropertyChanged(nameof(Path));
-                NotifyPropertyChanged(nameof(AvailableNamespaces));
+                NotifyPropertyChanged(nameof(MountPath));
+                NotifyPropertyChanged(nameof(AvailableSearchPaths));
             }
         }
 
-        public string PrimaryNamespace { get; set; }
+        public string PrimarySearchPath { get; set; }
         public bool IsRequired { get; set; }
-        public ObservableCollection<string> Namespaces { get; set; }
+        public ObservableCollection<string> SearchPaths { get; set; }
 
-        public string GetBinDirectory()
+        public string BinDirectory
         {
-            string binPath = $"{Path}/bin";
-            string platformSpecificBinPath = $"{binPath}/{GetPlatformString()}";
-
-            if (Directory.Exists(platformSpecificBinPath))
+            get
             {
-                binPath = platformSpecificBinPath;
-            }
+                string binPath = $"{MountPath}/bin";
+                string platformSpecificBinPath = $"{binPath}/{PlatformString}";
 
-            return binPath;
+                if (Directory.Exists(platformSpecificBinPath))
+                {
+                    binPath = platformSpecificBinPath;
+                }
+
+                return binPath;
+            }
         }
-        // TODO: GetPlatformString doesn't detect mac yet! (mac gets treated the same as linux...)
-        private string GetPlatformString()
-        {
-            string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
-            if(OperatingSystem.IsWindows())
-                return $"win{arch}";
-            if (OperatingSystem.IsLinux())
-                return $"linux{arch}";
-            if (OperatingSystem.IsMacOS())
-                return $"osx{arch}";
-        }
+
+        public string PrimarySearchPathDirectory => $"{MountPath}/{PrimarySearchPath}";
 
         // Don't you love it? :)
-        public List<string> AvailableNamespaces =>
-            string.IsNullOrWhiteSpace(Path) ? new List<string>() :
-                Directory.GetDirectories(Path)
-                    .Where(d => File.Exists($"{d}/gameinfo.txt"))
-                    .Where(d => !Namespaces.Contains(System.IO.Path.GetDirectoryName(d) ?? ""))
-                    .Select(d => d.Split(System.IO.Path.DirectorySeparatorChar).Last())
+        public List<string> AvailableSearchPaths =>
+            string.IsNullOrWhiteSpace(MountPath) ? new List<string>() :
+                Directory.GetDirectories(MountPath)                                                    // Get all subdirectories
+                    .Where(MountUtil.IsValidSearchPath)                                                // That have a gameinfo
+                    .Where(d => !SearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
+                    .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
                     .ToList();
+
+        private string PlatformString
+        {
+            get
+            {
+                string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
+                if(OperatingSystem.IsWindows())
+                    return $"win{arch}";
+                if (OperatingSystem.IsLinux())
+                    return $"linux{arch}";
+                if (OperatingSystem.IsMacOS())
+                    return $"osx{arch}";
+                throw new Exception("Invalid OS. You need to run windows, linux or mac.");
+            }
+        }
     }
 }

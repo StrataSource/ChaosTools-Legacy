@@ -1,6 +1,6 @@
 using System;
 
-namespace SDKLauncher.Steam
+namespace SDKLauncher.Util
 {
     public class SteamException : Exception
     {

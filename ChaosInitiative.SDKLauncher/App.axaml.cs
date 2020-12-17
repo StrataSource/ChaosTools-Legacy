@@ -2,7 +2,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SDKLauncher.Steam;
+using SDKLauncher.Util;
 using SDKLauncher.ViewModels;
 using SDKLauncher.Views;
 using Steamworks;
