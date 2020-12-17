@@ -130,26 +130,19 @@ namespace SDKLauncher.ViewModels
 
         // ====================================
 
-        private void LaunchTool(string executableName)
+        private void LaunchTool(string executableName, string arguments = "")
         {
 
-            string extension;
+            string extension = "";
 
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Win32NT: 
-                    extension = ".exe";
-                break;
-                default:
-                    extension = "";
-                break;
-            }
+            if (OperatingSystem.IsWindows())
+                extension = ".exe";
 
-            string binDir = CurrentProfile.Mod.Mount.GetBinDirectory();
+            string binDir = CurrentProfile.Mod.Mount.BinDirectory;
 
             string executablePath = $"{binDir}/{executableName}{extension}";
 
-            Process.Start(executablePath);
+            Process.Start(executablePath, arguments);
 
         }
 

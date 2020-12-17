@@ -83,12 +83,12 @@ namespace SDKLauncher.Models
         private string GetPlatformString()
         {
             string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
-            switch(Environment.OSVersion.Platform)
-            {
-                case PlatformID.Win32NT: return $"win{arch}";
-                case PlatformID.Unix: return $"linux{arch}";
-                default: return null;
-            }
+            if(OperatingSystem.IsWindows())
+                return $"win{arch}";
+            if (OperatingSystem.IsLinux())
+                return $"linux{arch}";
+            if (OperatingSystem.IsMacOS())
+                return $"osx{arch}";
         }
 
         // Don't you love it? :)
