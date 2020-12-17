@@ -15,14 +15,7 @@
     </Design.DataContext>
 
     <StackPanel Orientation="Vertical" Margin="12">
-        <TextBlock>
-An error occured when trying to load the Steam API.
-
-Troubleshooting:
-- Ensure Steam is installed and open
-- Close other running Steam games
-- Confirm that steam_api64.dll and steam_appid.txt are present in this application's folder
-        </TextBlock>
+        <TextBlock Text="{Binding Path=Message}"/>
 
         <Button Command="{Binding Path=OnClickClose}">
             Close

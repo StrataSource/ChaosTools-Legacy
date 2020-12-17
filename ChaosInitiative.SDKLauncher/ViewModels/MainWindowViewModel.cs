@@ -9,7 +9,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using SDKLauncher.Models;
 using SDKLauncher.Views;
-using Steamworks;
 
 namespace SDKLauncher.ViewModels
 {
@@ -28,8 +27,6 @@ namespace SDKLauncher.ViewModels
         
         public MainWindowViewModel()
         {
-            SteamAPI.Init();
-
             try
             {
                 Config = AppConfig.LoadConfig();

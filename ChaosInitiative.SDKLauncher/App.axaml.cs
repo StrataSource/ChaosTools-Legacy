@@ -2,8 +2,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using SDKLauncher.Steam;
 using SDKLauncher.ViewModels;
 using SDKLauncher.Views;
+using Steamworks;
 
 namespace SDKLauncher
 {
@@ -19,21 +21,34 @@ namespace SDKLauncher
             if (!(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop))
                 return;
             
+            // Init steam stuff
+            
             try
             {
-                desktop.MainWindow = new MainWindow
+                SteamAPI.Init();
+                if (!SteamAPI.IsSteamRunning())
                 {
-                    DataContext = new MainWindowViewModel(),
-                };
+                    // TODO: This doesn't work well with i3wm
+                    desktop.MainWindow = new SteamErrorDialog(SteamExceptionType.NotRunning);
+                    return;
+                }
             }
             catch (DllNotFoundException e)
             {
                 if (!e.Message.Contains("steam"))
                     throw;
 
-                desktop.MainWindow = new SteamErrorDialog(); // TODO: This doesn't work well with i3wm
-
+                // TODO: This doesn't work well with i3wm
+                desktop.MainWindow = new SteamErrorDialog(SteamExceptionType.ApiNotFound);
+                return;
             }
+
+            // Steam works, launch application
+
+            desktop.MainWindow = new MainWindow
+            {
+                DataContext = new MainWindowViewModel(),
+            };
 
             base.OnFrameworkInitializationCompleted();
         }
