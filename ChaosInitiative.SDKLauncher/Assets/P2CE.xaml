@@ -1,6 +1,66 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Design.PreviewWith>
+        <Grid Width="500"
+              Height="500">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+
+            <Button Grid.Column="0"
+                    Grid.Row="0">
+                Hi, I'm a Button! :)
+            </Button>
+            <TextBlock Grid.Column="1"
+                       Grid.Row="0"
+                       VerticalAlignment="Center">
+                I contain some Text
+            </TextBlock>
+
+            <TextBox Grid.Column="2"
+                     Grid.Row="0">
+                This is a Text box where you can enter Text
+            </TextBox>
+
+            <TextBox Grid.Column="0"
+                     Grid.Row="1">
+                More Text Boxes here!
+            </TextBox>
+            
+            <ComboBox Grid.Column="1" Grid.Row="1" SelectedIndex="0">
+                <ComboBoxItem>Item1</ComboBoxItem>
+                <ComboBoxItem>Item2</ComboBoxItem>
+                <ComboBoxItem>Item3</ComboBoxItem>
+            </ComboBox>
+            
+            <NumericUpDown Grid.Column="2"
+                           Grid.Row="1"
+                           ShowButtonSpinner="False"
+                           AllowSpin="False"
+                           Minimum="0"
+                           Maximum="1000000"
+                           Increment="1" />
+            
+            <ComboBox Grid.Column="1" Grid.Row="3" SelectedIndex="0">
+            </ComboBox>
+
+        </Grid>
+    </Design.PreviewWith>
+
     <Style>
         <Style.Resources>
 
@@ -26,26 +86,29 @@
             <Color x:Key="ErrorColor">#FFFF0000</Color>
             <Color x:Key="ErrorLowColor">#10FF0000</Color>
 
-            <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="{DynamicResource ThemeBackgroundColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeBorderLowBrush" Color="{DynamicResource ThemeBorderLowColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="{DynamicResource ThemeBorderMidColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeBorderHighBrush" Color="{DynamicResource ThemeBorderHighColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeControlLowBrush" Color="{DynamicResource ThemeControlLowColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeControlMidBrush" Color="{DynamicResource ThemeControlMidColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeControlHighBrush" Color="{DynamicResource ThemeControlHighColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeControlHighlightLowBrush" Color="{DynamicResource ThemeControlHighlightLowColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeControlHighlightMidBrush" Color="{DynamicResource ThemeControlHighlightMidColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeControlHighlightHighBrush" Color="{DynamicResource ThemeControlHighlightHighColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeForegroundBrush" Color="{DynamicResource ThemeForegroundColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeForegroundLowBrush" Color="{DynamicResource ThemeForegroundLowColor}"></SolidColorBrush>
+            <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="{DynamicResource ThemeBackgroundColor}" />
+            <SolidColorBrush x:Key="ThemeBorderLowBrush" Color="{DynamicResource ThemeBorderLowColor}" />
+            <SolidColorBrush x:Key="ThemeBorderMidBrush" Color="{DynamicResource ThemeBorderMidColor}" />
+            <SolidColorBrush x:Key="ThemeBorderHighBrush" Color="{DynamicResource ThemeBorderHighColor}" />
+            <SolidColorBrush x:Key="ThemeControlLowBrush" Color="{DynamicResource ThemeControlLowColor}" />
+            <SolidColorBrush x:Key="ThemeControlMidBrush" Color="{DynamicResource ThemeControlMidColor}" />
+            <SolidColorBrush x:Key="ThemeControlHighBrush" Color="{DynamicResource ThemeControlHighColor}" />
+            <SolidColorBrush x:Key="ThemeControlHighlightLowBrush"
+                             Color="{DynamicResource ThemeControlHighlightLowColor}" />
+            <SolidColorBrush x:Key="ThemeControlHighlightMidBrush"
+                             Color="{DynamicResource ThemeControlHighlightMidColor}" />
+            <SolidColorBrush x:Key="ThemeControlHighlightHighBrush"
+                             Color="{DynamicResource ThemeControlHighlightHighColor}" />
+            <SolidColorBrush x:Key="ThemeForegroundBrush" Color="{DynamicResource ThemeForegroundColor}" />
+            <SolidColorBrush x:Key="ThemeForegroundLowBrush" Color="{DynamicResource ThemeForegroundLowColor}" />
 
-            <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeAccentBrush" Color="{DynamicResource ThemeAccentColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeAccentBrush2" Color="{DynamicResource ThemeAccentColor2}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeAccentBrush3" Color="{DynamicResource ThemeAccentColor3}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ThemeAccentBrush4" Color="{DynamicResource ThemeAccentColor4}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ErrorBrush" Color="{DynamicResource ErrorColor}"></SolidColorBrush>
-            <SolidColorBrush x:Key="ErrorLowBrush" Color="{DynamicResource ErrorLowColor}"></SolidColorBrush>
+            <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightColor}" />
+            <SolidColorBrush x:Key="ThemeAccentBrush" Color="{DynamicResource ThemeAccentColor}" />
+            <SolidColorBrush x:Key="ThemeAccentBrush2" Color="{DynamicResource ThemeAccentColor2}" />
+            <SolidColorBrush x:Key="ThemeAccentBrush3" Color="{DynamicResource ThemeAccentColor3}" />
+            <SolidColorBrush x:Key="ThemeAccentBrush4" Color="{DynamicResource ThemeAccentColor4}" />
+            <SolidColorBrush x:Key="ErrorBrush" Color="{DynamicResource ErrorColor}" />
+            <SolidColorBrush x:Key="ErrorLowBrush" Color="{DynamicResource ErrorLowColor}" />
 
             <Thickness x:Key="ThemeBorderThickness">1</Thickness>
             <sys:Double x:Key="ThemeDisabledOpacity">0.5</sys:Double>
@@ -58,47 +121,52 @@
         </Style.Resources>
     </Style>
 
-	<Style Selector="Border.SectionBorder">
-		<Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
-		<Setter Property="BorderThickness" Value="1"/>
-		<Setter Property="Padding" Value="4"/>
-		<Setter Property="Margin" Value="4"/>
-	</Style>
-	
-	<Style Selector="Button, TextBox, TextBlock, ComboBox, ListBox, CheckBox">
-		<Setter Property="Margin" Value="4"/>
-	</Style>
-	
-	<Style Selector="ComboBox">
-		<Setter Property="MinHeight" Value="32"/>
-	</Style>
-	<!--
-	<Style Selector="NumericUpDown, TextBox">
-		<Setter Property="Height" Value="48"/>
-	</Style>
-	-->
-	<Style Selector="Button:hover">
-		<Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
-	</Style>
+    <Style Selector="Border.SectionBorder">
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Margin" Value="4" />
+    </Style>
 
-	<Style Selector="Button.SmallButton">
-		<Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}"/>
-		<Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
-		<Setter Property="MinWidth" Value="16"/>
-		<Setter Property="MinHeight" Value="16"/>
-		<Setter Property="Width" Value="24"/>
-		<Setter Property="Height" Value="24"/>
-	</Style>
+    <Style Selector="Button, TextBox, TextBlock, ComboBox, ListBox, CheckBox, NumericUpDown">
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="MaxHeight" Value="28" />
+    </Style>
+    
+    <Style Selector="Button TextBlock,ComboBox TextBlock,NumericUpDown TextBox">
+        <Setter Property="Margin" Value="0"/>
+    </Style>
+    
+    <Style Selector="ComboBox">
+        <Setter Property="MinHeight" Value="28"/>
+    </Style>
+    
+    <Style Selector="Button:hover">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
+    </Style>
+    
+    <Style Selector="Button.SmallButton">
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
+        <Setter Property="MinWidth" Value="16" />
+        <Setter Property="MinHeight" Value="16" />
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+    </Style>
 
-	<Style Selector="Button.SmallButton > Image">
-		<Setter Property="Width" Value="12"/>
-		<Setter Property="Height" Value="12"/>
-		<Setter Property="VerticalAlignment" Value="Center"/>
-		<Setter Property="HorizontalAlignment" Value="Center"/>
-	</Style>
-	
-	<Style Selector="Button.SmallButton:pressed">
-		<Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}"/>
-	</Style>
+    <Style Selector="Button.SmallButton > Image">
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
 
+    <Style Selector="Button.SmallButton:pressed">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}" />
+    </Style>
+    
+    <!-- Combo box needs a lot of adjustments -->
+    <Style Selector="ComboBox>Border>Grid>TextBlock">
+    </Style>
+    
 </Styles>
