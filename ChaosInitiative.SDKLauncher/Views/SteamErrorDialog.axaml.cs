@@ -1,23 +1,9 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-
 namespace SDKLauncher.Views
 {
-    public class SteamErrorDialog : Window
+    public class SteamErrorDialog : BaseWindow
     {
-        
-        public SteamErrorDialog()
+        protected override void InitializeComponent()
         {
-            InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
-        }
-        
-        protected void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
             DataContext = this;
         }
 

@@ -1,12 +1,10 @@
-﻿using System;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia;
 using Avalonia.Logging.Serilog;
 using Avalonia.ReactiveUI;
 
 namespace SDKLauncher
 {
-    class Program
+    static class Program
     {
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -15,7 +13,7 @@ namespace SDKLauncher
             .StartWithClassicDesktopLifetime(args);
 
         // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
+        private static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToDebug()
