@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:SDKLauncher.Views;assembly=ChaosInitiative.SDKLauncher"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="SDKLauncher.Views.SteamErrorDialog"
+        CanResize="False"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        DataContext=""
+        Title="Steam Error">
+
+    <Design.DataContext>
+        <vm:SteamErrorDialog/>
+    </Design.DataContext>
+
+    <StackPanel Orientation="Vertical" Margin="12">
+        <TextBlock>
+An error occured when trying to load the Steam API.
+
+Troubleshooting:
+- Ensure Steam is installed and open
+- Close other running Steam games
+- Confirm that steam_api64.dll and steam_appid.txt are present in this application's folder
+        </TextBlock>
+
+        <Button Command="{Binding Path=OnClickClose}">
+            Close
+        </Button>
+    </StackPanel>
+
+</Window>
