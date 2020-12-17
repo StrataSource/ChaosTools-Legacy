@@ -1,12 +1,7 @@
 {
   "profiles": {
-    "Windows": {
-      "commandName": "Executable",
-      "executablePath": "../net5.0/ChaosInitiative.SDKLauncher.exe"
-    },
-    "Linux": {
-      "commandName": "Executable",
-      "executablePath": "../net5.0/ChaosInitiative.SDKLauncher"
+    "SDKLauncher": {
+      "commandName": "Project"
     }
   }
 }
