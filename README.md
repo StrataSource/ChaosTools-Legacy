@@ -21,7 +21,7 @@ At this time, the program is in a work in progress state and not ready for produ
 
 ### Technologies used
 
-This program is written in C# using .NET Core 3.1.
+This program is written in C# using .NET 5.0.
 
 Frameworks:
 

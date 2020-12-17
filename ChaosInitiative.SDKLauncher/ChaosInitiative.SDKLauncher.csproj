@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 	<RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	<RootNamespace>SDKLauncher</RootNamespace>
+	<LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath></OutputPath>
@@ -36,7 +37,4 @@
     <Folder Include="Controls" />
     <Folder Include="Validation\" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y /d  &quot;$(ProjectDir)Lib\steam_api64.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
-  </Target>
 </Project>

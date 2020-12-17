@@ -1,8 +1,12 @@
 {
   "profiles": {
-    "SDKLauncher": {
+    "Windows": {
       "commandName": "Executable",
-      "executablePath": "E:\\Open\\ChaosTools\\ChaosInitiative.SDKLauncher\\bin\\Debug\\netcoreapp3.1\\ChaosInitiative.SDKLauncher.exe"
+      "executablePath": "../net5.0/ChaosInitiative.SDKLauncher.exe"
+    },
+    "Linux": {
+      "commandName": "Executable",
+      "executablePath": "../net5.0/ChaosInitiative.SDKLauncher"
     }
   }
 }
