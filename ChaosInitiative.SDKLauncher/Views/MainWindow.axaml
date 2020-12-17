@@ -18,6 +18,7 @@
 	<DockPanel>
 		<StackPanel DockPanel.Dock="Top" 
 					VerticalAlignment="Top">
+			<TextBlock>Tools:</TextBlock>
 			<Button Command="{Binding OnClickHammer}">Hammer World Editor</Button>
 			<Button Command="{Binding OnClickToolsMode}">Launch Game (Tools Mode)</Button>
 			<Button Command="{Binding OnClickModelViewer}">Model Viewer</Button>
@@ -28,6 +29,7 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			
 			<Grid.ColumnDefinitions>
@@ -35,10 +37,16 @@
 				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			
-			<ComboBox Grid.Row="0"
-					  Grid.Column="0"
-					  Items="{Binding Profiles}" 
-					  SelectedIndex="{Binding CurrentProfileIndex}">
+			<TextBlock Grid.Row="0"
+			           Grid.Column="0"
+			           Grid.ColumnSpan="2">
+				Workspace Profiles
+			</TextBlock>
+			
+			<ComboBox Grid.Row="1"
+			          Grid.Column="0"
+			          Items="{Binding Profiles}" 
+			          SelectedIndex="{Binding CurrentProfileIndex}">
 				<ComboBox.ItemTemplate>
 					<DataTemplate>
 						<TextBlock Text="{Binding Name}"/>
@@ -46,17 +54,17 @@
 				</ComboBox.ItemTemplate>
 			</ComboBox>
 			
-			<Button Grid.Row="0" 
+			<Button Grid.Row="1" 
 					Grid.Column="1" 
 					Command="{Binding OnClickOpenProfileConfig}">
 				Configure...
 			</Button>
-			<Button Grid.Row="1" 
+			<Button Grid.Row="2" 
 					Grid.Column="0"
 					Command="{Binding OnClickCreateMod}">
 				Create Mod
 			</Button>
-			<Button Grid.Row="1" 
+			<Button Grid.Row="2" 
 					Grid.Column="1"
 					Command="{Binding OnClickCreateProfile}">
 				New Profile

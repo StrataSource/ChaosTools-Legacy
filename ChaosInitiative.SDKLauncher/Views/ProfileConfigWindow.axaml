@@ -11,11 +11,15 @@
 		CanResize="False"
 		Icon="/Assets/p2ce_logo.png"
         Title="Profile Configuration">
+	
+	<Design.DataContext>
+		<vm:ProfileConfigViewModel/>
+	</Design.DataContext>
 
 	<StackPanel Orientation="Vertical">
 
 		<TextBlock Text="Profile Name"/>
-		<TextBox Text="{Binding CurrentProfile.Name}" 
+		<TextBox Text="{Binding Profile.Name}" 
 				 Watermark="Name"/>
 		
 		<TextBlock Text="Mod"/>
@@ -45,16 +49,16 @@
 				               Minimum="0"
 				               Maximum="1000000"
 				               Increment="1"
-				               Value="{Binding CurrentProfile.Mod.Mount.AppId}"
+				               Value="{Binding Profile.Mod.Mount.AppId}"
 				               Watermark="App ID"
 				               Name="MountAppId"/>
 
 				<TextBlock Grid.Row="0"
 						   Grid.Column="1"
-						   Text="Path"/>
+						   Text="MountPath"/>
 				<TextBox Grid.Row="1"
 						 Grid.Column="1"
-						 Text="{Binding CurrentProfile.Mod.Mount.Path}"
+						 Text="{Binding Profile.Mod.Mount.MountPath}"
 						 Watermark="Path"
 						 Name="MountPath"
 						 IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}"/>
@@ -72,8 +76,8 @@
 						   Text="Primary Namespace"/>
 				<ComboBox Grid.Row="3"
 						 Grid.Column="0"
-						 SelectedItem="{Binding CurrentProfile.Mod.Mount.PrimaryNamespace}"
-						 Items="{Binding CurrentProfile.Mod.Mount.AvailableNamespaces}"/>
+						 SelectedItem="{Binding Profile.Mod.Mount.PrimarySearchPath}"
+						 Items="{Binding Profile.Mod.Mount.AvailableSearchPaths}"/>
 				
 			</Grid>
 		</Border>
@@ -93,12 +97,12 @@
 
 				<TreeView Grid.Row="0"
 						  Grid.Column="1"
-						  Items="{Binding CurrentProfile.Mounts}"
-						  SelectedItem="{Binding CurrentMount}"
+						  Items="{Binding Profile.Mounts}"
+						  SelectedItem="{Binding SelectedMount}"
 						  MinHeight="200">
 					<TreeView.DataTemplates>
 						
-						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding Namespaces}">
+						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding SearchPaths}">
 
 							<Grid Background="Transparent">
 								<!-- Context menu won't work without some kind of background assigned. No idea why -->
@@ -113,7 +117,7 @@
 										   Text="{Binding AppId}"
 										   VerticalAlignment="Center"/>
 								<TextBlock Grid.Column="1" 
-										   Text="{Binding Path}"
+										   Text="{Binding MountPath}"
 										   VerticalAlignment="Center"/>
 								<CheckBox Grid.Column="2" 
 										  IsChecked="{Binding IsRequired}"
@@ -149,7 +153,7 @@
 						<Image Source="/Assets/Add_white_16x.png"></Image>
 					</Button>
 					<Button Command="{Binding OnClickMountRemove}"
-							IsEnabled="{Binding !!CurrentProfile.Mounts.Count}"
+							IsEnabled="{Binding !!Profile.Mounts.Count}"
 							Classes="SmallButton"
 							Margin="0">
 						<Image Source="/Assets/Remove_white_16x.png"></Image>
@@ -161,8 +165,7 @@
 		</Border>
 		
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button Command="{Binding OnClickSaveConfig}">Save Config</Button>
-			<Button  Command="{Binding OnClickCloseProfileConfig}">Done</Button>
+			<Button  Command="{Binding OnClickClose}">Done</Button>
 		</StackPanel>
 
 	</StackPanel>

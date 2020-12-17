@@ -32,10 +32,10 @@
 		               Increment="1"
 		               Value="{Binding Mount.AppId}"/>
 		
-		<TextBlock Text="Path"/>
-		<TextBox Watermark="Path" 
+		<TextBlock Text="MountPath"/>
+		<TextBox Watermark="MountPath" 
 				 IsEnabled="{Binding !IsChecked, ElementName=UseAppId}"
-				 Text="{Binding Mount.Path}"/>
+				 Text="{Binding Mount.MountPath}"/>
 
 		<Border Classes="SectionBorder">	
 		
@@ -53,7 +53,7 @@
 				<ComboBox Grid.Row="0"
 						  Grid.Column="0"
 						  Grid.ColumnSpan="2" 
-						  Items="{Binding Mount.AvailableNamespaces}"
+						  Items="{Binding Mount.AvailableSearchPaths}"
 						  SelectedItem="{Binding SelectedNamespace}"
 						  SelectedIndex="0"/>
 
@@ -65,7 +65,7 @@
 						<Image Source="/Assets/Add_white_16x.png"></Image>
 					</Button>
 					<Button Command="{Binding OnClickNamespaceRemove}"
-							IsEnabled="{Binding !!Mount.Namespaces.Count}"
+							IsEnabled="{Binding !!Mount.SearchPaths.Count}"
 							Classes="SmallButton"
 							Margin="4,0,4,4">
 						<Image Source="/Assets/Remove_white_16x.png"></Image>
@@ -74,7 +74,7 @@
 			
 				<ListBox Grid.Row="1"
 						 Grid.Column="1"
-						 Items="{Binding Mount.Namespaces}"
+						 Items="{Binding Mount.SearchPaths}"
 						 SelectedItem="{Binding SelectedNamespace}">
 				</ListBox>
 			</Grid>
