@@ -1,18 +1,19 @@
-﻿using SDKLauncher.Models;
+﻿using Avalonia.Markup.Xaml;
+using SDKLauncher.Models;
 
 namespace SDKLauncher.Views
 {
-    class AddMountDialog : BaseWindow
+    public class AddMountDialog : BaseWindow
     {
 
         public bool UseAppId { get; set; } = true;
         public Mount Mount { get; } = new ();
 
         public string SelectedNamespace { get; set; }
-
-
-        public AddMountDialog()
+        
+        protected override void InitializeComponent()
         {
+            AvaloniaXamlLoader.Load(this);
             DataContext = this;
         }
 

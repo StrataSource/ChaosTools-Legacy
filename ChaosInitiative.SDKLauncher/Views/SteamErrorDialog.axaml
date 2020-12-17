@@ -8,7 +8,6 @@
         CanResize="False"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        DataContext=""
         Title="Steam Error">
 
     <Design.DataContext>

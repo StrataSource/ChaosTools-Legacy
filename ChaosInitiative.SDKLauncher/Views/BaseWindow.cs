@@ -1,10 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
 namespace SDKLauncher.Views
 {
-    public class BaseWindow : Window
+    public abstract class BaseWindow : Window
     {
         protected BaseWindow()
         {
@@ -14,14 +13,11 @@ namespace SDKLauncher.Views
 #endif
         }
 
-        protected virtual void InitializeComponent()
-        {
-        }
+        protected abstract void InitializeComponent();
 
         private void FinalizeComponent()
         {
             InitializeComponent();
-            AvaloniaXamlLoader.Load(this);
         }
     }
 }
