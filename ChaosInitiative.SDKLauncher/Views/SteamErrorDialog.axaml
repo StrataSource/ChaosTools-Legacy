@@ -15,7 +15,9 @@
     </Design.DataContext>
 
     <StackPanel Orientation="Vertical" Margin="12">
-        <TextBlock Text="{Binding Path=Message}"/>
+        <TextBlock>
+            Steam error. Please check that steam is running.
+        </TextBlock>
 
         <Button Command="{Binding Path=OnClickClose}">
             Close

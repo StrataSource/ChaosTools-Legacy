@@ -1,8 +1,8 @@
 ﻿using System;
+using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SDKLauncher.Util;
 using SDKLauncher.ViewModels;
 using SDKLauncher.Views;
 using Steamworks;
@@ -25,21 +25,18 @@ namespace SDKLauncher
             
             try
             {
-                SteamAPI.Init();
-                if (!SteamAPI.IsSteamRunning())
-                {
-                    // TODO: This doesn't work well with i3wm
-                    desktop.MainWindow = new SteamErrorDialog(SteamExceptionType.NotRunning);
-                    return;
-                }
+                SteamClient.Init(440000); // TODO: Move this somewhere else
             }
-            catch (DllNotFoundException e)
+            catch (Exception e)
             {
                 if (!e.Message.Contains("steam"))
                     throw;
 
                 // TODO: This doesn't work well with i3wm
-                desktop.MainWindow = new SteamErrorDialog(SteamExceptionType.ApiNotFound);
+                desktop.MainWindow = new SteamErrorDialog();
+                Directory.CreateDirectory("logs");
+                File.WriteAllText($"logs/steam_error_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.log", 
+                                  e.Message );
                 return;
             }
 
