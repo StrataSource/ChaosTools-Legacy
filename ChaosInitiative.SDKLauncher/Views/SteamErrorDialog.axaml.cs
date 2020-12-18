@@ -1,12 +1,9 @@
-using System.ComponentModel;
 using Avalonia.Markup.Xaml;
 
 namespace SDKLauncher.Views
 {
-    public class SteamErrorDialog : BaseWindow, INotifyPropertyChanged
+    public class SteamErrorDialog : BaseWindow
     {
-        
-        public new event PropertyChangedEventHandler PropertyChanged;
         
         protected override void InitializeComponent()
         {
