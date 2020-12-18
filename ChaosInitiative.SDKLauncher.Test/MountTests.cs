@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using SDKLauncher.Models;
@@ -6,6 +7,7 @@ using Steamworks;
 
 namespace ChaosInitiative.SDKLauncher.Test
 {
+    [TestFixture]
     public class MountTests
     {
         private Mount _fakeP2CeMount;
@@ -102,20 +104,26 @@ namespace ChaosInitiative.SDKLauncher.Test
             Directory.Delete(momentum.MountPath, true);
         }
     }
-
+    
+    [TestFixture]
     public class MountTestsWithSteam
     {
         
-        [Test, Order(0)] // Before testing anything else, check if steam is running
-        public void TestSteamIsRunning()
+        [OneTimeSetUp]
+        public void Setup()
         {
-            
-            Assert.DoesNotThrow(() =>
+            Assume.That(() =>
             {
                 SteamClient.Init(440000);
-            });
+            }, Throws.Nothing);
         }
 
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            Assume.That(SteamClient.Shutdown, Throws.Nothing);
+        }
+        
         [Test]
         public void TestValidMountPathDetection()
         {
@@ -147,6 +155,29 @@ namespace ChaosInitiative.SDKLauncher.Test
 
             string binDir = mount.MountPath;
             Assert.That(binDir, Is.Null.Or.Empty);
+        }
+
+        [Test]
+        public void TestAvailableSearchPaths()
+        {
+            Mount mount = new Mount
+            {
+                AppId = 620, // Portal 2
+                IsRequired = true,
+                PrimarySearchPath = "portal2"
+            };
+            
+            Assume.That(() =>
+            {
+                bool isAppInstalled = SteamApps.IsAppInstalled(mount.AppId);
+                Assume.That(isAppInstalled, Is.True);
+            }, Throws.Nothing);
+            
+            List<string> availableSearchPaths = mount.AvailableSearchPaths;
+            
+            Assert.That(availableSearchPaths, Has.One.Items.EqualTo("portal2"));
+            Assert.That(availableSearchPaths, Has.One.Items.EqualTo("portal2_dlc1"));
+            Assert.That(availableSearchPaths, Has.One.Items.EqualTo("portal2_dlc2"));
         }
     }
 }
