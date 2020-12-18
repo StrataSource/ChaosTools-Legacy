@@ -28,3 +28,10 @@ Frameworks:
 - [Avalonia](https://avaloniaui.net/) (UI-Framework)
 
 - [Steamworks.net](https://steamworks.github.io/) (SteamAPI Wrapper)
+
+## Contributing
+
+Contributions are welcome! To contribute: 
+- Fork this repository 
+- Create a new feature branch (Name schema: feat/<feature-name>)
+- Open a pull request
