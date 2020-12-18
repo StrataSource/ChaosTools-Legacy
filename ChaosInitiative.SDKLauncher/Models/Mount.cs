@@ -20,7 +20,7 @@ namespace SDKLauncher.Models
         }
 
         // -------------------------------------------------------------------------------------
-
+        // TODO: Move this to some reusable interface
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -37,14 +37,15 @@ namespace SDKLauncher.Models
             get
             {
                 if (AppId == 0) return _mountPath;
+                try
+                {
+                    if (SteamApps.IsAppInstalled(AppId))
+                    {
+                        return SteamApps.AppInstallDir(AppId);
+                    }
+                } catch(NullReferenceException) {}
 
-                AppId_t appid = new AppId_t((uint)AppId);
-                if (!SteamApps.BIsAppInstalled(appid)) return null;
-
-                string dir;
-                SteamApps.GetAppInstallDir(appid, out dir, 1024);
-
-                return dir;
+                return null;
             }
             set {
                 _mountPath = value;
@@ -52,8 +53,8 @@ namespace SDKLauncher.Models
                 NotifyPropertyChanged(nameof(AvailableSearchPaths));
             }
         }
-        private long _appId;
-        public long AppId 
+        private int _appId;
+        public int AppId 
         {
             get => _appId;
             set
@@ -73,7 +74,7 @@ namespace SDKLauncher.Models
             get
             {
                 string binPath = $"{MountPath}/bin";
-                string platformSpecificBinPath = $"{binPath}/{PlatformString}";
+                string platformSpecificBinPath = $"{binPath}/{MountUtil.GetPlatformString()}";
 
                 if (Directory.Exists(platformSpecificBinPath))
                 {
@@ -95,19 +96,6 @@ namespace SDKLauncher.Models
                     .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
                     .ToList();
 
-        private string PlatformString
-        {
-            get
-            {
-                string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
-                if(OperatingSystem.IsWindows())
-                    return $"win{arch}";
-                if (OperatingSystem.IsLinux())
-                    return $"linux{arch}";
-                if (OperatingSystem.IsMacOS())
-                    return $"osx{arch}";
-                throw new Exception("Invalid OS. You need to run windows, linux or mac.");
-            }
-        }
+        
     }
 }
