@@ -13,7 +13,7 @@ namespace SDKLauncher.Models
         {
             WriteIndented = true
         };
-
+        
         // ============================================
 
         public List<Profile> Profiles { get; set; }
@@ -31,12 +31,13 @@ namespace SDKLauncher.Models
             File.WriteAllText(CONFIG_NAME, jsonString);
         }
         
+        /// <summary>
+        /// Loads the config.json file. Throws JsonException
+        /// </summary>
         public static AppConfig LoadConfig()
         {
             string jsonString = File.ReadAllText(CONFIG_NAME);
-
-            if (String.IsNullOrWhiteSpace(jsonString)) throw new InvalidDataException("Default config cannot be loaded / is empty");
-
+            
             //     This throws JsonException, which should be passed to the method caller for processing
             return JsonSerializer.Deserialize<AppConfig>(jsonString);
         }

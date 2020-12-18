@@ -6,7 +6,7 @@ namespace SDKLauncher.Models
     {
         public Mod Mod { get; set; }
         public string Name { get; set; }
-        public ObservableCollection<Mount> Mounts { get; set; } = new ObservableCollection<Mount>();
+        public ObservableCollection<Mount> Mounts { get; } = new ObservableCollection<Mount>();
 
         public static Profile GetDefaultProfile()
         {
@@ -19,7 +19,8 @@ namespace SDKLauncher.Models
                     Mount = new Mount
                     {
                         AppId = 440000,
-                        PrimarySearchPath = "p2ce"
+                        PrimarySearchPath = "p2ce",
+                        IsRequired = true
                     }
                 },
                 Mounts =

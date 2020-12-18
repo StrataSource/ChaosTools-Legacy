@@ -4,6 +4,5 @@
     {
         public string Name { get; set; }
         public Mount Mount { get; set; }
-
     }
 }
