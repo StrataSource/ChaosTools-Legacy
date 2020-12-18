@@ -102,7 +102,7 @@
 						  MinHeight="200">
 					<TreeView.DataTemplates>
 						
-						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding SearchPaths}">
+						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding SelectedSearchPaths}">
 
 							<Grid Background="Transparent">
 								<!-- Context menu won't work without some kind of background assigned. No idea why -->

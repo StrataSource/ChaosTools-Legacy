@@ -19,7 +19,7 @@ namespace ChaosInitiative.SDKLauncher.Test
                 MountPath = "Portal 2 Community Edition",
                 PrimarySearchPath = "p2ce",
                 IsRequired = true,
-                SearchPaths = { "p2ce" }
+                SelectedSearchPaths = { "p2ce" }
             };
         }
 
@@ -30,8 +30,8 @@ namespace ChaosInitiative.SDKLauncher.Test
             Assert.That(_fakeP2CeMount.IsRequired, Is.True);
             Assert.That(_fakeP2CeMount.PrimarySearchPath, Is.EqualTo("p2ce"));
             Assert.That(_fakeP2CeMount.MountPath, Is.EqualTo("Portal 2 Community Edition"));
-            Assert.That(_fakeP2CeMount.SearchPaths.Count, Is.EqualTo(1));
-            Assert.That(_fakeP2CeMount.SearchPaths, Has.One.Items.EqualTo("p2ce"));
+            Assert.That(_fakeP2CeMount.SelectedSearchPaths.Count, Is.EqualTo(1));
+            Assert.That(_fakeP2CeMount.SelectedSearchPaths, Has.One.Items.EqualTo("p2ce"));
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace ChaosInitiative.SDKLauncher.Test
                 MountPath = "Counter Strike Global Offensive",
                 IsRequired = true,
                 PrimarySearchPath = "csgo",
-                SearchPaths = {"csgo"}
+                SelectedSearchPaths = {"csgo"}
             };
 
             Directory.CreateDirectory($"{csgo.MountPath}/bin");
@@ -91,7 +91,7 @@ namespace ChaosInitiative.SDKLauncher.Test
                 MountPath = "Momentum Mod",
                 IsRequired = true,
                 PrimarySearchPath = "momentum",
-                SearchPaths = {"momentum"}
+                SelectedSearchPaths = {"momentum"}
             };
 
             Directory.CreateDirectory($"{momentum.MountPath}/bin/win64");
@@ -124,7 +124,7 @@ namespace ChaosInitiative.SDKLauncher.Test
                 AppId = 440000,
                 IsRequired = true,
                 PrimarySearchPath = "p2ce",
-                AvailableSearchPaths = { "p2ce" }
+                SelectedSearchPaths = { "p2ce" }
             };
             var appId = mount.AppId;
             Assert.That(appId, Is.EqualTo(440000));
@@ -142,7 +142,7 @@ namespace ChaosInitiative.SDKLauncher.Test
                 AppId = 69, // <== This is an invalid appid
                 IsRequired = true,
                 PrimarySearchPath = "p2ce",
-                AvailableSearchPaths = { "p2ce" }
+                SelectedSearchPaths = { "p2ce" }
             };
 
             string binDir = mount.MountPath;

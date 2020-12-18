@@ -15,7 +15,7 @@ namespace SDKLauncher.Models
 
         public Mount()
         {
-            SearchPaths = new ObservableCollection<string>();
+            SelectedSearchPaths = new ObservableCollection<string>();
             PrimarySearchPath = string.Empty;
         }
 
@@ -67,7 +67,7 @@ namespace SDKLauncher.Models
 
         public string PrimarySearchPath { get; set; }
         public bool IsRequired { get; set; }
-        public ObservableCollection<string> SearchPaths { get; set; }
+        public ObservableCollection<string> SelectedSearchPaths { get; set; }
 
         public string BinDirectory
         {
@@ -92,7 +92,7 @@ namespace SDKLauncher.Models
             string.IsNullOrWhiteSpace(MountPath) ? new List<string>() :
                 Directory.GetDirectories(MountPath)                                                    // Get all subdirectories
                     .Where(MountUtil.IsValidSearchPath)                                                // That have a gameinfo
-                    .Where(d => !SearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
+                    .Where(d => !SelectedSearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
                     .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
                     .ToList();
 

@@ -24,14 +24,14 @@ namespace SDKLauncher.Views
 
         public void OnClickAddNamespace()
         {
-            Mount.SearchPaths.Add("New Namespace");
+            Mount.SelectedSearchPaths.Add("New Namespace");
         }
 
         public void OnClickNamespaceAdd()
         {
-            if (!string.IsNullOrWhiteSpace(SelectedNamespace) && !Mount.SearchPaths.Contains(SelectedNamespace))
+            if (!string.IsNullOrWhiteSpace(SelectedNamespace) && !Mount.SelectedSearchPaths.Contains(SelectedNamespace))
             {   
-                Mount.SearchPaths.Add(SelectedNamespace);
+                Mount.SelectedSearchPaths.Add(SelectedNamespace);
             }
 
         }

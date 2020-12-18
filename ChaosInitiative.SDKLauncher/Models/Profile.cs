@@ -29,7 +29,7 @@ namespace SDKLauncher.Models
                         AppId = 620,
                         IsRequired = true,
                         PrimarySearchPath = "portal2",
-                        SearchPaths =
+                        SelectedSearchPaths =
                         {
                             "portal2",
                             "portal2_dlc1",

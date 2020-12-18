@@ -65,7 +65,7 @@
 						<Image Source="/Assets/Add_white_16x.png"></Image>
 					</Button>
 					<Button Command="{Binding OnClickNamespaceRemove}"
-							IsEnabled="{Binding !!Mount.SearchPaths.Count}"
+							IsEnabled="{Binding !!Mount.SelectedSearchPaths.Count}"
 							Classes="SmallButton"
 							Margin="4,0,4,4">
 						<Image Source="/Assets/Remove_white_16x.png"></Image>
@@ -74,7 +74,7 @@
 			
 				<ListBox Grid.Row="1"
 						 Grid.Column="1"
-						 Items="{Binding Mount.SearchPaths}"
+						 Items="{Binding Mount.SelectedSearchPaths}"
 						 SelectedItem="{Binding SelectedNamespace}">
 				</ListBox>
 			</Grid>
