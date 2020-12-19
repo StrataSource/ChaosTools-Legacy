@@ -47,10 +47,7 @@ namespace ChaosInitiative.SDKLauncher.Test
         public void TestLoadConfigFailsWhenConfigDoesNotExist()
         {
             Assume.That(File.Exists("config.json"), Is.False);
-            Assert.That(() =>
-            {
-                AppConfig.LoadConfig();
-            }, Throws.TypeOf<FileNotFoundException>());
+            Assert.That(AppConfig.LoadConfig, Throws.Exception.TypeOf<FileNotFoundException>());
         }
         
         [Test, Order(4)]
@@ -58,10 +55,7 @@ namespace ChaosInitiative.SDKLauncher.Test
         {
             Assume.That(File.Exists("config.json"), Is.False);
             File.WriteAllText("config.json", "nbdsjvkjfdsbjhvsbjhv");
-            Assert.That(() =>
-            {
-                AppConfig.LoadConfig();
-            }, Throws.TypeOf<JsonException>());
+            Assert.That(AppConfig.LoadConfig, Throws.Exception.TypeOf<JsonException>());
         }
     }
 }
