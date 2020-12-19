@@ -50,6 +50,29 @@ namespace SDKLauncher.Models
             return JsonSerializer.Deserialize<AppConfig>(jsonString);
         }
 
+        /// <summary>
+        /// Checks if the config is saved to disk.
+        /// This does not check if the config is valid or the current version, just if some file with that name exists
+        /// </summary>
+        /// <returns>Whether or not config.json exists in working directory</returns>
+        public static bool IsConfigSaved() => File.Exists(ConfigName);
+
+        /// <summary>
+        /// Deletes the config if the file exists
+        /// </summary>
+        public static void DeleteSavedConfig()
+        {
+            if(IsConfigSaved())
+                File.Delete(ConfigName);
+        }
+        
+        /// <summary>
+        /// This is the config that should be used when generating a default config template
+        /// Default values:
+        /// - DefaultProfileIndex: 0
+        /// - Profile: Default Profile
+        /// </summary>
+        /// <returns>Instance of AppConfig using default values</returns>
         public static AppConfig CreateDefaultConfig()
         {
             return new AppConfig()
@@ -59,7 +82,24 @@ namespace SDKLauncher.Models
                     Profile.GetDefaultProfile()
                 }
             };
-
+        }
+        
+        /// <summary>
+        /// Tries to load the config. If the file doesn't exist, a new default config will be created and saved.
+        /// Throws JsonException if file exists but is corrupted
+        /// </summary>
+        /// <returns>Instance of AppConfig that is either loaded from disk or generated if file doesn't exist</returns>
+        public static AppConfig LoadConfigOrCreateDefault()
+        {
+            AppConfig config;
+            if (IsConfigSaved())
+                config = LoadConfig();
+            else
+            {
+                config = CreateDefaultConfig();
+                config.Save();
+            }
+            return config;
         }
 
     }
