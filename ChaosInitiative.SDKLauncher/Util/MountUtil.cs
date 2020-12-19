@@ -22,17 +22,19 @@ namespace SDKLauncher.Util
                 "gameinfo.txt"
             }
         };
+
+        private static Dictionary<PlatformID, string> PlatformNames = new()
+        {
+            { PlatformID.Win32NT, "win" },
+            { PlatformID.MacOSX, "osx" },
+            { PlatformID.Unix, "linux" },
+        };
         
         public static string GetPlatformString()
         {
             string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
-            if(OperatingSystem.IsWindows())
-                return $"win{arch}";
-            if (OperatingSystem.IsLinux())
-                return $"linux{arch}";
-            if (OperatingSystem.IsMacOS())
-                return $"osx{arch}";
-            throw new Exception("Invalid OS. You need to run windows, linux or mac.");
+            string name = PlatformNames[Environment.OSVersion.Platform];
+            return name + arch;
         }
     }
 }
