@@ -81,23 +81,5 @@ namespace SDKLauncher.ViewModels
             Config.Save();
         }
 
-        // ====================================
-
-        private void LaunchTool(string executableName, string arguments = "")
-        {
-
-            string extension = "";
-
-            if (OperatingSystem.IsWindows())
-                extension = ".exe";
-
-            string binDir = CurrentProfile.Mod.Mount.BinDirectory;
-
-            string executablePath = $"{binDir}/{executableName}{extension}";
-
-            Process.Start(executablePath, arguments);
-
-        }
-
     }
 }
