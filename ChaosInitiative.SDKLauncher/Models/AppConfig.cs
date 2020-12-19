@@ -7,17 +7,22 @@ namespace SDKLauncher.Models
 {
     public class AppConfig
     {
+        private const string ConfigName = "config.json";
 
-        private static readonly string CONFIG_NAME = "config.json";
-        private static readonly JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
+        private static readonly JsonSerializerOptions ConfigJsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true
         };
         
         // ============================================
 
-        public List<Profile> Profiles { get; set; }
+        public IList<Profile> Profiles { get; set; }
         private int _defaultProfileIndex;
+        
+        /// <summary>
+        /// Property accessor for the profile index.
+        /// Value is clamped between 0 and size of Profiles list
+        /// </summary>
         public int DefaultProfileIndex { 
             get => Math.Clamp(_defaultProfileIndex, 0, Profiles.Count - 1);
             set => _defaultProfileIndex = Math.Clamp(value, 0, Profiles.Count - 1);
@@ -25,10 +30,13 @@ namespace SDKLauncher.Models
 
         // ============================================
 
+        /// <summary>
+        /// Saves the this config to config.json in the working directory
+        /// </summary>
         public void Save()
         {
-            string jsonString = JsonSerializer.Serialize(this, JsonSerializerOptions);
-            File.WriteAllText(CONFIG_NAME, jsonString);
+            string jsonString = JsonSerializer.Serialize(this, ConfigJsonSerializerOptions);
+            File.WriteAllText(ConfigName, jsonString);
         }
         
         /// <summary>
@@ -36,7 +44,7 @@ namespace SDKLauncher.Models
         /// </summary>
         public static AppConfig LoadConfig()
         {
-            string jsonString = File.ReadAllText(CONFIG_NAME);
+            string jsonString = File.ReadAllText(ConfigName);
             
             //     This throws JsonException, which should be passed to the method caller for processing
             return JsonSerializer.Deserialize<AppConfig>(jsonString);
