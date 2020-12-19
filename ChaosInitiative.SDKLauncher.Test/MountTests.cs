@@ -103,6 +103,13 @@ namespace ChaosInitiative.SDKLauncher.Test
             // Clean up
             Directory.Delete(momentum.MountPath, true);
         }
+
+        [Test]
+        public void TestInfoGameFilter()
+        {
+            var filter = MountUtil.GameInfoFileFilter;
+            Assert.That(filter, Is.Not.Null);
+        }
     }
     
     [TestFixture]
