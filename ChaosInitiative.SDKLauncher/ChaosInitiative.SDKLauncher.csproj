@@ -3,7 +3,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
 	<RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
-	<RootNamespace>SDKLauncher</RootNamespace>
+	<RootNamespace>ChaosInitiative.SDKLauncher</RootNamespace>
 	<LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
