@@ -5,9 +5,9 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 
-namespace SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    public class ViewModelBase : ReactiveObject, INotifyPropertyChanged
+    public abstract class BaseViewModel : ReactiveObject, INotifyPropertyChanged
     {
 
         protected IClassicDesktopStyleApplicationLifetime ApplicationLifetime =>

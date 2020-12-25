@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace SDKLauncher.Util
+namespace ChaosInitiative.SDKLauncher.Util
 {
     public static class ToolUtil
     {

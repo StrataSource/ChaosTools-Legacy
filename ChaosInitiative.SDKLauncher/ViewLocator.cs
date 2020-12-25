@@ -1,9 +1,9 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using SDKLauncher.ViewModels;
+using ChaosInitiative.SDKLauncher.ViewModels;
 
-namespace SDKLauncher
+namespace ChaosInitiative.SDKLauncher
 {
     public class ViewLocator : IDataTemplate
     {

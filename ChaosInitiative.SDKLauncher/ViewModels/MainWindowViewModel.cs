@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using SDKLauncher.Models;
-using SDKLauncher.Util;
-using SDKLauncher.Views;
+using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.Util;
+using ChaosInitiative.SDKLauncher.Views;
 
-namespace SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : BaseViewModel
     {
         public ObservableCollection<Profile> Profiles { get; set; }
         public int CurrentProfileIndex { get; set; }

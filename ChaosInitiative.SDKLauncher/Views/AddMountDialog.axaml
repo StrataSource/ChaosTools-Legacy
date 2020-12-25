@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:SDKLauncher.Views;assembly=ChaosInitiative.SDKLauncher"
+        xmlns:views="clr-namespace:ChaosInitiative.SDKLauncher.Views"
         mc:Ignorable="d"
-        x:Class="SDKLauncher.Views.AddMountDialog"
+        x:Class="ChaosInitiative.SDKLauncher.Views.AddMountDialog"
 		WindowStartupLocation="CenterOwner"
         Width="320"
 		SizeToContent="Height"
@@ -13,7 +13,7 @@
         Title="New Mount">
 
 	<Design.DataContext>
-		<vm:AddMountDialog/>
+		<views:AddMountDialog/>
 	</Design.DataContext>
 	
 	<StackPanel Orientation="Vertical">

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace SDKLauncher.Models
+namespace ChaosInitiative.SDKLauncher.Models
 {
     public class Profile
     {

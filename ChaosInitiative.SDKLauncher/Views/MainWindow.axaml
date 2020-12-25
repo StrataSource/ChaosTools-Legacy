@@ -1,10 +1,10 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=ChaosInitiative.SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
-        x:Class="SDKLauncher.Views.MainWindow"
+        x:Class="ChaosInitiative.SDKLauncher.Views.MainWindow"
 		Width="300" Height="450"
 		CanResize="False"
 		WindowStartupLocation="CenterScreen"
@@ -12,7 +12,7 @@
         Title="SDK Launcher">
 
 	<Design.DataContext>
-        <vm:MainWindowViewModel/>
+        <viewModels:MainWindowViewModel/>
     </Design.DataContext>
 
 	<DockPanel>

@@ -1,4 +1,4 @@
-﻿namespace SDKLauncher.Models
+﻿namespace ChaosInitiative.SDKLauncher.Models
 {
     public class Mod
     {

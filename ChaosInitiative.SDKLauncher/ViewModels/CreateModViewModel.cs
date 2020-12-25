@@ -1,8 +1,8 @@
-﻿using SDKLauncher.Models;
+﻿using ChaosInitiative.SDKLauncher.Models;
 
-namespace SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    class CreateModViewModel : ViewModelBase
+    class CreateModViewModel : BaseViewModel
     {
 
         public Mod Mod { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Avalonia.Markup.Xaml;
+using ChaosInitiative.SDKLauncher.ViewModels;
 
-namespace SDKLauncher.Views
+namespace ChaosInitiative.SDKLauncher.Views
 {
     public class MainWindow : BaseWindow
     {

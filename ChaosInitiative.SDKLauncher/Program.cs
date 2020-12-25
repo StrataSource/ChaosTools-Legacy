@@ -2,7 +2,7 @@
 using Avalonia.Logging.Serilog;
 using Avalonia.ReactiveUI;
 
-namespace SDKLauncher
+namespace ChaosInitiative.SDKLauncher
 {
     static class Program
     {

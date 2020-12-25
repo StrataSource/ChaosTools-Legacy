@@ -1,17 +1,17 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SDKLauncher.Views;assembly=ChaosInitiative.SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:ChaosInitiative.SDKLauncher.Views"
         mc:Ignorable="d"
-        x:Class="SDKLauncher.Views.SteamErrorDialog"
+        x:Class="ChaosInitiative.SDKLauncher.Views.SteamErrorDialog"
         CanResize="False"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Title="Steam Error">
 
     <Design.DataContext>
-        <vm:SteamErrorDialog/>
+        <views:SteamErrorDialog/>
     </Design.DataContext>
 
     <StackPanel Orientation="Vertical" Margin="12">

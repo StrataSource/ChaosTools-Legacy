@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.Util;
 using NUnit.Framework;
-using SDKLauncher.Models;
-using SDKLauncher.Util;
 using Steamworks;
 
 namespace ChaosInitiative.SDKLauncher.Test

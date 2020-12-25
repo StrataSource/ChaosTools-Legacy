@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text.Json;
+using ChaosInitiative.SDKLauncher.Models;
 using NUnit.Framework;
-using SDKLauncher.Models;
 
 namespace ChaosInitiative.SDKLauncher.Test
 {

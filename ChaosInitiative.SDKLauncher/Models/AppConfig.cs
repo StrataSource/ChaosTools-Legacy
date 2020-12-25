@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace SDKLauncher.Models
+namespace ChaosInitiative.SDKLauncher.Models
 {
     public class AppConfig
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Avalonia.Controls;
 
-namespace SDKLauncher.Util
+namespace ChaosInitiative.SDKLauncher.Util
 {
     public static class MountUtil
     {

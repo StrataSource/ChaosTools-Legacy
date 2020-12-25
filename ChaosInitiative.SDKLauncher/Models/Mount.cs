@@ -5,10 +5,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using SDKLauncher.Util;
+using ChaosInitiative.SDKLauncher.Util;
 using Steamworks;
 
-namespace SDKLauncher.Models
+namespace ChaosInitiative.SDKLauncher.Models
 {
     public class Mount : INotifyPropertyChanged
     {

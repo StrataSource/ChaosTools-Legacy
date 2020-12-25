@@ -1,11 +1,11 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SDKLauncher.ViewModels;assembly=ChaosInitiative.SDKLauncher"
-		xmlns:models="clr-namespace:SDKLauncher.Models;assembly=ChaosInitiative.SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
+        xmlns:models1="clr-namespace:ChaosInitiative.SDKLauncher.Models"
         mc:Ignorable="d"
-        x:Class="SDKLauncher.Views.ProfileConfigWindow"
+        x:Class="ChaosInitiative.SDKLauncher.Views.ProfileConfigWindow"
 		Width="800" MinHeight="450"
 		SizeToContent="Height"
 		CanResize="False"
@@ -13,7 +13,7 @@
         Title="Profile Configuration">
 	
 	<Design.DataContext>
-		<vm:ProfileConfigViewModel/>
+		<viewModels:ProfileConfigViewModel/>
 	</Design.DataContext>
 
 	<StackPanel Orientation="Vertical">

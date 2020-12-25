@@ -1,7 +1,8 @@
 using Avalonia;
 using Avalonia.Controls;
+using ChaosInitiative.SDKLauncher.ViewModels;
 
-namespace SDKLauncher.Views
+namespace ChaosInitiative.SDKLauncher.Views
 {
     public abstract class BaseWindow : Window
     {

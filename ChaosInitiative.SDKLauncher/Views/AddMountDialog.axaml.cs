@@ -1,7 +1,7 @@
 ﻿using Avalonia.Markup.Xaml;
-using SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.Models;
 
-namespace SDKLauncher.Views
+namespace ChaosInitiative.SDKLauncher.Views
 {
     public class AddMountDialog : BaseWindow
     {

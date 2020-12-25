@@ -3,13 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using SDKLauncher.Models;
-using SDKLauncher.Util;
-using SDKLauncher.Views;
+using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.Util;
+using ChaosInitiative.SDKLauncher.Views;
 
-namespace SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    public class ProfileConfigViewModel : ViewModelBase
+    public class ProfileConfigViewModel : BaseViewModel
     {
         public Profile Profile { get; set; }
         public Mount SelectedMount { get; set; }

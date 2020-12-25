@@ -3,11 +3,11 @@ using System.IO;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SDKLauncher.ViewModels;
-using SDKLauncher.Views;
+using ChaosInitiative.SDKLauncher.ViewModels;
+using ChaosInitiative.SDKLauncher.Views;
 using Steamworks;
 
-namespace SDKLauncher
+namespace ChaosInitiative.SDKLauncher
 {
     public class App : Application
     {
