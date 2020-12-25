@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>sdk_launcher</AssemblyName>
 	<RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 	<RootNamespace>ChaosInitiative.SDKLauncher</RootNamespace>
 	<LangVersion>9</LangVersion>
