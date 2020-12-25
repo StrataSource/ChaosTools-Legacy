@@ -21,6 +21,11 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             Profiles = new ObservableCollection<Profile>(Config.Profiles);
             CurrentProfileIndex = Config.DefaultProfileIndex;
         }
+
+        public void OnCloseWindow(object sender, CancelEventArgs e)
+        {
+            SaveConfig();
+        }
         
         public void OnClickHammer()
         {
@@ -32,7 +37,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         {
             CreateModWindow modOptions = new CreateModWindow();
 
-            modOptions.ShowDialog(MainWindow);
+            modOptions.ShowDialog(MyWindow);
         }
         
         public void OnClickOpenProfileConfig()
@@ -41,7 +46,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             {
                 DataContext = new ProfileConfigViewModel(CurrentProfile)
             };
-            profileConfigWindow.ShowDialog(MainWindow);
+            profileConfigWindow.ShowDialog(MyWindow);
         }
         
         public void OnClickCreateProfile()
@@ -57,8 +62,9 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             InvokePropertyChangedEvent(nameof(CurrentProfileIndex));
         }
 
-        public void OnClickSaveConfig()
+        private void SaveConfig()
         {
+            Config.Profiles = Profiles;
             Config.Save();
         }
 

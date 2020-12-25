@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using ChaosInitiative.SDKLauncher.ViewModels;
 
 namespace ChaosInitiative.SDKLauncher.Views
 {
@@ -15,7 +14,7 @@ namespace ChaosInitiative.SDKLauncher.Views
         }
 
         protected abstract void InitializeComponent();
-
+        
         private void FinalizeComponent()
         {
             InitializeComponent();

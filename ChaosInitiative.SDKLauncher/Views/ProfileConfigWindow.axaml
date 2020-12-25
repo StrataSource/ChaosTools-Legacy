@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
-        xmlns:models1="clr-namespace:ChaosInitiative.SDKLauncher.Models"
+        xmlns:models="clr-namespace:ChaosInitiative.SDKLauncher.Models"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.ProfileConfigWindow"
 		Width="800" MinHeight="450"

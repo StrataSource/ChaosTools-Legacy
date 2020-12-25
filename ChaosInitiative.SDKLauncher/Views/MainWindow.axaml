@@ -9,7 +9,8 @@
 		CanResize="False"
 		WindowStartupLocation="CenterScreen"
 		Icon="/Assets/p2ce_logo.png"
-        Title="SDK Launcher">
+        Title="SDK Launcher"
+        Closing="OnClosing">
 
 	<Design.DataContext>
         <viewModels:MainWindowViewModel/>

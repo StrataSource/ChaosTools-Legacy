@@ -12,8 +12,8 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
         protected IClassicDesktopStyleApplicationLifetime ApplicationLifetime =>
             (IClassicDesktopStyleApplicationLifetime) Application.Current.ApplicationLifetime;
-        protected Window MainWindow => ApplicationLifetime.MainWindow;
-        protected Window MyWindow => ApplicationLifetime.Windows.First(w => w.DataContext == this);
+
+        protected Window MyWindow => ApplicationLifetime.Windows.FirstOrDefault(window => window.DataContext == this);
         
         public new event PropertyChangedEventHandler PropertyChanged;
 
