@@ -3,13 +3,14 @@ using ChaosInitiative.SDKLauncher.Models;
 
 namespace ChaosInitiative.SDKLauncher.Views
 {
+    // TODO: Put AddMountDialog into properly separated view & viewmodel
     public class AddMountDialog : BaseWindow
     {
 
         public bool UseAppId { get; set; } = true;
         public Mount Mount { get; } = new ();
 
-        public string SelectedNamespace { get; set; }
+        public string SelectedSearchPath { get; set; }
         
         protected override void InitializeComponent()
         {
@@ -22,21 +23,16 @@ namespace ChaosInitiative.SDKLauncher.Views
             Close(Mount);
         }
 
-        public void OnClickAddNamespace()
+        public void OnClickAdd()
         {
-            Mount.SelectedSearchPaths.Add("New Namespace");
-        }
-
-        public void OnClickNamespaceAdd()
-        {
-            if (!string.IsNullOrWhiteSpace(SelectedNamespace) && !Mount.SelectedSearchPaths.Contains(SelectedNamespace))
+            if (!string.IsNullOrWhiteSpace(SelectedSearchPath) && !Mount.SelectedSearchPaths.Contains(SelectedSearchPath))
             {   
-                Mount.SelectedSearchPaths.Add(SelectedNamespace);
+                Mount.SelectedSearchPaths.Add(SelectedSearchPath);
             }
 
         }
 
-        public void OnClickNamespaceRemove()
+        public void OnClickRemove()
         {
 
         }

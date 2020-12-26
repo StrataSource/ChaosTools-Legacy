@@ -73,7 +73,7 @@
 
 				<TextBlock Grid.Row="2"
 						   Grid.Column="0"
-						   Text="Primary Namespace"/>
+						   Text="Primary SearchPath"/>
 				<ComboBox Grid.Row="3"
 						 Grid.Column="0"
 						 SelectedItem="{Binding Profile.Mod.Mount.PrimarySearchPath}"
