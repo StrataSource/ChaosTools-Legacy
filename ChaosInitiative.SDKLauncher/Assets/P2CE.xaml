@@ -32,8 +32,8 @@
             </TextBlock>
 
             <TextBox Grid.Column="2"
-                     Grid.Row="0">
-                This is a Text box where you can enter Text
+                     Grid.Row="0"
+                     Watermark="Watermark">
             </TextBox>
 
             <TextBox Grid.Column="0"
@@ -150,6 +150,10 @@
     <Style Selector="ComboBox">
         <Setter Property="MinHeight" Value="28"/>
         <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+    </Style>
+    
+    <Style Selector="TextBox TextBlock">
+        <Setter Property="Margin" Value="0"/>
     </Style>
     
     <Style Selector="Button:pressed">
