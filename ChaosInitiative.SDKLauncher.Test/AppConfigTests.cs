@@ -83,5 +83,22 @@ namespace ChaosInitiative.SDKLauncher.Test
             Assert.That(AppConfig.LoadConfigOrCreateDefault, Throws.Exception.TypeOf<JsonException>());
             AppConfig.DeleteSavedConfig();
         }
+
+        [Test]
+        public void TestAppConfigEquals()
+        {
+            AppConfig config1 = AppConfig.CreateDefaultConfig();
+            AppConfig config2 = AppConfig.CreateDefaultConfig();
+            
+            Assert.That(config1, Is.EqualTo(config2));
+        }
+
+        [Test]
+        public void TestAppConfigHashCode()
+        {
+            AppConfig config = AppConfig.CreateDefaultConfig();
+            
+            Assert.That(config.GetHashCode(), Is.Not.Zero);
+        }
     }
 }

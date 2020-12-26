@@ -110,6 +110,49 @@ namespace ChaosInitiative.SDKLauncher.Test
             var filter = MountUtil.GameInfoFileFilter;
             Assert.That(filter, Is.Not.Null);
         }
+
+        [Test]
+        public void TestMountEquals()
+        {
+            Mount mount1 = new Mount
+            {
+                AppId = 0,
+                IsRequired = true,
+                MountPath = "testpath",
+                SelectedSearchPaths =
+                {
+                    "path1", "path2"
+                },
+                PrimarySearchPath = "primary_search_path",
+            };
+            
+            Mount mount2 = new Mount
+            {
+                AppId = 0,
+                IsRequired = true,
+                MountPath = "testpath",
+                SelectedSearchPaths =
+                {
+                    "path1", "path2"
+                },
+                PrimarySearchPath = "primary_search_path",
+            };
+            
+            Mount mount3 = new Mount
+            {
+                AppId = 0,
+                IsRequired = false,
+                MountPath = "testpath_other",
+                SelectedSearchPaths =
+                {
+                    "path1", "path2"
+                },
+                PrimarySearchPath = "primary_search_path_different",
+            };
+            Assert.That(mount1.Equals(mount2), Is.True);
+            Assert.That(mount1, Is.EqualTo(mount2));
+            Assert.That(mount2, Is.Not.EqualTo(mount3));
+        }
     }
     
     [TestFixture]

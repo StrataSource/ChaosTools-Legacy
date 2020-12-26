@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ChaosInitiative.SDKLauncher.Models
 {
@@ -7,7 +9,7 @@ namespace ChaosInitiative.SDKLauncher.Models
         public Mod Mod { get; set; }
         public string Name { get; set; }
         public ObservableCollection<Mount> Mounts { get; } = new ObservableCollection<Mount>();
-
+        
         public static Profile GetDefaultProfile()
         {
             return new Profile
@@ -40,5 +42,23 @@ namespace ChaosInitiative.SDKLauncher.Models
                 }
             };
         }
+
+        public bool Equals(Profile other)
+        {
+            return Equals(Mod, other.Mod) && 
+                   Name == other.Name && 
+                   Mounts.SequenceEqual(other.Mounts);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Profile);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Mod, Name, Mounts);
+        }
+        
     }
 }

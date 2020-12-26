@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 namespace ChaosInitiative.SDKLauncher.Models
@@ -102,6 +103,21 @@ namespace ChaosInitiative.SDKLauncher.Models
             return config;
         }
 
+        public bool Equals(AppConfig other)
+        {
+            return _defaultProfileIndex == other._defaultProfileIndex && 
+                   Profiles.SequenceEqual(other.Profiles);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as AppConfig);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_defaultProfileIndex, Profiles);
+        }
     }
 
 }

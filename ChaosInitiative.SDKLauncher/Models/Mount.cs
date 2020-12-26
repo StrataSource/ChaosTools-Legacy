@@ -96,6 +96,23 @@ namespace ChaosInitiative.SDKLauncher.Models
                     .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
                     .ToList();
 
-        
+        public bool Equals(Mount other)
+        {
+            return _mountPath == other._mountPath &&
+                   _appId == other._appId &&
+                   PrimarySearchPath == other.PrimarySearchPath &&
+                   IsRequired == other.IsRequired &&
+                   SelectedSearchPaths.SequenceEqual(other.SelectedSearchPaths);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Mount);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_mountPath, _appId, PrimarySearchPath, IsRequired, SelectedSearchPaths);
+        }
     }
 }

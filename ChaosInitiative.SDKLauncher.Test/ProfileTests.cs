@@ -20,5 +20,84 @@ namespace ChaosInitiative.SDKLauncher.Test
             Assert.That(profile.Mod.Mount.PrimarySearchPath, Is.Not.Null.Or.Empty);
             Assert.That(profile.Mounts, Is.Not.Empty);
         }
+
+        [Test]
+        public void TestProfileEquals()
+        {
+            Profile profile1 = new Profile
+            {
+                Name = "profile",
+                Mounts = { 
+                    new Mount
+                    {
+                        AppId = 0,
+                        IsRequired = true,
+                        MountPath = "testpath",
+                        SelectedSearchPaths = 
+                        {
+                            "path1", "path2"
+                        },
+                        PrimarySearchPath = "primary_search_path",
+                    }
+                },
+                Mod = new Mod
+                {
+                    Name = "My mod",
+                    Mount = new Mount
+                    {
+                        AppId = 0,
+                        IsRequired = true,
+                        MountPath = "maintestpath",
+                        SelectedSearchPaths = 
+                        {
+                            "path3", "path4", "path5"
+                        },
+                        PrimarySearchPath = "main_primary_search_path",
+                    }
+                }
+            };
+            
+            Profile profile2 = new Profile
+            {
+                Name = "profile",
+                Mounts = { 
+                    new Mount
+                    {
+                        AppId = 0,
+                        IsRequired = true,
+                        MountPath = "testpath",
+                        SelectedSearchPaths = 
+                        {
+                            "path1", "path2"
+                        },
+                        PrimarySearchPath = "primary_search_path",
+                    }
+                },
+                Mod = new Mod
+                {
+                    Name = "My mod",
+                    Mount = new Mount
+                    {
+                        AppId = 0,
+                        IsRequired = true,
+                        MountPath = "maintestpath",
+                        SelectedSearchPaths = 
+                        {
+                            "path3", "path4", "path5"
+                        },
+                        PrimarySearchPath = "main_primary_search_path",
+                    }
+                }
+            };
+            
+            Assert.That(profile1, Is.EqualTo(profile2));
+        }
+
+        [Test]
+        public void TestProfileHashCode()
+        {
+            Profile profile = Profile.GetDefaultProfile();
+            Assert.That(profile.GetHashCode(), Is.Not.Zero);
+        }
     }
 }
