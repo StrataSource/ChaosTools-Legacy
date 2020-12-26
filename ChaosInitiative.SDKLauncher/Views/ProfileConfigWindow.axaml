@@ -68,7 +68,7 @@
 						Classes="IconButton"
 						Command="{Binding OnClickBrowseModMountPath}"
 						IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}">
-					...
+					<Image Source="/Assets/browse_folder_16px.png"/>
 				</Button>
 
 				<TextBlock Grid.Row="2"
