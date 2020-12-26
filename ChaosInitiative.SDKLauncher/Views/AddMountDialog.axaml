@@ -60,15 +60,15 @@
 				<StackPanel Grid.Row="1"
 							Grid.Column="0">
 					<Button Command="{Binding OnClickNamespaceAdd}"
-							Classes="SmallButton"
+							Classes="IconButton"
 							Margin="4">
-						<Image Source="/Assets/Add_white_16x.png"></Image>
+						<Image Source="/Assets/plus_math_16px.png"></Image>
 					</Button>
 					<Button Command="{Binding OnClickNamespaceRemove}"
 							IsEnabled="{Binding !!Mount.SelectedSearchPaths.Count}"
-							Classes="SmallButton"
+							Classes="IconButton"
 							Margin="4,0,4,4">
-						<Image Source="/Assets/Remove_white_16x.png"></Image>
+						<Image Source="/Assets/subtract_16px.png"></Image>
 					</Button>
 				</StackPanel>
 			

@@ -65,7 +65,7 @@
 
 				<Button Grid.Row="1"
 						Grid.Column="2"
-						Classes="SmallButton"
+						Classes="IconButton"
 						Command="{Binding OnClickBrowseModMountPath}"
 						IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}">
 					...
@@ -127,7 +127,7 @@
 									<ContextMenu>
 										<MenuItem Header="Add Namespace">
 											<MenuItem.Icon>
-												<Image Source="/Assets/Add_white_16x.png"/>
+												<Image Source="/Assets/plus_math_16px.png"/>
 											</MenuItem.Icon>
 										</MenuItem>
 									</ContextMenu>
@@ -148,15 +148,15 @@
 							Margin="0,0,4,0">
 					
 					<Button Command="{Binding OnClickMountAdd}"
-							Classes="SmallButton"
+							Classes="IconButton"
 							Margin="0,0,0,4">
-						<Image Source="/Assets/Add_white_16x.png"></Image>
+						<Image Source="/Assets/plus_math_16px.png"></Image>
 					</Button>
 					<Button Command="{Binding OnClickMountRemove}"
 							IsEnabled="{Binding !!Profile.Mounts.Count}"
-							Classes="SmallButton"
+							Classes="IconButton"
 							Margin="0">
-						<Image Source="/Assets/Remove_white_16x.png"></Image>
+						<Image Source="/Assets/subtract_16px.png"></Image>
 					</Button>
 				
 				</StackPanel>

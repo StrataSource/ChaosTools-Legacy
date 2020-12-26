@@ -59,6 +59,14 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             
             Profiles.Add(profile);
             CurrentProfileIndex = Config.DefaultProfileIndex;
+            InvokePropertyChangedEvent(nameof(Profiles));
+            InvokePropertyChangedEvent(nameof(CurrentProfileIndex));
+        }
+
+        public void OnClickDeleteProfile()
+        {
+            Profiles.RemoveAt(CurrentProfileIndex);
+            CurrentProfileIndex = 0;
             InvokePropertyChangedEvent(nameof(CurrentProfileIndex));
         }
 
