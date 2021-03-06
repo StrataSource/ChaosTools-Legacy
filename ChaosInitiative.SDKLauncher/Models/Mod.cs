@@ -1,9 +1,11 @@
 ﻿using System;
+using ReactiveUI.Fody.Helpers;
 
 namespace ChaosInitiative.SDKLauncher.Models
 {
     public class Mod
     {
+        [Reactive]
         public string Name { get; set; }
         public Mount Mount { get; set; }
 

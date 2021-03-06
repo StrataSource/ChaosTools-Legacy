@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using ChaosInitiative.SDKLauncher.ViewModels;
+using MessageBox.Avalonia.ViewModels;
 
 namespace ChaosInitiative.SDKLauncher
 {
@@ -26,7 +26,7 @@ namespace ChaosInitiative.SDKLauncher
 
         public bool Match(object data)
         {
-            return data is BaseViewModel;
+            return data is ViewModelBase;
         }
     }
 }

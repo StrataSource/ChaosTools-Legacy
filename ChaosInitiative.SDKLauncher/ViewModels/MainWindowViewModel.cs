@@ -1,55 +1,83 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using ChaosInitiative.SDKLauncher.Models;
-using ChaosInitiative.SDKLauncher.Util;
-using ChaosInitiative.SDKLauncher.Views;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    public class MainWindowViewModel : BaseViewModel
+    public class MainWindowViewModel : ReactiveObject, IActivatableViewModel
     {
-        public ObservableCollection<Profile> Profiles { get; set; }
+        public ViewModelActivator Activator { get; }
+
+        [Reactive]
+        public string TestString { get; set; } = "";
+        
+        [Reactive]
         public int CurrentProfileIndex { get; set; }
+        
         public Profile CurrentProfile => Profiles[CurrentProfileIndex];
+        
+        [Reactive]
+        public ObservableCollection<Profile> Profiles { get; set; }
         public AppConfig Config { get; set; }
 
+        public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; set; }
+        
         public MainWindowViewModel()
         {
+
+            Activator = new ViewModelActivator();
+            
+            this.WhenActivated((CompositeDisposable disposable) =>
+            {
+                Disposable.Create(() =>
+                {
+                    
+                }).DisposeWith(disposable);
+            });
+            
             Config = AppConfig.LoadConfigOrCreateDefault();
 
             Profiles = new ObservableCollection<Profile>(Config.Profiles);
             CurrentProfileIndex = Config.DefaultProfileIndex;
+            
+            OnClickCreateMod = ReactiveCommand.Create(CreateMod);
+            OnClickOpenHammer = ReactiveCommand.Create(OpenHammer, Observable.Return(OperatingSystem.IsWindows()));
+
+            OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
+            OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
         }
 
-        public void OnCloseWindow(object sender, CancelEventArgs e)
+        public void OpenHammer()
         {
-            SaveConfig();
-        }
-        
-        public void OnClickHammer()
-        {
-            // TODO: Make it so this doesn't use the first item
-            ToolUtil.LaunchTool("hammer", $"-mountmod=\"{CurrentProfile.Mounts[0].PrimarySearchPathDirectory}\"");
-        }
-        
-        public void OnClickCreateMod()
-        {
-            CreateModWindow modOptions = new CreateModWindow();
+            string binDir = CurrentProfile.Mod.Mount.BinDirectory;
 
-            modOptions.ShowDialog(MyWindow);
-        }
-        
-        public void OnClickOpenProfileConfig()
-        {
-            ProfileConfigWindow profileConfigWindow = new ProfileConfigWindow
+            if (string.IsNullOrWhiteSpace(binDir))
+                return;
+
+            string hammerPath = Path.Combine(binDir, "hammer.exe");
+            
+            var hammerProcessStartInfo = new ProcessStartInfo
             {
-                DataContext = new ProfileConfigViewModel(CurrentProfile)
+                FileName = hammerPath,
+                WorkingDirectory = binDir
             };
-            profileConfigWindow.ShowDialog(MyWindow);
+            
+            Process.Start(hammerProcessStartInfo);
         }
-        
-        public void OnClickCreateProfile()
+
+        public void CreateProfile()
         {
             Profile profile = Profile.GetDefaultProfile();
             profile.Name = "New Profile";
@@ -59,21 +87,17 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             
             Profiles.Add(profile);
             CurrentProfileIndex = Config.DefaultProfileIndex;
-            InvokePropertyChangedEvent(nameof(Profiles));
-            InvokePropertyChangedEvent(nameof(CurrentProfileIndex));
         }
 
-        public void OnClickDeleteProfile()
+        public void DeleteProfile()
         {
             Profiles.RemoveAt(CurrentProfileIndex);
             CurrentProfileIndex = 0;
-            InvokePropertyChangedEvent(nameof(CurrentProfileIndex));
         }
 
-        private void SaveConfig()
+        public void CreateMod()
         {
-            Config.Profiles = Profiles;
-            Config.Save();
+            
         }
 
     }

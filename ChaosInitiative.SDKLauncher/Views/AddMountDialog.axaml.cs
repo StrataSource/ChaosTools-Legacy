@@ -1,23 +1,18 @@
 ﻿using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
 using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.ViewModels;
 
 namespace ChaosInitiative.SDKLauncher.Views
 {
-    // TODO: Put AddMountDialog into properly separated view & viewmodel
-    public class AddMountDialog : BaseWindow
+    public class AddMountDialog : ReactiveWindow<AddMountViewModel>
     {
-
-        public bool UseAppId { get; set; } = true;
-        public Mount Mount { get; } = new ();
-
-        public string SelectedSearchPath { get; set; }
         
-        protected override void InitializeComponent()
+        public AddMountDialog()
         {
             AvaloniaXamlLoader.Load(this);
-            DataContext = this;
         }
-
+        /*
         public void OnClickOk()
         {
             Close(Mount);
@@ -36,6 +31,6 @@ namespace ChaosInitiative.SDKLauncher.Views
         {
 
         }
-
+*/
     }
 }

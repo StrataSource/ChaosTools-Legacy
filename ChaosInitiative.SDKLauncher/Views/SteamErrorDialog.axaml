@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:ChaosInitiative.SDKLauncher.Views"
+        xmlns:vm="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.SteamErrorDialog"
         CanResize="False"
@@ -11,7 +11,7 @@
         Title="Steam Error">
 
     <Design.DataContext>
-        <views:SteamErrorDialog/>
+        <vm:SteamErrorViewModel/>
     </Design.DataContext>
 
     <StackPanel Orientation="Vertical" Margin="12">

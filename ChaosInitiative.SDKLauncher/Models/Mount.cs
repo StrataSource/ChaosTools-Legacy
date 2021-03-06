@@ -6,26 +6,18 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ChaosInitiative.SDKLauncher.Util;
+using ReactiveUI;
 using Steamworks;
 
 namespace ChaosInitiative.SDKLauncher.Models
 {
-    public class Mount : INotifyPropertyChanged
+    public class Mount : ReactiveObject
     {
 
         public Mount()
         {
             SelectedSearchPaths = new ObservableCollection<string>();
             PrimarySearchPath = string.Empty;
-        }
-
-        // -------------------------------------------------------------------------------------
-        // TODO: Move this to some reusable interface
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // -------------------------------------------------------------------------------------
@@ -47,10 +39,13 @@ namespace ChaosInitiative.SDKLauncher.Models
 
                 return null;
             }
-            set {
+            set
+            {
+                AppId = 0;
                 _mountPath = value;
-                NotifyPropertyChanged(nameof(MountPath));
-                NotifyPropertyChanged(nameof(AvailableSearchPaths));
+                this.RaisePropertyChanged(nameof(AppId));
+                this.RaisePropertyChanged(nameof(MountPath));
+                this.RaisePropertyChanged(nameof(AvailableSearchPaths));
             }
         }
         private int _appId;
@@ -60,8 +55,8 @@ namespace ChaosInitiative.SDKLauncher.Models
             set
             {
                 _appId = value;
-                NotifyPropertyChanged(nameof(MountPath));
-                NotifyPropertyChanged(nameof(AvailableSearchPaths));
+                this.RaisePropertyChanged(nameof(MountPath));
+                this.RaisePropertyChanged(nameof(AvailableSearchPaths));
             }
         }
 
@@ -98,6 +93,9 @@ namespace ChaosInitiative.SDKLauncher.Models
 
         public bool Equals(Mount other)
         {
+            if (other is null)
+                return false;
+            
             return _mountPath == other._mountPath &&
                    _appId == other._appId &&
                    PrimarySearchPath == other.PrimarySearchPath &&

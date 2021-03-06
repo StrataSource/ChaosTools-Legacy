@@ -1,19 +1,15 @@
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
 
 namespace ChaosInitiative.SDKLauncher.Views
 {
-    public class SteamErrorDialog : BaseWindow
+    public class SteamErrorDialog : ReactiveWindow<SteamErrorDialog>
     {
         
-        protected override void InitializeComponent()
+        public SteamErrorDialog()
         {
             AvaloniaXamlLoader.Load(this);
-            DataContext = this;
         }
-
-        public void OnClickClose()
-        {
-            Close();
-        }
+        
     }
 }

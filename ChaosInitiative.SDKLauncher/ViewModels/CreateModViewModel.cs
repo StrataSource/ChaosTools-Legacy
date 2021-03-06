@@ -1,8 +1,9 @@
 ﻿using ChaosInitiative.SDKLauncher.Models;
+using ReactiveUI;
 
 namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    class CreateModViewModel : BaseViewModel
+    public class CreateModViewModel : ReactiveObject
     {
 
         public Mod Mod { get; set; }

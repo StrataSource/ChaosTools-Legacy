@@ -19,7 +19,7 @@ namespace ChaosInitiative.SDKLauncher.Util
             Name = "Game Info",
             Extensions = new List<string>
             {
-                "gameinfo.txt"
+                "txt"
             }
         };
 

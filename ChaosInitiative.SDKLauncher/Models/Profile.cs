@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace ChaosInitiative.SDKLauncher.Models
 {
-    public class Profile
+    public class Profile : ReactiveObject
     {
+        [Reactive]
         public Mod Mod { get; set; }
+        
+        [Reactive]
         public string Name { get; set; }
         public ObservableCollection<Mount> Mounts { get; } = new ObservableCollection<Mount>();
         

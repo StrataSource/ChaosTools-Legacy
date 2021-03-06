@@ -19,7 +19,7 @@
 	<StackPanel Orientation="Vertical">
 
 		<TextBlock Text="Profile Name"/>
-		<TextBox Text="{Binding Profile.Name}" 
+		<TextBox Text="{Binding Profile.Name,Mode=TwoWay}" 
 				 Watermark="Name"/>
 		
 		<TextBlock Text="Mod"/>
@@ -65,9 +65,8 @@
 
 				<Button Grid.Row="1"
 						Grid.Column="2"
-						Classes="IconButton"
-						Command="{Binding OnClickBrowseModMountPath}"
-						IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}">
+						x:Name="BrowseMountPathButton"
+						Classes="IconButton">
 					<Image Source="/Assets/browse_folder_16px.png"/>
 				</Button>
 
@@ -165,7 +164,7 @@
 		</Border>
 		
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button  Command="{Binding OnClickClose}">Done</Button>
+			<Button x:Name="CloseButton">Done</Button>
 		</StackPanel>
 
 	</StackPanel>
