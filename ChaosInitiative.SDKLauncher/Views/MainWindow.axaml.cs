@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Reactive.Disposables;
 using Avalonia;
@@ -17,6 +16,28 @@ namespace ChaosInitiative.SDKLauncher.Views
     {
 
         protected Button EditProfileButton => this.FindControl<Button>("EditProfileButton");
+
+        private string HammerArguments
+        {
+            get
+            {
+                string arguments = "";
+
+                var additionalMount = ViewModel.CurrentProfile.AdditionalMount;
+
+                if (additionalMount is not null && 
+                    !string.IsNullOrWhiteSpace(additionalMount.BinDirectory))
+                {
+                    arguments = $"-mountmod \"{additionalMount.PrimarySearchPathDirectory}\"";
+                }
+                else
+                {
+                    arguments = "-nop4"; // Chaos doesn't need these, but valve games do
+                }
+
+                return arguments;
+            }
+        } 
         
         public MainWindow()
         {
@@ -27,7 +48,7 @@ namespace ChaosInitiative.SDKLauncher.Views
             {
                 ViewModel.OnClickEditProfile.Subscribe(_ => EditProfile()).DisposeWith(disposables);
                 ViewModel.OnClickOpenHammer.Subscribe(_ => LaunchTool("hammer", 
-                                                                      "-nosteam -nop4", 
+                                                                      HammerArguments, 
                                                                       true))
                          .DisposeWith(disposables);
                 ViewModel.OnClickOpenModelViewer.Subscribe(_ => 
@@ -45,7 +66,8 @@ namespace ChaosInitiative.SDKLauncher.Views
         private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null)
         {
             string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
-
+            workingDir ??= binDir;
+            
             try
             {
                 var process = ToolsUtil.LaunchTool(binDir, executableName, args, windowsOnly, workingDir);
@@ -62,7 +84,7 @@ namespace ChaosInitiative.SDKLauncher.Views
             dialog.ShowDialog(this);
         }
 
-        private void OnClosing(object? sender, CancelEventArgs e)
+        private void OnClosing(object sender, CancelEventArgs e)
         {
             ViewModel.Config.Save();
         }

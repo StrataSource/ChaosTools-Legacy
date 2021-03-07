@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using ChaosInitiative.SDKLauncher.Models;
 using ChaosInitiative.SDKLauncher.Util;
 using ChaosInitiative.SDKLauncher.ViewModels;
 using ReactiveUI;
@@ -16,6 +17,7 @@ namespace ChaosInitiative.SDKLauncher.Views
 
         protected Button CloseButton => this.FindControl<Button>("CloseButton");
         protected Button BrowseMountPathButton => this.FindControl<Button>("BrowseMountPathButton");
+        protected Button BrowseAdditionalMountButton => this.FindControl<Button>("BrowseAdditionalMountButton");
 
         public ProfileConfigWindow()
         {
@@ -28,14 +30,26 @@ namespace ChaosInitiative.SDKLauncher.Views
                                  vm => vm.OnClickClose, 
                                  v => v.CloseButton);
 
-                ViewModel.OnClickBrowseMountPath = ReactiveCommand.CreateFromTask(OnClickBrowseModMountPath);
+                ViewModel.OnClickBrowseMountPath = ReactiveCommand.CreateFromTask(async () =>
+                {
+                    await BrowseMountPath(ViewModel.Profile.Mod.Mount);
+                });
                 this.BindCommand(ViewModel,
                                  vm => vm.OnClickBrowseMountPath, 
                                  v => v.BrowseMountPathButton);
+
+                ViewModel.OnClickBrowseAdditionalMount = ReactiveCommand.CreateFromTask(async () =>
+                {
+                     await BrowseMountPath(ViewModel.Profile.AdditionalMount);
+                });
+                this.BindCommand(ViewModel,
+                                 vm => vm.OnClickBrowseAdditionalMount, 
+                                 v => v.BrowseAdditionalMountButton);
+
             });
         }
         
-        public async Task OnClickBrowseModMountPath()
+        public async Task BrowseMountPath(Mount mount)
         {
             OpenFileDialog folderDialog = new OpenFileDialog
             {
@@ -62,9 +76,9 @@ namespace ChaosInitiative.SDKLauncher.Views
                 primarySearchPath = primarySearchPath.Replace("/", "")
                                            .Replace(@"\", "");
                 
-                ViewModel.Profile.Mod.Mount.MountPath = mountPath;
-                ViewModel.Profile.Mod.Mount.PrimarySearchPath = primarySearchPath;
-            } 
+                mount.MountPath = mountPath;
+                mount.PrimarySearchPath = primarySearchPath;
+            }
 
         }
     }

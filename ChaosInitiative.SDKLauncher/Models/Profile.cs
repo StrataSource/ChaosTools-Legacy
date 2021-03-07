@@ -30,19 +30,7 @@ namespace ChaosInitiative.SDKLauncher.Models
                         IsRequired = true
                     }
                 },
-                AdditionalMount = 
-                new Mount
-                {
-                    AppId = 620,
-                    IsRequired = true,
-                    PrimarySearchPath = "portal2",
-                    SelectedSearchPaths =
-                    {
-                        "portal2",
-                        "portal2_dlc1",
-                        "portal2_dlc2"
-                    }
-                }
+                AdditionalMount = new Mount()
             };
         }
 

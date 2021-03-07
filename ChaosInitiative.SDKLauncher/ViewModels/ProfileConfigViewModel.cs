@@ -14,6 +14,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         
         public ReactiveCommand<Unit, Unit> OnClickClose { get; set; }
         public ReactiveCommand<Unit, Unit> OnClickBrowseMountPath { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickBrowseAdditionalMount { get; set; }
 
         // Default constructor is used by designer
         public ProfileConfigViewModel() : this(Profile.GetDefaultProfile())

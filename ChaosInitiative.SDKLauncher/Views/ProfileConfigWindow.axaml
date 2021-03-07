@@ -6,7 +6,7 @@
         xmlns:models="clr-namespace:ChaosInitiative.SDKLauncher.Models"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.ProfileConfigWindow"
-		Width="800" MinHeight="450"
+		Width="800"
 		SizeToContent="Height"
 		CanResize="False"
 		Icon="/Assets/p2ce_logo.png"
@@ -78,9 +78,26 @@
 						 SelectedItem="{Binding Profile.Mod.Mount.PrimarySearchPath}"
 						 Items="{Binding Profile.Mod.Mount.AvailableSearchPaths}"/>
 				
+				<TextBlock Grid.Row="2" 
+				           Grid.Column="1" 
+				           Text="Additional Mount"/>
+				<TextBox Grid.Row="3" 
+				         Grid.Column="1"
+				         Watermark="Additional Mount Path"
+				         Text="{Binding Profile.AdditionalMount.MountPath}"/>
+				<Button Grid.Row="3" 
+				        Grid.Column="2"
+				        x:Name="BrowseAdditionalMountButton"
+				        Classes="IconButton">
+					<Image Source="/Assets/browse_folder_16px.png"/>
+				</Button>
 			</Grid>
 		</Border>
-
+		
+		<!--
+		
+			Keeping this commented out in case we want to re-use this layout somewhere else.
+		
 		<TextBlock Text="Additional Mounts"/>
 		<Border Classes="SectionBorder">
 			<Grid>
@@ -104,8 +121,7 @@
 						<TreeDataTemplate DataType="models:Mount" ItemsSource="{Binding SelectedSearchPaths}">
 
 							<Grid Background="Transparent">
-								<!-- Context menu won't work without some kind of background assigned. No idea why -->
-
+								
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="100"/>
 									<ColumnDefinition Width="*"/>
@@ -162,6 +178,7 @@
 
 			</Grid>
 		</Border>
+		-->
 		
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 			<Button x:Name="CloseButton">Done</Button>
