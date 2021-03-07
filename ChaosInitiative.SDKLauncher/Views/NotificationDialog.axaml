@@ -4,23 +4,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
-        x:Class="ChaosInitiative.SDKLauncher.Views.SteamErrorDialog"
+        x:Class="ChaosInitiative.SDKLauncher.Views.NotificationDialog"
         CanResize="False"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Title="Steam Error">
 
     <Design.DataContext>
-        <vm:SteamErrorViewModel/>
+        <vm:NotificationViewModel/>
     </Design.DataContext>
 
-    <StackPanel Orientation="Vertical" Margin="12">
-        <TextBlock>
-            Steam error. Please check that steam is running.
-        </TextBlock>
-
-        <Button Command="{Binding Path=OnClickClose}">
-            Close
+    <StackPanel Orientation="Vertical" Margin="8">
+        <TextBlock Text="{Binding Message}"/>
+        <Button Command="{Binding OnClickClose}" MinWidth="48" HorizontalAlignment="Right">
+            Ok
         </Button>
     </StackPanel>
 

@@ -5,8 +5,10 @@
         xmlns:viewModels="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.MainWindow"
-        Width="300" Height="450"
+        Width="300"
+        Height="450"
         CanResize="False"
+        d:DesignHeight="450"
         WindowStartupLocation="CenterScreen"
         Icon="/Assets/p2ce_logo.png"
         Title="SDK Launcher">
@@ -22,7 +24,7 @@
             <TextBlock>Tools:</TextBlock>
             <Button x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
             <Button x:Name="OpenToolsModeButton">Launch Game (Tools Mode)</Button>
-            <Button x:Name="OpenModelViewerButton">Model Viewer</Button>
+            <Button x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
 
             <TextBlock>Mods:</TextBlock>
             <Button x:Name="CreateModButton" Command="{Binding OnClickCreateMod}">Create Mod</Button>
@@ -70,7 +72,7 @@
                     Command="{Binding OnClickEditProfile}">
                 <Image Source="/Assets/edit_16px.png" />
             </Button>
-            
+
             <ComboBox x:Name="ProfilesBox"
                       Grid.Row="2"
                       Grid.Column="0"

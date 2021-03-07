@@ -33,7 +33,7 @@ namespace ChaosInitiative.SDKLauncher
                     throw;
 
                 // TODO: This doesn't work well with i3wm
-                desktop.MainWindow = new SteamErrorDialog();
+                desktop.MainWindow = new NotificationDialog("Steam error. Please check that steam is running.");
                 Directory.CreateDirectory("logs");
                 File.WriteAllText($"logs/steam_error_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.log", 
                                   e.Message );

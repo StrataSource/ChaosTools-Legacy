@@ -18,6 +18,9 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
 
@@ -63,6 +66,15 @@
                     Classes="IconButton">
                 <Image Source="/Assets/edit_16px.png"></Image>
             </Button>
+            
+            <StackPanel Grid.Column="0" 
+                   Grid.ColumnSpan="3"
+                   Grid.Row="4"
+                   Classes="StatusBar">
+                <TextBlock Text="This is a status bar."/>
+                <ProgressBar Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Value="50" MaxHeight="2"/>
+            </StackPanel>
+            
 
         </Grid>
     </Design.PreviewWith>
@@ -185,6 +197,20 @@
 
     <Style Selector="Button.IconButton:pressed">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}" />
+    </Style>
+    
+    <Style Selector="StackPanel.StatusBar">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+    </Style>
+    
+    <Style Selector="StackPanel.StatusBar > TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="5 1 1 2"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    
+    <Style Selector="StackPanel.StatusBar > ProgressBar:horizontal">
+        <Setter Property="MinHeight" Value="2"/>
     </Style>
     
     <!-- Combo box needs a lot of adjustments -->

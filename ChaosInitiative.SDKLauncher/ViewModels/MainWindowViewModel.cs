@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -15,7 +13,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
     public class MainWindowViewModel : ReactiveObject, IActivatableViewModel
     {
         public ViewModelActivator Activator { get; }
-
+        
         [Reactive]
         public int CurrentProfileIndex { get; set; }
         
@@ -26,10 +24,13 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public AppConfig Config { get; set; }
 
         public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; }
+        public ReactiveCommand<Unit, Unit> OnClickOpenModelViewer { get; }
         public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; }
         public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; }
+        
+        public ReactiveCommand<string, Unit> ShowNotification { get; set; }
         
         public MainWindowViewModel()
         {
@@ -51,12 +52,13 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             
             OnClickCreateMod = ReactiveCommandUtil.CreateEmpty();
             OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
+            OnClickOpenModelViewer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
 
             OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
             OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
             OnClickEditProfile = ReactiveCommandUtil.CreateEmpty();
         }
-        
+
         public void CreateProfile()
         {
             Profile profile = Profile.GetDefaultProfile();
@@ -67,12 +69,16 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             
             Profiles.Add(profile);
             CurrentProfileIndex = Profiles.Count - 1;
+            
+            ShowNotification?.Execute("Created Profile");
         }
 
         public void DeleteProfile()
         {
             Profiles.RemoveAt(CurrentProfileIndex);
             CurrentProfileIndex = 0;
+            
+            ShowNotification?.Execute("Deleted Profile");
         }
 
         public void CreateMod()
