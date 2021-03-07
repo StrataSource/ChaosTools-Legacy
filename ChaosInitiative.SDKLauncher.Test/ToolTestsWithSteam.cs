@@ -35,12 +35,16 @@ namespace ChaosInitiative.SDKLauncher.Test
             Process process = null;
             Assert.That(() =>
             {
-                process = ToolUtil.LaunchTool(mount.BinDirectory, "hammer");
+                process = ToolsUtil.LaunchTool(mount.BinDirectory, "hammer");
                 Assert.That(process.HasExited, Is.False);
             }, Throws.Nothing);
             
             process.Kill(true);
             Assert.That(process.HasExited, Is.True);
         }
+    }
+
+    public class ToolUtil
+    {
     }
 }

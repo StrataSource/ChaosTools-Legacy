@@ -42,6 +42,20 @@ namespace ChaosInitiative.SDKLauncher.Views
             Closing += OnClosing;
         }
 
+        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null)
+        {
+            string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
+
+            try
+            {
+                var process = ToolsUtil.LaunchTool(binDir, executableName, args, windowsOnly, workingDir);
+            }
+            catch (ToolsLaunchException e)
+            {
+                ShowNotification(e.Message);
+            }
+        }
+
         private void ShowNotification(string message)
         {
             NotificationDialog dialog = new NotificationDialog(message);
@@ -62,36 +76,6 @@ namespace ChaosInitiative.SDKLauncher.Views
             profileConfigWindow.ShowDialog(this);
         }
         
-        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null)
-        {
-            if (windowsOnly && !OperatingSystem.IsWindows())
-            {
-                ViewModel.ShowNotification?.Execute("This tool is windows-only");
-                return;
-            }
-            
-            string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
-
-            if (string.IsNullOrWhiteSpace(binDir))
-                return; 
-            
-            string extension = OperatingSystem.IsWindows() ? ".exe" : "";
-            string executablePath = $"{binDir}/{executableName}{extension}";
-
-            if (!File.Exists(executablePath))
-            {
-                ShowNotification($"Unable to find tool binary '{executablePath}'");
-                return;
-            }
-            
-            var hammerProcessStartInfo = new ProcessStartInfo
-            {
-                FileName = executablePath,
-                WorkingDirectory = workingDir ?? binDir,
-                Arguments = args
-            };
-            
-            var process = Process.Start(hammerProcessStartInfo);
-        }
+        
     }
 }

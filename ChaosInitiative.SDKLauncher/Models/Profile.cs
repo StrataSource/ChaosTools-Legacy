@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -13,7 +11,9 @@ namespace ChaosInitiative.SDKLauncher.Models
         
         [Reactive]
         public string Name { get; set; }
-        public ObservableCollection<Mount> Mounts { get; } = new ObservableCollection<Mount>();
+        
+        [Reactive]
+        public Mount AdditionalMount { get; set; }
         
         public static Profile GetDefaultProfile()
         {
@@ -30,19 +30,17 @@ namespace ChaosInitiative.SDKLauncher.Models
                         IsRequired = true
                     }
                 },
-                Mounts =
+                AdditionalMount = 
+                new Mount
                 {
-                    new Mount
+                    AppId = 620,
+                    IsRequired = true,
+                    PrimarySearchPath = "portal2",
+                    SelectedSearchPaths =
                     {
-                        AppId = 620,
-                        IsRequired = true,
-                        PrimarySearchPath = "portal2",
-                        SelectedSearchPaths =
-                        {
-                            "portal2",
-                            "portal2_dlc1",
-                            "portal2_dlc2"
-                        }
+                        "portal2",
+                        "portal2_dlc1",
+                        "portal2_dlc2"
                     }
                 }
             };
@@ -52,7 +50,7 @@ namespace ChaosInitiative.SDKLauncher.Models
         {
             return Equals(Mod, other.Mod) && 
                    Name == other.Name && 
-                   Mounts.SequenceEqual(other.Mounts);
+                   AdditionalMount.Equals(other.AdditionalMount);
         }
 
         public override bool Equals(object obj)
@@ -62,7 +60,7 @@ namespace ChaosInitiative.SDKLauncher.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Mod, Name, Mounts);
+            return HashCode.Combine(Mod, Name, AdditionalMount);
         }
         
     }

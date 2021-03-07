@@ -18,7 +18,7 @@ namespace ChaosInitiative.SDKLauncher.Test
             Assert.That(profile.Mod.Mount.AppId, Is.Not.Null.And.Not.Zero);
             Assert.That(profile.Mod.Mount.IsRequired, Is.True);
             Assert.That(profile.Mod.Mount.PrimarySearchPath, Is.Not.Null.Or.Empty);
-            Assert.That(profile.Mounts, Is.Not.Empty);
+            Assert.That(profile.AdditionalMount, Is.Not.Null);
         }
 
         [Test]
@@ -27,18 +27,17 @@ namespace ChaosInitiative.SDKLauncher.Test
             Profile profile1 = new Profile
             {
                 Name = "profile",
-                Mounts = { 
-                    new Mount
+                AdditionalMount =  
+                new Mount
+                {
+                    AppId = 0,
+                    IsRequired = true,
+                    MountPath = "testpath",
+                    SelectedSearchPaths = 
                     {
-                        AppId = 0,
-                        IsRequired = true,
-                        MountPath = "testpath",
-                        SelectedSearchPaths = 
-                        {
-                            "path1", "path2"
-                        },
-                        PrimarySearchPath = "primary_search_path",
-                    }
+                        "path1", "path2"
+                    },
+                    PrimarySearchPath = "primary_search_path",
                 },
                 Mod = new Mod
                 {
@@ -60,18 +59,17 @@ namespace ChaosInitiative.SDKLauncher.Test
             Profile profile2 = new Profile
             {
                 Name = "profile",
-                Mounts = { 
-                    new Mount
+                AdditionalMount = 
+                new Mount
+                {
+                    AppId = 0,
+                    IsRequired = true,
+                    MountPath = "testpath",
+                    SelectedSearchPaths = 
                     {
-                        AppId = 0,
-                        IsRequired = true,
-                        MountPath = "testpath",
-                        SelectedSearchPaths = 
-                        {
-                            "path1", "path2"
-                        },
-                        PrimarySearchPath = "primary_search_path",
-                    }
+                        "path1", "path2"
+                    },
+                    PrimarySearchPath = "primary_search_path",
                 },
                 Mod = new Mod
                 {
