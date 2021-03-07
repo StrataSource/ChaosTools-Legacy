@@ -18,18 +18,43 @@
     </Design.DataContext>
 
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top"
-                    VerticalAlignment="Top">
+        <Grid DockPanel.Dock="Top"
+              VerticalAlignment="Top">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock>Tools:</TextBlock>
-            <Button x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
-            <Button x:Name="OpenToolsModeButton">Launch Game (Tools Mode)</Button>
-            <Button x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
+            <TextBlock Grid.Row="0" 
+                       Grid.Column="0" 
+                       Grid.ColumnSpan="2">Tools:</TextBlock>
+            <Button Grid.Row="1" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
+            
+            <Button Grid.Row="2" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2" x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
+            
+            <Button Grid.Row="3" 
+                    Grid.Column="0" 
+                    Command="{Binding OnClickLaunchGame}">Launch Game</Button>
+            <Button Grid.Row="3" 
+                    Grid.Column="1"
+                    Command="{Binding OnClickLaunchToolsMode}">Launch Tools Mode</Button>
 <!--
             <TextBlock>Mods:</TextBlock>
             <Button x:Name="CreateModButton" Command="{Binding OnClickCreateMod}">Create Mod</Button>
             -->
-        </StackPanel>
+        </Grid>
 
         <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
 

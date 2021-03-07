@@ -23,6 +23,8 @@ namespace ChaosInitiative.SDKLauncher.Models
                 Mod = new Mod
                 {
                     Name = "Portal 2: Community Edition",
+                    ExecutableName = "chaos",
+                    LaunchArguments = "",
                     Mount = new Mount
                     {
                         AppId = 440000,

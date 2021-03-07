@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.Util;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -25,6 +26,8 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
         public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; }
         public ReactiveCommand<Unit, Unit> OnClickOpenModelViewer { get; }
+        public ReactiveCommand<Unit, Unit> OnClickLaunchGame { get; }        
+        public ReactiveCommand<Unit, Unit> OnClickLaunchToolsMode { get; }        
         public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; }
         public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; }
@@ -54,6 +57,9 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
             OnClickOpenModelViewer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
 
+            OnClickLaunchGame = ReactiveCommandUtil.CreateEmpty();
+            OnClickLaunchToolsMode = ReactiveCommandUtil.CreateEmpty();
+            
             OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
             OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
             OnClickEditProfile = ReactiveCommandUtil.CreateEmpty();

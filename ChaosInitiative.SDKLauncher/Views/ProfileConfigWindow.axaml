@@ -37,6 +37,8 @@
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
 				</Grid.RowDefinitions>
 
 				<TextBlock Grid.Row="0"
@@ -80,12 +82,29 @@
 				
 				<TextBlock Grid.Row="2" 
 				           Grid.Column="1" 
-				           Text="Additional Mount"/>
+				           Text="Executable Name"/>
 				<TextBox Grid.Row="3" 
+				         Grid.Column="1"
+				         Watermark="Executable Name (No extension) eg. chaos, portal2, hl2"
+				         Text="{Binding Profile.Mod.ExecutableName}"/>
+				
+				<TextBlock Grid.Row="4" 
+				           Grid.Column="0" 
+				           Text="Game Launch Arguments"/>
+				<TextBox Grid.Row="5" 
+				         Grid.Column="0"
+				         Watermark="Game Launch Arguments"
+				         Text="{Binding Profile.Mod.LaunchArguments}"/>
+
+				
+				<TextBlock Grid.Row="4" 
+				           Grid.Column="1" 
+				           Text="Additional Mount"/>
+				<TextBox Grid.Row="5" 
 				         Grid.Column="1"
 				         Watermark="Additional Mount Path"
 				         Text="{Binding Profile.AdditionalMount.MountPath}"/>
-				<Button Grid.Row="3" 
+				<Button Grid.Row="5" 
 				        Grid.Column="2"
 				        x:Name="BrowseAdditionalMountButton"
 				        Classes="IconButton">

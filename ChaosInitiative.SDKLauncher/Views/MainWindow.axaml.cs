@@ -16,6 +16,8 @@ namespace ChaosInitiative.SDKLauncher.Views
     {
 
         protected Button EditProfileButton => this.FindControl<Button>("EditProfileButton");
+        protected Button OpenToolsModeButton => this.FindControl<Button>("OpenToolsModeButton");
+        protected Button OpenGameButton => this.FindControl<Button>("OpenGameButton");
 
         private string HammerArguments
         {
@@ -58,14 +60,18 @@ namespace ChaosInitiative.SDKLauncher.Views
                                                                           ViewModel.CurrentProfile.Mod.Mount.MountPath))
                          .DisposeWith(disposables);
                 ViewModel.ShowNotification = ReactiveCommand.Create<string>(ShowNotification).DisposeWith(disposables);
+
+                ViewModel.OnClickLaunchGame.Subscribe(_ => LaunchGame(false));
+                ViewModel.OnClickLaunchToolsMode.Subscribe(_ => LaunchGame(true));
+
             });
             
             Closing += OnClosing;
         }
 
-        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null)
+        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null, string binDir = null)
         {
-            string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
+            binDir ??= ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
             workingDir ??= binDir;
             
             try
@@ -76,6 +82,49 @@ namespace ChaosInitiative.SDKLauncher.Views
             {
                 ShowNotification(e.Message);
             }
+        }
+
+        private void LaunchGame(bool toolsMode)
+        {
+            string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
+            string executableName = ViewModel.CurrentProfile.Mod.ExecutableName;
+            string gameRootPath = ViewModel.CurrentProfile.Mod.Mount.MountPath;
+
+            if (OperatingSystem.IsWindows())
+            {
+                executableName += ".exe";
+            }
+
+            string binPath = Path.Combine(binDir, executableName);
+            
+            // See if the binary is in bin folder
+            if (!File.Exists(binPath))
+            {
+                // Not in a chaos game. Try to find it in game root. Yes copy paste code i know. It's minimal, nobody cares
+                binPath = Path.Combine(gameRootPath, executableName);
+
+                if (!File.Exists(binPath))
+                {
+                    // Can't find the game bruh
+                    ShowNotification($"Unable to find game binary '{binPath}'");
+                    return;
+                }
+            }
+            
+            string args = $"{ViewModel.CurrentProfile.Mod.LaunchArguments} -game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}";
+            if (toolsMode)
+            {
+                args += " -tools";
+            }
+
+            try
+            {
+                LaunchTool(executableName, 
+                           args,
+                           false,
+                           gameRootPath,
+                           binDir);
+            } catch(Exception) { }
         }
 
         private void ShowNotification(string message)

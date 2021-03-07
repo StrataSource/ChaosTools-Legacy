@@ -12,6 +12,7 @@ namespace ChaosInitiative.SDKLauncher.Test
             Mod mod = new Mod
             {
                 Name = "Portal: Revolution",
+                ExecutableName = "chaos",
                 Mount = new Mount
                 {
                     AppId = 601360,
@@ -30,6 +31,7 @@ namespace ChaosInitiative.SDKLauncher.Test
             Mod mod = new Mod
             {
                 Name = "Portal: Revolution",
+                ExecutableName = "chaos",
                 Mount = new Mount
                 {
                     AppId = 601360,

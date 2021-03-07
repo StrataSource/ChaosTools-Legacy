@@ -13,7 +13,7 @@ namespace ChaosInitiative.SDKLauncher.Util
                 throw new ToolsLaunchException("This tool is windows-only");
             }
 
-            string extension = OperatingSystem.IsWindows() ? ".exe" : "";
+            string extension = OperatingSystem.IsWindows() && !executableName.EndsWith(".exe") ? ".exe" : "";
             string executablePath = $"{binDirectory}/{executableName}{extension}";
 
             if (!File.Exists(executablePath))

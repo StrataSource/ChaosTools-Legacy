@@ -1,7 +1,7 @@
 using System.Reactive;
 using ReactiveUI;
 
-namespace ChaosInitiative.SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.Util
 {
     public static class ReactiveCommandUtil
     {
