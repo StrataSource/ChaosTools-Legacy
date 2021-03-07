@@ -26,10 +26,6 @@
 
             <TextBlock>Mods:</TextBlock>
             <Button x:Name="CreateModButton" Command="{Binding OnClickCreateMod}">Create Mod</Button>
-            
-            <TextBox Text="{Binding TestString}"/>
-            <TextBlock Text="{Binding TestString}"/>
-            
         </StackPanel>
 
         <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">

@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Reactive.Disposables;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -19,17 +22,8 @@ namespace ChaosInitiative.SDKLauncher.Views
 
             this.WhenActivated((CompositeDisposable disposables) =>
             {
-                ViewModel.OnClickEditProfile = ReactiveCommand.Create(() =>
-                {
-                    ProfileConfigWindow profileConfigWindow = new ProfileConfigWindow
-                    {
-                        DataContext = new ProfileConfigViewModel(ViewModel.CurrentProfile)
-                    };
-                    profileConfigWindow.ShowDialog(this);
-                });
-                this.BindCommand(this.ViewModel,
-                                 vm => vm.OnClickEditProfile,
-                                 v => v.EditProfileButton);
+                ViewModel.OnClickEditProfile.Subscribe(_ => EditProfile());
+                ViewModel.OnClickOpenHammer.Subscribe(_ => OpenHammer());
             });
             
             this.Closing += OnClosing;
@@ -38,6 +32,39 @@ namespace ChaosInitiative.SDKLauncher.Views
         private void OnClosing(object? sender, CancelEventArgs e)
         {
             ViewModel.Config.Save();
+        }
+
+        private void EditProfile()
+        {
+            ProfileConfigWindow profileConfigWindow = new ProfileConfigWindow
+            {
+                DataContext = new ProfileConfigViewModel(ViewModel.CurrentProfile)
+            };
+            profileConfigWindow.ShowDialog(this);
+        }
+        
+        private void OpenHammer()
+        {
+            string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
+
+            if (string.IsNullOrWhiteSpace(binDir))
+                return;
+
+            string hammerPath = Path.Combine(binDir, "hammer.exe");
+
+            if (!File.Exists(binDir))
+            {
+                
+            }
+            
+            var hammerProcessStartInfo = new ProcessStartInfo
+            {
+                FileName = hammerPath,
+                WorkingDirectory = binDir,
+                Arguments = "-nosteam -nop4"
+            };
+            
+            Process.Start(hammerProcessStartInfo);
         }
     }
 }

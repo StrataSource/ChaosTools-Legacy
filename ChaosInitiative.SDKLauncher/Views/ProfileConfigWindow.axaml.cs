@@ -49,6 +49,9 @@ namespace ChaosInitiative.SDKLauncher.Views
             };
 
             var results = await folderDialog.ShowAsync(this);
+            if (results.Length == 0)
+                return;
+            
             string path = Path.GetDirectoryName(results[0]); // We only accept 1 element, so just take the first
             
             if(path is not null && Directory.Exists(path))

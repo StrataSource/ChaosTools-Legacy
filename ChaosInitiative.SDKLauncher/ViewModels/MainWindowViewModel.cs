@@ -17,9 +17,6 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public ViewModelActivator Activator { get; }
 
         [Reactive]
-        public string TestString { get; set; } = "";
-        
-        [Reactive]
         public int CurrentProfileIndex { get; set; }
         
         public Profile CurrentProfile => Profiles[CurrentProfileIndex];
@@ -28,11 +25,11 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public ObservableCollection<Profile> Profiles { get; set; }
         public AppConfig Config { get; set; }
 
-        public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; set; }
-        public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; set; }
-        public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; set; }
-        public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; set; }
-        public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; }
+        public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; }
+        public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; }
+        public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; }
+        public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; }
         
         public MainWindowViewModel()
         {
@@ -52,31 +49,14 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             Profiles = new ObservableCollection<Profile>(Config.Profiles);
             CurrentProfileIndex = Config.DefaultProfileIndex;
             
-            OnClickCreateMod = ReactiveCommand.Create(CreateMod);
-            OnClickOpenHammer = ReactiveCommand.Create(OpenHammer, Observable.Return(OperatingSystem.IsWindows()));
+            OnClickCreateMod = ReactiveCommandUtil.CreateEmpty();
+            OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
 
             OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
             OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
+            OnClickEditProfile = ReactiveCommandUtil.CreateEmpty();
         }
-
-        public void OpenHammer()
-        {
-            string binDir = CurrentProfile.Mod.Mount.BinDirectory;
-
-            if (string.IsNullOrWhiteSpace(binDir))
-                return;
-
-            string hammerPath = Path.Combine(binDir, "hammer.exe");
-            
-            var hammerProcessStartInfo = new ProcessStartInfo
-            {
-                FileName = hammerPath,
-                WorkingDirectory = binDir
-            };
-            
-            Process.Start(hammerProcessStartInfo);
-        }
-
+        
         public void CreateProfile()
         {
             Profile profile = Profile.GetDefaultProfile();
@@ -86,7 +66,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
                 return;
             
             Profiles.Add(profile);
-            CurrentProfileIndex = Config.DefaultProfileIndex;
+            CurrentProfileIndex = Profiles.Count - 1;
         }
 
         public void DeleteProfile()
