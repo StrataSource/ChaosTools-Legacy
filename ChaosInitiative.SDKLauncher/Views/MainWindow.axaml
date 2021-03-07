@@ -25,9 +25,10 @@
             <Button x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
             <Button x:Name="OpenToolsModeButton">Launch Game (Tools Mode)</Button>
             <Button x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
-
+<!--
             <TextBlock>Mods:</TextBlock>
             <Button x:Name="CreateModButton" Command="{Binding OnClickCreateMod}">Create Mod</Button>
+            -->
         </StackPanel>
 
         <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">

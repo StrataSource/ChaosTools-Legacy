@@ -1,4 +1,5 @@
 using System.Reactive;
+using System.Reactive.Disposables;
 using ReactiveUI;
 
 namespace ChaosInitiative.SDKLauncher.ViewModels
@@ -8,17 +9,18 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public ViewModelActivator Activator { get; }
         
         public ReactiveCommand<Unit, Unit> OnClickClose { get; set; }
-        public string Message { get; set; }
 
-        public NotificationViewModel() : this("Default message")
-        {
-        }
-        
-        public NotificationViewModel(string message)
+        public NotificationViewModel()
         {
             Activator = new ViewModelActivator();
-
-            Message = message;
+            
+            this.WhenActivated((CompositeDisposable disposable) =>
+            {
+                Disposable.Create(() =>
+                {
+                    
+                }).DisposeWith(disposable);
+            });
         }
     }
 }

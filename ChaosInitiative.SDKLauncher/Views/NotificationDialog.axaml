@@ -6,17 +6,20 @@
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.NotificationDialog"
         CanResize="False"
+        MinWidth="200"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        Title="Steam Error">
+        Title="Notification">
 
     <Design.DataContext>
         <vm:NotificationViewModel/>
     </Design.DataContext>
 
     <StackPanel Orientation="Vertical" Margin="8">
-        <TextBlock Text="{Binding Message}"/>
-        <Button Command="{Binding OnClickClose}" MinWidth="48" HorizontalAlignment="Right">
+        <TextBlock x:Name="MessageBox" Text="No Message"/>
+        <Button MinWidth="48" 
+                x:Name="OkButton" 
+                HorizontalAlignment="Right">
             Ok
         </Button>
     </StackPanel>

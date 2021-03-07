@@ -29,7 +29,7 @@ namespace ChaosInitiative.SDKLauncher
             }
             catch (Exception e)
             {
-                if (!e.Message.Contains("steam"))
+                if (!e.Message.Contains("Steam"))
                     throw;
 
                 // TODO: This doesn't work well with i3wm
