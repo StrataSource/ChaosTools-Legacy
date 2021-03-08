@@ -83,22 +83,39 @@
                     Grid.Column="0"
                     Classes="IconButton"
                     Command="{Binding OnClickCreateProfile}">
-                <Image Source="/Assets/plus_math_16px.png" />
+                <Image Source="/Assets/plus_math_16px.png" Classes="IconImage"/>
             </Button>
             <Button x:Name="DeleteProfileButton"
                     Grid.Row="1"
                     Grid.Column="1"
                     Classes="IconButton"
                     Command="{Binding OnClickDeleteProfile}">
-                <Image Source="/Assets/subtract_16px.png" />
+                <Image Source="/Assets/subtract_16px.png" Classes="IconImage"/>
             </Button>
             <Button x:Name="EditProfileButton"
                     Grid.Row="1"
                     Grid.Column="2"
                     Classes="IconButton"
                     Command="{Binding OnClickEditProfile}">
-                <Image Source="/Assets/edit_16px.png" />
+                <Image Source="/Assets/edit_16px.png" Classes="IconImage"/>
             </Button>
+            <StackPanel Grid.Row="1"
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                
+                <Image Source="/Assets/checkmark_16px.png" 
+                       Classes="IconImage" 
+                       IsVisible="{Binding ShowSaveConfirmation}"
+                       Margin="0 0 6 0"/>
+                
+                <Button x:Name="SaveConfigButton"
+                        Classes="IconButton"
+                        Command="{Binding OnClickSaveConfig}"
+                        IsVisible="{Binding !ShowSaveConfirmation}">
+                    <Image Source="/Assets/save_16px.png" Classes="IconImage"/>
+                </Button>
+            </StackPanel>
 
             <ComboBox x:Name="ProfilesBox"
                       Grid.Row="2"

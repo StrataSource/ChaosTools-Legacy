@@ -25,8 +25,8 @@ namespace ChaosInitiative.SDKLauncher.Models
         /// Value is clamped between 0 and size of Profiles list
         /// </summary>
         public int DefaultProfileIndex { 
-            get => Math.Clamp(_defaultProfileIndex, 0, Profiles.Count - 1);
-            set => _defaultProfileIndex = Math.Clamp(value, 0, Profiles.Count - 1);
+            get => _defaultProfileIndex;
+            set => _defaultProfileIndex = Math.Clamp(value, 0, Math.Max(Profiles.Count - 1, 0));
         }
 
         // ============================================

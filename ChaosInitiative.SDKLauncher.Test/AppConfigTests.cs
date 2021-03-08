@@ -83,6 +83,37 @@ namespace ChaosInitiative.SDKLauncher.Test
             Assert.That(AppConfig.LoadConfigOrCreateDefault, Throws.Exception.TypeOf<JsonException>());
             AppConfig.DeleteSavedConfig();
         }
+        
+        [Test(Description = "Save a default config, add a profile to it, save, confirm that it saved properly")]
+        public void TestAddProfileSaveConfig()
+        {
+            Assume.That(AppConfig.IsConfigSaved, Is.False, "File config.json must not exist on disk");
+            AppConfig config = AppConfig.CreateDefaultConfig();
+            config.Save();
+            
+            config.Profiles.Add(new Profile
+            {
+                Name = "Other Profile",
+                AdditionalMount = null,
+                Mod = new Mod
+                {
+                    Name = "Other Profile's Mod",
+                    ExecutableName = "chaos",
+                    LaunchArguments = "",
+                    Mount = new Mount
+                    {
+                        AppId = 620
+                    }
+                }
+            });
+            
+            config.Save();
+            
+            AppConfig loadedConfig = AppConfig.LoadConfig();
+            Assert.That(loadedConfig, Is.Not.Null);
+            Assert.That(loadedConfig.Profiles, Is.Not.Null.And.Count.EqualTo(2));
+            Assert.That(loadedConfig.Profiles[1].Name, Is.EqualTo("Other Profile"));
+        }
 
         [Test]
         public void TestAppConfigEquals()

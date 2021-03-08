@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using ChaosInitiative.SDKLauncher.Models;
 using ChaosInitiative.SDKLauncher.Util;
+using DynamicData;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -16,8 +21,18 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public ViewModelActivator Activator { get; }
         
         [Reactive]
-        public int CurrentProfileIndex { get; set; }
-        
+        public bool ShowSaveConfirmation { get; set; }
+
+        public int CurrentProfileIndex
+        {
+            get => Config.DefaultProfileIndex;
+            set
+            {
+                Config.DefaultProfileIndex = value;
+                this.RaisePropertyChanged(nameof(CurrentProfileIndex));
+            }
+        }
+
         public Profile CurrentProfile => Profiles[CurrentProfileIndex];
         
         [Reactive]
@@ -32,6 +47,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; }
+        public ReactiveCommand<Unit, Unit> OnClickSaveConfig { get; }
         
         public ReactiveCommand<string, Unit> ShowNotification { get; set; }
         
@@ -51,8 +67,12 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             Config = AppConfig.LoadConfigOrCreateDefault();
 
             Profiles = new ObservableCollection<Profile>(Config.Profiles);
-            CurrentProfileIndex = Config.DefaultProfileIndex;
-            
+            Profiles.CollectionChanged += (sender, args) =>
+            {
+                Config.Profiles.AddRange( args.NewItems?.OfType<Profile>() ?? Array.Empty<Profile>() );
+                Config.Profiles.RemoveMany( args.OldItems?.OfType<Profile>() ?? Array.Empty<Profile>() );
+            };
+
             OnClickCreateMod = ReactiveCommandUtil.CreateEmpty();
             OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
             OnClickOpenModelViewer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
@@ -63,28 +83,40 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
             OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
             OnClickEditProfile = ReactiveCommandUtil.CreateEmpty();
+
+            OnClickSaveConfig = ReactiveCommand.CreateFromTask(async () =>
+            {
+                Config.Save();
+                ShowSaveConfirmation = true;
+                await Task.Delay(2000);
+                ShowSaveConfirmation = false;
+            });
         }
 
         public void CreateProfile()
         {
             Profile profile = Profile.GetDefaultProfile();
-            profile.Name = "New Profile";
-
-            if (Profiles.Any(p => p.Name == profile.Name))
-                return;
             
+            string profileName = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                if (i == 10)
+                    return;
+                
+                profileName = $"New Profile ({i})";
+                if (Profiles.All(p => p.Name != profileName))
+                    break;
+            }
+
+            profile.Name = profileName;
             Profiles.Add(profile);
             CurrentProfileIndex = Profiles.Count - 1;
-            
-            ShowNotification?.Execute("Created Profile");
         }
 
         public void DeleteProfile()
         {
             Profiles.RemoveAt(CurrentProfileIndex);
             CurrentProfileIndex = 0;
-            
-            ShowNotification?.Execute("Deleted Profile");
         }
 
         public void CreateMod()
