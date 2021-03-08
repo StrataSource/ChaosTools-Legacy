@@ -59,11 +59,19 @@ namespace ChaosInitiative.SDKLauncher.Test
         }
 
         [Test]
-        //[Platform(Include = "Win,64-Bit-OS,Net")] TODO: Uncomment this once nunit version 3.13 releases! https://github.com/nunit/nunit/issues/3565
+        [Platform(Include = "Win", Exclude = "32-Bit")]
         public void TestPlatformStringWin64()
         {
             string platformString = MountUtil.GetPlatformString();
             Assert.That(platformString, Is.EqualTo("win64"));
+        }
+        
+        [Test]
+        [Platform(Include = "Linux", Exclude = "32-Bit")]
+        public void TestPlatformStringLinux64()
+        {
+            string platformString = MountUtil.GetPlatformString();
+            Assert.That(platformString, Is.EqualTo("linux64"));
         }
 
         [Test]
@@ -85,8 +93,8 @@ namespace ChaosInitiative.SDKLauncher.Test
         }
         
         [Test]
-        //[Platform(Include = "Win,64-Bit-OS,Net")] TODO: Uncomment this once nunit version 3.13 releases! https://github.com/nunit/nunit/issues/3565
-        public void TestBinDirectoryPlatformSpecific()
+        [Platform(Include = "Win", Exclude = "32-Bit")]
+        public void TestBinDirectoryWin64()
         {
             Mount momentum = new Mount
             {
@@ -99,6 +107,26 @@ namespace ChaosInitiative.SDKLauncher.Test
             Directory.CreateDirectory($"{momentum.MountPath}/bin/win64");
             
             Assert.That(momentum.BinDirectory, Is.EqualTo("Momentum Mod/bin/win64"));
+            
+            // Clean up
+            Directory.Delete(momentum.MountPath, true);
+        }
+        
+        [Test]
+        [Platform(Include = "Linux", Exclude = "32-Bit")]
+        public void TestBinDirectoryLinux64()
+        {
+            Mount momentum = new Mount
+            {
+                MountPath = "Momentum Mod",
+                IsRequired = true,
+                PrimarySearchPath = "momentum",
+                SelectedSearchPaths = {"momentum"}
+            };
+
+            Directory.CreateDirectory($"{momentum.MountPath}/bin/linux64");
+            
+            Assert.That(momentum.BinDirectory, Is.EqualTo("Momentum Mod/bin/linux64"));
             
             // Clean up
             Directory.Delete(momentum.MountPath, true);
