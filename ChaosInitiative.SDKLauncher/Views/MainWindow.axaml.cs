@@ -116,6 +116,10 @@ namespace ChaosInitiative.SDKLauncher.Views
             {
                 args += " -tools";
             }
+            if (!string.IsNullOrWhiteSpace(ViewModel.CurrentProfile.AdditionalMount.MountPath))
+            {
+                args += $" -mountmod \"{Path.Combine(ViewModel.CurrentProfile.AdditionalMount.MountPath, ViewModel.CurrentProfile.AdditionalMount.PrimarySearchPath)}\"";
+            }
 
             try
             {
