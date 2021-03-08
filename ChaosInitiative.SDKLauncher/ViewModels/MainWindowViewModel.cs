@@ -1,102 +1,127 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
-using SDKLauncher.Models;
-using SDKLauncher.Views;
+using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.Util;
+using DynamicData;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
-namespace SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ReactiveObject, IActivatableViewModel
     {
-        public ObservableCollection<Profile> Profiles { get; set; }
-        //public Profile Profile { get; set; }
-        public int CurrentProfileIndex { get; set; }
+        public ViewModelActivator Activator { get; }
+        
+        [Reactive]
+        public bool ShowSaveConfirmation { get; set; }
+
+        public int CurrentProfileIndex
+        {
+            get => Config.DefaultProfileIndex;
+            set
+            {
+                Config.DefaultProfileIndex = value;
+                this.RaisePropertyChanged(nameof(CurrentProfileIndex));
+            }
+        }
+
         public Profile CurrentProfile => Profiles[CurrentProfileIndex];
-        public Mount CurrentMount { get; set; }
+        
+        [Reactive]
+        public ObservableCollection<Profile> Profiles { get; set; }
         public AppConfig Config { get; set; }
 
+        public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; }
+        public ReactiveCommand<Unit, Unit> OnClickOpenModelViewer { get; }
+        public ReactiveCommand<Unit, Unit> OnClickLaunchGame { get; }        
+        public ReactiveCommand<Unit, Unit> OnClickLaunchToolsMode { get; }        
+        public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; }
+        public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; }
+        public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; }
+        public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; }
+        public ReactiveCommand<Unit, Unit> OnClickSaveConfig { get; }
+        
+        public ReactiveCommand<string, Unit> ShowNotification { get; set; }
+        
         public MainWindowViewModel()
         {
-            try
+
+            Activator = new ViewModelActivator();
+            
+            this.WhenActivated((CompositeDisposable disposable) =>
             {
-                Config = AppConfig.LoadConfig();
-            } 
-            catch (FileNotFoundException)
-            {
-                Config = AppConfig.CreateDefaultConfig();
-                Config.Save();
-            }
+                Disposable.Create(() =>
+                {
+                    
+                }).DisposeWith(disposable);
+            });
+            
+            Config = AppConfig.LoadConfigOrCreateDefault();
 
             Profiles = new ObservableCollection<Profile>(Config.Profiles);
-            CurrentProfileIndex = Config.DefaultProfileIndex;
-        }
-
-        // ====================================
-
-        public void OnClickHammer()
-        {
-            // TODO: Make it so this doesn't use the first item
-            LaunchTool("hammer", $"-mountmod=\"{CurrentProfile.Mounts[0].PrimarySearchPathDirectory}\"");
-        }
-        
-        public void OnClickCreateMod()
-        {
-            CreateModWindow modOptions = new CreateModWindow();
-
-            modOptions.ShowDialog(MainWindow);
-        }
-
-        
-
-        public void OnClickOpenProfileConfig()
-        {
-            ProfileConfigWindow profileConfigWindow = new ProfileConfigWindow
+            Profiles.CollectionChanged += (sender, args) =>
             {
-                DataContext = new ProfileConfigViewModel(CurrentProfile)
+                Config.Profiles.AddRange( args.NewItems?.OfType<Profile>() ?? Array.Empty<Profile>() );
+                Config.Profiles.RemoveMany( args.OldItems?.OfType<Profile>() ?? Array.Empty<Profile>() );
             };
-            profileConfigWindow.ShowDialog(MainWindow);
+
+            OnClickCreateMod = ReactiveCommandUtil.CreateEmpty();
+            OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
+            OnClickOpenModelViewer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
+
+            OnClickLaunchGame = ReactiveCommandUtil.CreateEmpty();
+            OnClickLaunchToolsMode = ReactiveCommandUtil.CreateEmpty();
+            
+            OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
+            OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
+            OnClickEditProfile = ReactiveCommandUtil.CreateEmpty();
+
+            OnClickSaveConfig = ReactiveCommand.CreateFromTask(async () =>
+            {
+                Config.Save();
+                ShowSaveConfirmation = true;
+                await Task.Delay(2000);
+                ShowSaveConfirmation = false;
+            });
         }
 
-        
-
-        public void OnClickCreateProfile()
+        public void CreateProfile()
         {
             Profile profile = Profile.GetDefaultProfile();
-            profile.Name = "New Profile";
-
-            if (Profiles.Any(p => p.Name == profile.Name))
-                return;
             
+            string profileName = "";
+            for (int i = 1; i <= 10; i++)
+            {
+                if (i == 10)
+                    return;
+                
+                profileName = $"New Profile ({i})";
+                if (Profiles.All(p => p.Name != profileName))
+                    break;
+            }
+
+            profile.Name = profileName;
             Profiles.Add(profile);
-            CurrentProfileIndex = Config.DefaultProfileIndex;
+            CurrentProfileIndex = Profiles.Count - 1;
         }
 
-        
-
-        public void OnClickSaveConfig()
+        public void DeleteProfile()
         {
-            Config.Save();
+            Profiles.RemoveAt(CurrentProfileIndex);
+            CurrentProfileIndex = 0;
         }
 
-        // ====================================
-
-        private void LaunchTool(string executableName, string arguments = "")
+        public void CreateMod()
         {
-
-            string extension = "";
-
-            if (OperatingSystem.IsWindows())
-                extension = ".exe";
-
-            string binDir = CurrentProfile.Mod.Mount.BinDirectory;
-
-            string executablePath = $"{binDir}/{executableName}{extension}";
-
-            Process.Start(executablePath, arguments);
-
+            
         }
 
     }

@@ -1,10 +1,12 @@
 ﻿using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using ChaosInitiative.SDKLauncher.ViewModels;
 
-namespace SDKLauncher.Views
+namespace ChaosInitiative.SDKLauncher.Views
 {
-    public class CreateModWindow : BaseWindow
+    public class CreateModWindow : ReactiveWindow<CreateModViewModel>
     {
-        protected override void InitializeComponent()
+        public CreateModWindow()
         {
             AvaloniaXamlLoader.Load(this);
         }

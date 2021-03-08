@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Avalonia.Controls;
 
-namespace SDKLauncher.Util
+namespace ChaosInitiative.SDKLauncher.Util
 {
     public static class MountUtil
     {
@@ -13,13 +14,27 @@ namespace SDKLauncher.Util
             return File.Exists($"{searchPath}/gameinfo.txt");
         }
 
-        public static FileDialogFilter GameInfoFileFilter = new FileDialogFilter()
+        public static readonly FileDialogFilter GameInfoFileFilter = new FileDialogFilter()
         {
             Name = "Game Info",
             Extensions = new List<string>
             {
-                "gameinfo.txt"
+                "txt"
             }
         };
+
+        private static Dictionary<PlatformID, string> PlatformNames = new()
+        {
+            { PlatformID.Win32NT, "win" },
+            { PlatformID.MacOSX, "osx" },
+            { PlatformID.Unix, "linux" },
+        };
+        
+        public static string GetPlatformString()
+        {
+            string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
+            string name = PlatformNames[Environment.OSVersion.Platform];
+            return name + arch;
+        }
     }
 }

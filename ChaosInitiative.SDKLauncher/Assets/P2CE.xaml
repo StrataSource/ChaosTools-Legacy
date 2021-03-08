@@ -18,6 +18,9 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
 
@@ -32,8 +35,8 @@
             </TextBlock>
 
             <TextBox Grid.Column="2"
-                     Grid.Row="0">
-                This is a Text box where you can enter Text
+                     Grid.Row="0"
+                     Watermark="Watermark">
             </TextBox>
 
             <TextBox Grid.Column="0"
@@ -57,6 +60,21 @@
             
             <ComboBox Grid.Column="1" Grid.Row="3" SelectedIndex="0">
             </ComboBox>
+            
+            <Button Grid.Column="0" 
+                    Grid.Row="3"
+                    Classes="IconButton">
+                <Image Source="/Assets/edit_16px.png" Classes="IconImage"></Image>
+            </Button>
+            
+            <StackPanel Grid.Column="0" 
+                   Grid.ColumnSpan="3"
+                   Grid.Row="4"
+                   Classes="StatusBar">
+                <TextBlock Text="This is a status bar."/>
+                <ProgressBar Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Value="50" MaxHeight="2"/>
+            </StackPanel>
+            
 
         </Grid>
     </Design.PreviewWith>
@@ -69,16 +87,16 @@
             <Color x:Key="ThemeAccentColor3">#66303030</Color>
             <Color x:Key="ThemeAccentColor4">#33303030</Color>
 
-            <Color x:Key="ThemeBackgroundColor">#FF242424</Color>
-            <Color x:Key="ThemeBorderLowColor">#FF4C4C4C</Color>
-            <Color x:Key="ThemeBorderMidColor">#FF4C4C4C</Color>
-            <Color x:Key="ThemeBorderHighColor">#FFFF7B02</Color>
-            <Color x:Key="ThemeControlLowColor">#FF343434</Color>
-            <Color x:Key="ThemeControlMidColor">#FF505050</Color>
-            <Color x:Key="ThemeControlHighColor">#FF808080</Color>
+            <Color x:Key="ThemeBackgroundColor">#FF353535</Color>
+            <Color x:Key="ThemeBorderLowColor">#FF242424</Color>
+            <Color x:Key="ThemeBorderMidColor">#FF1F1F1F</Color>
+            <Color x:Key="ThemeBorderHighColor">#FF808080</Color>
+            <Color x:Key="ThemeControlLowColor">#FF313131</Color>
+            <Color x:Key="ThemeControlMidColor">#FF424247</Color>
+            <Color x:Key="ThemeControlHighColor">#FF202020</Color>
             <Color x:Key="ThemeControlHighlightLowColor">#FF383838</Color>
             <Color x:Key="ThemeControlHighlightMidColor">#FF424242</Color>
-            <Color x:Key="ThemeControlHighlightHighColor">#FF505050</Color>
+            <Color x:Key="ThemeControlHighlightHighColor">#FF101010</Color>
             <Color x:Key="ThemeForegroundColor">#FFDEDEDE</Color>
             <Color x:Key="ThemeForegroundLowColor">#FF808080</Color>
 
@@ -122,7 +140,7 @@
     </Style>
 
     <Style Selector="Border.SectionBorder">
-        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ThemeControlLowBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="Margin" Value="4" />
@@ -133,36 +151,66 @@
         <Setter Property="MaxHeight" Value="28" />
     </Style>
     
+    <Style Selector="TextBox, NumericUpDown">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlLowBrush}"/>
+    </Style>
+    
     <Style Selector="Button TextBlock,ComboBox TextBlock,NumericUpDown TextBox">
         <Setter Property="Margin" Value="0"/>
     </Style>
     
     <Style Selector="ComboBox">
         <Setter Property="MinHeight" Value="28"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+    </Style>
+    
+    <Style Selector="TextBox TextBlock">
+        <Setter Property="Margin" Value="0"/>
+    </Style>
+    
+    <Style Selector="Button:pressed">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
     </Style>
     
     <Style Selector="Button:hover">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
     </Style>
     
-    <Style Selector="Button.SmallButton">
-        <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderLowBrush}" />
+    <Style Selector="Button.IconButton">
+        <Setter Property="BorderBrush" Value="transparent" />
         <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
-        <Setter Property="MinWidth" Value="16" />
-        <Setter Property="MinHeight" Value="16" />
         <Setter Property="Width" Value="24" />
         <Setter Property="Height" Value="24" />
     </Style>
 
-    <Style Selector="Button.SmallButton > Image">
-        <Setter Property="Width" Value="12" />
-        <Setter Property="Height" Value="12" />
+    <Style Selector="Image.IconImage">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+    
+    <Style Selector="Button.IconButton:pointerover > ContentPresenter">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+    </Style>
 
-    <Style Selector="Button.SmallButton:pressed">
+    <Style Selector="Button.IconButton:pressed">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}" />
+    </Style>
+    
+    <Style Selector="StackPanel.StatusBar">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+    </Style>
+    
+    <Style Selector="StackPanel.StatusBar > TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="5 1 1 2"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    
+    <Style Selector="StackPanel.StatusBar > ProgressBar:horizontal">
+        <Setter Property="MinHeight" Value="2"/>
     </Style>
     
     <!-- Combo box needs a lot of adjustments -->

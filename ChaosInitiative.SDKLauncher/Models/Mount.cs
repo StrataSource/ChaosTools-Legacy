@@ -5,27 +5,19 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using SDKLauncher.Util;
+using ChaosInitiative.SDKLauncher.Util;
+using ReactiveUI;
 using Steamworks;
 
-namespace SDKLauncher.Models
+namespace ChaosInitiative.SDKLauncher.Models
 {
-    public class Mount : INotifyPropertyChanged
+    public class Mount : ReactiveObject
     {
 
         public Mount()
         {
-            SearchPaths = new ObservableCollection<string>();
+            SelectedSearchPaths = new ObservableCollection<string>();
             PrimarySearchPath = string.Empty;
-        }
-
-        // -------------------------------------------------------------------------------------
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // -------------------------------------------------------------------------------------
@@ -37,43 +29,47 @@ namespace SDKLauncher.Models
             get
             {
                 if (AppId == 0) return _mountPath;
+                try
+                {
+                    if (SteamApps.IsAppInstalled(AppId))
+                    {
+                        return SteamApps.AppInstallDir(AppId);
+                    }
+                } catch(NullReferenceException) {}
 
-                AppId_t appid = new AppId_t((uint)AppId);
-                if (!SteamApps.BIsAppInstalled(appid)) return null;
-
-                string dir;
-                SteamApps.GetAppInstallDir(appid, out dir, 1024);
-
-                return dir;
+                return null;
             }
-            set {
+            set
+            {
+                AppId = 0;
                 _mountPath = value;
-                NotifyPropertyChanged(nameof(MountPath));
-                NotifyPropertyChanged(nameof(AvailableSearchPaths));
+                this.RaisePropertyChanged(nameof(AppId));
+                this.RaisePropertyChanged(nameof(MountPath));
+                this.RaisePropertyChanged(nameof(AvailableSearchPaths));
             }
         }
-        private long _appId;
-        public long AppId 
+        private int _appId;
+        public int AppId 
         {
             get => _appId;
             set
             {
                 _appId = value;
-                NotifyPropertyChanged(nameof(MountPath));
-                NotifyPropertyChanged(nameof(AvailableSearchPaths));
+                this.RaisePropertyChanged(nameof(MountPath));
+                this.RaisePropertyChanged(nameof(AvailableSearchPaths));
             }
         }
 
         public string PrimarySearchPath { get; set; }
         public bool IsRequired { get; set; }
-        public ObservableCollection<string> SearchPaths { get; set; }
+        public ObservableCollection<string> SelectedSearchPaths { get; set; }
 
         public string BinDirectory
         {
             get
             {
                 string binPath = $"{MountPath}/bin";
-                string platformSpecificBinPath = $"{binPath}/{PlatformString}";
+                string platformSpecificBinPath = $"{binPath}/{MountUtil.GetPlatformString()}";
 
                 if (Directory.Exists(platformSpecificBinPath))
                 {
@@ -91,23 +87,30 @@ namespace SDKLauncher.Models
             string.IsNullOrWhiteSpace(MountPath) ? new List<string>() :
                 Directory.GetDirectories(MountPath)                                                    // Get all subdirectories
                     .Where(MountUtil.IsValidSearchPath)                                                // That have a gameinfo
-                    .Where(d => !SearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
+                    .Where(d => !SelectedSearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
                     .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
                     .ToList();
 
-        private string PlatformString
+        public bool Equals(Mount other)
         {
-            get
-            {
-                string arch = Environment.Is64BitOperatingSystem ? "64" : "32";
-                if(OperatingSystem.IsWindows())
-                    return $"win{arch}";
-                if (OperatingSystem.IsLinux())
-                    return $"linux{arch}";
-                if (OperatingSystem.IsMacOS())
-                    return $"osx{arch}";
-                throw new Exception("Invalid OS. You need to run windows, linux or mac.");
-            }
+            if (other is null)
+                return false;
+            
+            return _mountPath == other._mountPath &&
+                   _appId == other._appId &&
+                   PrimarySearchPath == other.PrimarySearchPath &&
+                   IsRequired == other.IsRequired &&
+                   SelectedSearchPaths.SequenceEqual(other.SelectedSearchPaths);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Mount);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_mountPath, _appId, PrimarySearchPath, IsRequired, SelectedSearchPaths);
         }
     }
 }

@@ -1,45 +1,36 @@
 ﻿using Avalonia.Markup.Xaml;
-using SDKLauncher.Models;
+using Avalonia.ReactiveUI;
+using ChaosInitiative.SDKLauncher.Models;
+using ChaosInitiative.SDKLauncher.ViewModels;
 
-namespace SDKLauncher.Views
+namespace ChaosInitiative.SDKLauncher.Views
 {
-    public class AddMountDialog : BaseWindow
+    public class AddMountDialog : ReactiveWindow<AddMountViewModel>
     {
-
-        public bool UseAppId { get; set; } = true;
-        public Mount Mount { get; } = new ();
-
-        public string SelectedNamespace { get; set; }
         
-        protected override void InitializeComponent()
+        public AddMountDialog()
         {
             AvaloniaXamlLoader.Load(this);
-            DataContext = this;
         }
-
+        /*
         public void OnClickOk()
         {
             Close(Mount);
         }
 
-        public void OnClickAddNamespace()
+        public void OnClickAdd()
         {
-            Mount.SearchPaths.Add("New Namespace");
-        }
-
-        public void OnClickNamespaceAdd()
-        {
-            if (!string.IsNullOrWhiteSpace(SelectedNamespace) && !Mount.SearchPaths.Contains(SelectedNamespace))
+            if (!string.IsNullOrWhiteSpace(SelectedSearchPath) && !Mount.SelectedSearchPaths.Contains(SelectedSearchPath))
             {   
-                Mount.SearchPaths.Add(SelectedNamespace);
+                Mount.SelectedSearchPaths.Add(SelectedSearchPath);
             }
 
         }
 
-        public void OnClickNamespaceRemove()
+        public void OnClickRemove()
         {
 
         }
-
+*/
     }
 }

@@ -2,8 +2,9 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>sdk_launcher</AssemblyName>
 	<RuntimeIdentifiers>win-x64;win-x86;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
-	<RootNamespace>SDKLauncher</RootNamespace>
+	<RootNamespace>ChaosInitiative.SDKLauncher</RootNamespace>
 	<LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -13,27 +14,32 @@
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="steam_api64.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="steam_appid.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="libsteam_api.so">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Aura.UI" Version="0.1.2" />
     <PackageReference Include="Avalonia" Version="0.9.12" />
     <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.12" />
     <PackageReference Include="MessageBox.Avalonia" Version="0.9.6.1" />
+    <PackageReference Include="ReactiveUI.Fody" Version="13.2.2" />
     <PackageReference Include="ValveKeyValue" Version="0.5.0.4" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Steamworks.NET">
-      <HintPath>Lib\Steamworks.NET.dll</HintPath>
+  <ItemGroup Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux))) or $([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))">
+    <Reference Include="Facepunch.Steamworks.Posix, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Lib\Facepunch.Steamworks.Posix.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))">
+    <Reference Include="Facepunch.Steamworks.Win64, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Lib\Facepunch.Steamworks.Win64.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="steam_api64.dll" />
+    <Content Include="steam_api64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="libsteam_api.so" />
+    <Content Include="libsteam_api.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

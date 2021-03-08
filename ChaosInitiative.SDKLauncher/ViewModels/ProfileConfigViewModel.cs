@@ -1,50 +1,43 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Avalonia.Controls;
-using SDKLauncher.Models;
-using SDKLauncher.Util;
-using SDKLauncher.Views;
+using System.Reactive;
+using System.Reactive.Disposables;
+using ChaosInitiative.SDKLauncher.Models;
+using ReactiveUI;
 
-namespace SDKLauncher.ViewModels
+namespace ChaosInitiative.SDKLauncher.ViewModels
 {
-    public class ProfileConfigViewModel : ViewModelBase
+    public class ProfileConfigViewModel : ReactiveObject, IActivatableViewModel
     {
+        public ViewModelActivator Activator { get; }
+
         public Profile Profile { get; set; }
         public Mount SelectedMount { get; set; }
+        
+        public ReactiveCommand<Unit, Unit> OnClickClose { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickBrowseMountPath { get; set; }
+        public ReactiveCommand<Unit, Unit> OnClickBrowseAdditionalMount { get; set; }
 
-        public ProfileConfigViewModel() : this(Profile.GetDefaultProfile()) // Constructor for demonstration
+        // Default constructor is used by designer
+        public ProfileConfigViewModel() : this(Profile.GetDefaultProfile())
         {
         }
-        
+
         public ProfileConfigViewModel(Profile profile)
         {
+            Activator = new ViewModelActivator();
+
             Profile = profile;
+            
+            this.WhenActivated((CompositeDisposable disposable) =>
+            {
+                Disposable.Create(() =>
+                {
+                    
+                }).DisposeWith(disposable);
+            });
         }
         
-        public async Task OnClickBrowseModMountPath()
-        {
-            OpenFileDialog folderDialog = new OpenFileDialog
-            {
-                Title = "Select gameinfo.txt",
-                Directory = ".",
-                Filters = new List<FileDialogFilter>
-                {
-                    MountUtil.GameInfoFileFilter
-                },
-                AllowMultiple = false
-            };
-
-            var results = await folderDialog.ShowAsync(MyWindow);
-            string path = Path.GetDirectoryName(results[0]); // We only accept 1 element, so just take the first
-            
-            if(Directory.Exists(path))
-            {
-                Profile.Mod.Mount.MountPath = path;
-            } 
-
-        }
+        /*
+        
         
         public async Task OnClickMountAdd()
         {
@@ -71,6 +64,6 @@ namespace SDKLauncher.ViewModels
         {
             MyWindow.Close();
         }
-        
+        */
     }
 }

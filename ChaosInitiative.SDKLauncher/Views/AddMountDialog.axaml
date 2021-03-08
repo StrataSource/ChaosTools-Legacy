@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:SDKLauncher.Views;assembly=ChaosInitiative.SDKLauncher"
+        xmlns:vm="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
-        x:Class="SDKLauncher.Views.AddMountDialog"
+        x:Class="ChaosInitiative.SDKLauncher.Views.AddMountDialog"
 		WindowStartupLocation="CenterOwner"
         Width="320"
 		SizeToContent="Height"
@@ -13,7 +13,7 @@
         Title="New Mount">
 
 	<Design.DataContext>
-		<vm:AddMountDialog/>
+		<vm:AddMountViewModel/>
 	</Design.DataContext>
 	
 	<StackPanel Orientation="Vertical">
@@ -54,28 +54,28 @@
 						  Grid.Column="0"
 						  Grid.ColumnSpan="2" 
 						  Items="{Binding Mount.AvailableSearchPaths}"
-						  SelectedItem="{Binding SelectedNamespace}"
+						  SelectedItem="{Binding SelectedSearchPath}"
 						  SelectedIndex="0"/>
 
 				<StackPanel Grid.Row="1"
 							Grid.Column="0">
-					<Button Command="{Binding OnClickNamespaceAdd}"
-							Classes="SmallButton"
+					<Button Command="{Binding OnClickAdd}"
+							Classes="IconButton"
 							Margin="4">
-						<Image Source="/Assets/Add_white_16x.png"></Image>
+						<Image Source="/Assets/plus_math_16px.png"></Image>
 					</Button>
-					<Button Command="{Binding OnClickNamespaceRemove}"
-							IsEnabled="{Binding !!Mount.SearchPaths.Count}"
-							Classes="SmallButton"
+					<Button Command="{Binding OnClickRemove}"
+							IsEnabled="{Binding !!Mount.SelectedSearchPaths.Count}"
+							Classes="IconButton"
 							Margin="4,0,4,4">
-						<Image Source="/Assets/Remove_white_16x.png"></Image>
+						<Image Source="/Assets/subtract_16px.png"></Image>
 					</Button>
 				</StackPanel>
 			
 				<ListBox Grid.Row="1"
 						 Grid.Column="1"
-						 Items="{Binding Mount.SearchPaths}"
-						 SelectedItem="{Binding SelectedNamespace}">
+						 Items="{Binding Mount.SelectedSearchPaths}"
+						 SelectedItem="{Binding SelectedSearchPath}">
 				</ListBox>
 			</Grid>
 		

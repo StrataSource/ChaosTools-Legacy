@@ -1,24 +1,26 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:SDKLauncher.Views;assembly=ChaosInitiative.SDKLauncher"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
-        x:Class="SDKLauncher.Views.SteamErrorDialog"
+        x:Class="ChaosInitiative.SDKLauncher.Views.NotificationDialog"
         CanResize="False"
+        MinWidth="200"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        Title="Steam Error">
+        Title="Notification">
 
     <Design.DataContext>
-        <vm:SteamErrorDialog/>
+        <vm:NotificationViewModel/>
     </Design.DataContext>
 
-    <StackPanel Orientation="Vertical" Margin="12">
-        <TextBlock Text="{Binding Path=Message}"/>
-
-        <Button Command="{Binding Path=OnClickClose}">
-            Close
+    <StackPanel Orientation="Vertical" Margin="8">
+        <TextBlock x:Name="MessageBox" Text="No Message"/>
+        <Button MinWidth="48" 
+                x:Name="OkButton" 
+                HorizontalAlignment="Right">
+            Ok
         </Button>
     </StackPanel>
 

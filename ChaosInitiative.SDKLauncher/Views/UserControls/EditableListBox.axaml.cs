@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace SDKLauncher.Views.UserControls
+namespace ChaosInitiative.SDKLauncher.Views.UserControls
 {
     public class EditableListBox : UserControl
     {

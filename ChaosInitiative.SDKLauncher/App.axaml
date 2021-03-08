@@ -1,9 +1,9 @@
 ﻿<Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SDKLauncher"
-             x:Class="SDKLauncher.App">
+             xmlns:sdkLauncher="clr-namespace:ChaosInitiative.SDKLauncher"
+             x:Class="ChaosInitiative.SDKLauncher.App">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <sdkLauncher:ViewLocator/>
     </Application.DataTemplates>
 
     <Application.Styles>
