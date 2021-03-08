@@ -85,7 +85,7 @@ namespace ChaosInitiative.SDKLauncher.Test
         }
         
         [Test]
-        //[Platform(Include = "Win,64-Bit-OS,Net")] TODO: Uncomment this once nunit version 3.13 releases! https://github.com/nunit/nunit/issues/3565
+        [Platform(Include = "Win,64-Bit-OS,Net")]
         public void TestBinDirectoryPlatformSpecific()
         {
             Mount momentum = new Mount
