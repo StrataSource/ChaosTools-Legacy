@@ -99,6 +99,10 @@ namespace ChaosInitiative.SDKLauncher.Views
             if (OperatingSystem.IsWindows())
             {
                 executableName += ".exe";
+            } 
+            else if (OperatingSystem.IsLinux())
+            {
+                executableName += ".sh";
             }
             else if (OperatingSystem.IsLinux())
             {
