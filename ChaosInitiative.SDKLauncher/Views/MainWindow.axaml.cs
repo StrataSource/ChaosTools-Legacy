@@ -94,6 +94,10 @@ namespace ChaosInitiative.SDKLauncher.Views
             {
                 executableName += ".exe";
             }
+            else if (OperatingSystem.IsLinux())
+            {
+                executableName += ".sh";
+            }
 
             string binPath = Path.Combine(binDir, executableName);
             
