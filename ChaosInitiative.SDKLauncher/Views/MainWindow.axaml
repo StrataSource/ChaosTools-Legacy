@@ -62,7 +62,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -129,13 +128,6 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            
-            <TextBlock Grid.Column="0"
-                       Grid.ColumnSpan="4"
-                       Grid.Row="3"
-                       Text="Preview Build 1"
-                       TextAlignment="Right"
-                       Margin="5 0 5 5"/>
 
         </Grid>
     </DockPanel>
