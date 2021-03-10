@@ -5,6 +5,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ChaosInitiative.SDKLauncher.ViewModels;
 using ChaosInitiative.SDKLauncher.Views;
+using MessageBox.Avalonia;
 using Steamworks;
 
 namespace ChaosInitiative.SDKLauncher
@@ -33,7 +34,9 @@ namespace ChaosInitiative.SDKLauncher
                     throw;
 
                 // TODO: This doesn't work well with i3wm
-                desktop.MainWindow = new NotificationDialog("Steam error. Please check that steam is running.");
+                MessageBoxManager.GetMessageBoxStandardWindow("Steam Error",
+                                                              "Steam Error. Please check that steam is running.").Show();
+                
                 Directory.CreateDirectory("logs");
                 File.WriteAllText($"logs/steam_error_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.log", 
                                   e.Message );

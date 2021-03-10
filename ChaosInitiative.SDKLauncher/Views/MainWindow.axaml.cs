@@ -6,8 +6,10 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using ChaosInitiative.SDKLauncher.Models;
 using ChaosInitiative.SDKLauncher.Util;
 using ChaosInitiative.SDKLauncher.ViewModels;
+using MessageBox.Avalonia;
 using ReactiveUI;
 
 namespace ChaosInitiative.SDKLauncher.Views
@@ -18,6 +20,8 @@ namespace ChaosInitiative.SDKLauncher.Views
         protected Button EditProfileButton => this.FindControl<Button>("EditProfileButton");
         protected Button OpenToolsModeButton => this.FindControl<Button>("OpenToolsModeButton");
         protected Button OpenGameButton => this.FindControl<Button>("OpenGameButton");
+
+        private Profile CurrentProfile => ViewModel.CurrentProfile;
 
         private string HammerArguments
         {
@@ -55,11 +59,10 @@ namespace ChaosInitiative.SDKLauncher.Views
                          .DisposeWith(disposables);
                 ViewModel.OnClickOpenModelViewer.Subscribe(_ => 
                                                                LaunchTool("hlmv", 
-                                                                          $"-game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}", 
+                                                                          $"-game {CurrentProfile.Mod.Mount.PrimarySearchPath}", 
                                                                           true, 
-                                                                          ViewModel.CurrentProfile.Mod.Mount.MountPath))
+                                                                          CurrentProfile.Mod.Mount.MountPath))
                          .DisposeWith(disposables);
-                ViewModel.ShowNotification = ReactiveCommand.Create<string>(ShowNotification).DisposeWith(disposables);
 
                 ViewModel.OnClickLaunchGame.Subscribe(_ => LaunchGame(false));
                 ViewModel.OnClickLaunchToolsMode.Subscribe(_ => LaunchGame(true));
@@ -86,15 +89,15 @@ namespace ChaosInitiative.SDKLauncher.Views
             }
             catch (ToolsLaunchException e)
             {
-                ShowNotification(e.Message);
+                MessageBoxManager.GetMessageBoxStandardWindow("Failed to launch tool", e.Message).Show();
             }
         }
 
         private void LaunchGame(bool toolsMode)
         {
-            string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
-            string executableName = ViewModel.CurrentProfile.Mod.ExecutableName;
-            string gameRootPath = ViewModel.CurrentProfile.Mod.Mount.MountPath;
+            string binDir = CurrentProfile.Mod.Mount.BinDirectory;
+            string executableName = CurrentProfile.Mod.ExecutableName;
+            string gameRootPath = CurrentProfile.Mod.Mount.MountPath;
 
             if (OperatingSystem.IsWindows())
             {
@@ -120,19 +123,21 @@ namespace ChaosInitiative.SDKLauncher.Views
                 if (!File.Exists(binPath))
                 {
                     // Can't find the game bruh
-                    ShowNotification($"Unable to find game binary '{binPath}'");
+                    var msgBox = MessageBoxManager.GetMessageBoxStandardWindow("Failed to launch game", 
+                                                                               $"Unable to find game binary '{binPath}'");
+                    msgBox.ShowDialog(this);
                     return;
                 }
             }
             
-            string args = $"{ViewModel.CurrentProfile.Mod.LaunchArguments} -game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}";
+            string args = $"{CurrentProfile.Mod.LaunchArguments} -game {CurrentProfile.Mod.Mount.PrimarySearchPath}";
             if (toolsMode)
             {
                 args += " -tools";
             }
-            if (!string.IsNullOrWhiteSpace(ViewModel.CurrentProfile.AdditionalMount.MountPath))
+            if (!string.IsNullOrWhiteSpace(CurrentProfile.AdditionalMount.MountPath))
             {
-                args += $" -mountmod \"{Path.Combine(ViewModel.CurrentProfile.AdditionalMount.MountPath, ViewModel.CurrentProfile.AdditionalMount.PrimarySearchPath)}\"";
+                args += $" -mountmod \"{Path.Combine(CurrentProfile.AdditionalMount.MountPath, CurrentProfile.AdditionalMount.PrimarySearchPath)}\"";
             }
 
             try
@@ -145,12 +150,6 @@ namespace ChaosInitiative.SDKLauncher.Views
             } catch(Exception) { }
         }
 
-        private void ShowNotification(string message)
-        {
-            NotificationDialog dialog = new NotificationDialog(message);
-            dialog.ShowDialog(this);
-        }
-
         private void OnClosing(object sender, CancelEventArgs e)
         {
             ViewModel.Config.Save();
@@ -160,7 +159,7 @@ namespace ChaosInitiative.SDKLauncher.Views
         {
             ProfileConfigWindow profileConfigWindow = new ProfileConfigWindow
             {
-                DataContext = new ProfileConfigViewModel(ViewModel.CurrentProfile)
+                DataContext = new ProfileConfigViewModel(CurrentProfile)
             };
             profileConfigWindow.ShowDialog(this);
         }
