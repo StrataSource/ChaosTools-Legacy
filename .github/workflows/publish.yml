@@ -14,38 +14,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Publish Windows
-      run: dotnet publish -p:PublishProfile=Win64
-    - name: Publish Linux
-      run: dotnet publish -p:PublishProfile=Linux64
       
-  release:
-    needs: [publish]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Zip Setup
-        uses: montudor/action-zip@v0.1.1
+    - name: Publish Windows
+      run: dotnet publish -p:PublishProfile=Win64 --no-restore
+    - name: Publish Linux
+      run: dotnet publish -p:PublishProfile=Linux64 --no-restore
+      
+    - name: Zip Setup
+      uses: montudor/action-zip@v0.1.1
+    - name: Zip Windows
+      run: zip -qq -r sdklauncher_win64.zip ChaosInitiative.SDKLauncher/bin/Publish/win64
+    - name: Zip Linux
+      run: zip -qq -r sdklauncher_linux64.zip ChaosInitiative.SDKLauncher/bin/Publish/linux64
 
-      - name: Zip Windows
-        run: zip -qq -r sdklauncher_win64.zip ChaosInitiative.SDKLauncher/bin/Publish/Win64
-        
-      - name: Zip Linux
-        run: zip -qq -r sdklauncher_linux64.zip ChaosInitiative.SDKLauncher/bin/Publish/Linux64
-        
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
-          artifacts: "sdklauncher_win64.zip,sdklauncher_linux64.zip"
-          draft: true
-          prerelease: false
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
+        artifacts: "sdklauncher_win64.zip,sdklauncher_linux64.zip"
+        draft: true
+        prerelease: false
