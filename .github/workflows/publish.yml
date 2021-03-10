@@ -9,8 +9,8 @@ name: Create Release
 
 jobs:
 
-  publish:
-    name: DotNet Publish
+  release:
+    name: Publish and Release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -44,5 +44,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
         artifacts: "sdklauncher_win64.zip,sdklauncher_linux64.zip"
+        tag: "build$GITHUB_RUN_NUMBER"
         draft: true
         prerelease: false
