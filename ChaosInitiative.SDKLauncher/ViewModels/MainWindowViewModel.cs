@@ -49,8 +49,6 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         public ReactiveCommand<Unit, Unit> OnClickDeleteProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickSaveConfig { get; }
         
-        public ReactiveCommand<string, Unit> ShowNotification { get; set; }
-        
         public MainWindowViewModel()
         {
 
