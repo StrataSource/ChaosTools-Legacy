@@ -12,7 +12,9 @@ namespace ChaosInitiative.SDKLauncher.Models
 
         private static readonly JsonSerializerOptions ConfigJsonSerializerOptions = new JsonSerializerOptions
         {
-            WriteIndented = true
+            WriteIndented = true,
+            IgnoreReadOnlyProperties = true,
+            IgnoreReadOnlyFields = true
         };
         
         // ============================================
