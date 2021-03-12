@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 using ChaosInitiative.SDKLauncher.Util;
 using ReactiveUI;
 using Steamworks;
@@ -82,14 +81,14 @@ namespace ChaosInitiative.SDKLauncher.Models
 
         public string PrimarySearchPathDirectory => $"{MountPath}/{PrimarySearchPath}";
 
-        // Don't you love it? :)
-        public List<string> AvailableSearchPaths =>
-            string.IsNullOrWhiteSpace(MountPath) ? new List<string>() :
-                Directory.GetDirectories(MountPath)                                                    // Get all subdirectories
-                    .Where(MountUtil.IsValidSearchPath)                                                // That have a gameinfo
-                    .Where(d => !SelectedSearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
-                    .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
-                    .ToList();
+        [JsonIgnore]
+        public IReadOnlyList<string> AvailableSearchPaths => 
+                string.IsNullOrWhiteSpace(MountPath) ? new List<string>() :
+                    Directory.GetDirectories(MountPath)                                                    // Get all subdirectories
+                        .Where(MountUtil.IsValidSearchPath)                                                // That have a gameinfo
+                        .Where(d => !SelectedSearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
+                        .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
+                        .ToList();
 
         public bool Equals(Mount other)
         {

@@ -251,7 +251,7 @@ namespace ChaosInitiative.SDKLauncher.Test
                 Assume.That(isAppInstalled, Is.True);
             }, Throws.Nothing);
             
-            List<string> availableSearchPaths = mount.AvailableSearchPaths;
+            IReadOnlyList<string> availableSearchPaths = mount.AvailableSearchPaths;
             
             Assert.That(availableSearchPaths, Has.One.Items.EqualTo("portal2"));
             Assert.That(availableSearchPaths, Has.One.Items.EqualTo("portal2_dlc1"));
