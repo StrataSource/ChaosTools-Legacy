@@ -69,10 +69,16 @@ namespace ChaosInitiative.SDKLauncher.Views
             Closing += OnClosing;
         }
 
-        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null, string binDir = null)
+        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null, string binDir = null, bool allowProton = true)
         {
             binDir ??= ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
             workingDir ??= binDir;
+
+            if (windowsOnly && allowProton && OperatingSystem.IsLinux())
+            {
+                binDir = binDir.Replace("linux64", "win64");
+                workingDir = binDir;
+            }
             
             try
             {
