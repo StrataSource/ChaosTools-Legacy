@@ -11,7 +11,7 @@ namespace ChaosInitiative.SDKLauncher.Util
     public class ToolsUtil
     {
         public static AppId ProtonAppId = 1420170;
-        public static string SteamPath = "~/.local/share/Steam/";
+        public static string SteamPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.local/share/Steam/";
         
         /// <summary>
         /// Launches an arbitrary tool
@@ -80,7 +80,7 @@ namespace ChaosInitiative.SDKLauncher.Util
             
             if (prefix == null)
             {
-                prefix = "~/.config/ChaosSDKLauncher";
+                prefix = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ChaosSDKLauncher";
             }
 
             string protonPath = null;
@@ -94,7 +94,7 @@ namespace ChaosInitiative.SDKLauncher.Util
                 protonStartInfo.Environment.Add("SteamGameId", appid.ToString());
             
             protonStartInfo.Environment.Add("STEAM_COMPAT_DATA_PATH", prefix);
-            protonStartInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", "~/.steam/");
+            protonStartInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.steam/");
             
             if(use_wined3d)
                 protonStartInfo.Environment.Add("PROTON_USE_WINED3D", "1");
@@ -147,7 +147,7 @@ namespace ChaosInitiative.SDKLauncher.Util
                 Console.WriteLine(proton_path + " " + startInfo.Arguments);
                 
                 startInfo.Environment.Add("STEAM_COMPAT_DATA_PATH", directory);
-                startInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", "~/.steam");
+                startInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.steam");
                 
                 var process = Process.Start(startInfo);
 
