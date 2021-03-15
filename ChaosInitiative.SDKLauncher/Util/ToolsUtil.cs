@@ -10,7 +10,7 @@ namespace ChaosInitiative.SDKLauncher.Util
 {
     public class ToolsUtil
     {
-        public static AppId ProtonAppId = 1420170;
+        public static AppId ProtonAppId = 1245040;
         public static string SteamPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.local/share/Steam/";
         
         /// <summary>
@@ -93,6 +93,7 @@ namespace ChaosInitiative.SDKLauncher.Util
             if(appid != 0)
                 protonStartInfo.Environment.Add("SteamGameId", appid.ToString());
             
+            protonStartInfo.Environment.Add("PROTON_LOG", "1");
             protonStartInfo.Environment.Add("STEAM_COMPAT_DATA_PATH", prefix);
             protonStartInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.steam/");
             
@@ -100,7 +101,7 @@ namespace ChaosInitiative.SDKLauncher.Util
                 protonStartInfo.Environment.Add("PROTON_USE_WINED3D", "1");
 
             protonStartInfo.FileName = protonPath;
-            protonStartInfo.Arguments = $"{exe} {args}";
+            protonStartInfo.Arguments = $"run \"{binDir}/{exe}.exe\" {args}";
 
             return Process.Start(protonStartInfo);
         }
@@ -129,12 +130,12 @@ namespace ChaosInitiative.SDKLauncher.Util
                 {
                     Directory.CreateDirectory(directory);
                 }
-                catch (UnauthorizedAccessException e)
+                catch (UnauthorizedAccessException)
                 {
                     throw new ToolsLaunchException(
                         $"Failed to create proton 5.13 prefix, access to '{directory}' not permitted.");
                 }
-                catch (Exception any)
+                catch (Exception)
                 {
                     throw new ToolsLaunchException($"Failed to create proton 5.13 prefix at '{directory}");
                 }
@@ -142,7 +143,7 @@ namespace ChaosInitiative.SDKLauncher.Util
                 /* To do this, let's just run proton with xcopy /?, as a dummy. proton will automatically create the pfx for us */
                 var startInfo = new ProcessStartInfo();
                 startInfo.FileName = proton_path;
-                startInfo.Arguments = "xcopy /?";
+                startInfo.Arguments = "run xcopy /?";
                 
                 Console.WriteLine(proton_path + " " + startInfo.Arguments);
                 
@@ -161,11 +162,12 @@ namespace ChaosInitiative.SDKLauncher.Util
                 var steamDllPath = directory + "/pfx/drive_c/Program Files (x86)/Steam";
                 try
                 {
+                    Console.WriteLine("Copying in Steam DLLs");
                     File.Copy(SteamPath + "steamclient.dll", steamDllPath + "/steamclient.dll", overwrite: true);
                     File.Copy(SteamPath + "steamclient64.dll", steamDllPath + "/steamclient64.dll", overwrite: true);
                     File.Copy(SteamPath + "legacycompat/Steam.dll", steamDllPath + "/Steam.dll", overwrite: true);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     throw new ToolsLaunchException($"Failed to copy Steam DLLs into prefix at {directory}");
                 }
