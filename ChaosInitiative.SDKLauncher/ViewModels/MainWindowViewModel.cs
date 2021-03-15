@@ -74,8 +74,8 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             };
 
             OnClickCreateMod = ReactiveCommandUtil.CreateEmpty();
-            OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
-            OnClickOpenModelViewer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
+            OnClickOpenHammer = ReactiveCommand.Create(() => { });
+            OnClickOpenModelViewer = ReactiveCommand.Create(() => { });
 
             OnClickLaunchGame = ReactiveCommandUtil.CreateEmpty();
             OnClickLaunchToolsMode = ReactiveCommandUtil.CreateEmpty();
