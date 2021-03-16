@@ -11,7 +11,8 @@ namespace ChaosInitiative.SDKLauncher.Util
     public class ToolsUtil
     {
         public static AppId ProtonAppId = 1245040;
-        public static string SteamPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.local/share/Steam/";
+        public static string ProtonVersion = "Proton 5.13";
+        public static string SteamPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ".local/share/Steam/");
         
         /// <summary>
         /// Launches an arbitrary tool
@@ -45,14 +46,14 @@ namespace ChaosInitiative.SDKLauncher.Util
             }
             else
             {
-                var hammerProcessStartInfo = new ProcessStartInfo
+                var startInfo = new ProcessStartInfo
                 {
                     FileName = executablePath,
                     WorkingDirectory = workingDir ?? binDirectory,
                     Arguments = args
                 };
-            
-                return Process.Start(hammerProcessStartInfo);    
+
+                return Process.Start(startInfo);
             }
         }
 
@@ -77,27 +78,28 @@ namespace ChaosInitiative.SDKLauncher.Util
 
             /* References for all this crapola: https://github.com/ChaosInitiative/ChaosTools/issues/12 */
             /* tldr; need to set a bunch of envvars to appease proton, and dxvk doesn't like mfc (or the other way around) */
-            
+
             if (prefix == null)
             {
-                prefix = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/ChaosSDKLauncher";
+                prefix = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChaosSDKLauncher");
             }
 
             string protonPath = null;
             if (!FindOrCreateProtonPrefix(ref protonPath, prefix))
                 throw new ToolsLaunchException("Failed to create the proton prefix");
-            
+
             var protonStartInfo = new ProcessStartInfo();
             protonStartInfo.WorkingDirectory = workingDir ?? binDir;
 
-            if(appid != 0)
+            if (appid != 0)
                 protonStartInfo.Environment.Add("SteamGameId", appid.ToString());
-            
+
             protonStartInfo.Environment.Add("PROTON_LOG", "1");
             protonStartInfo.Environment.Add("STEAM_COMPAT_DATA_PATH", prefix);
-            protonStartInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.steam/");
-            
-            if(use_wined3d)
+            protonStartInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", 
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ".steam/"));
+
+            if (use_wined3d)
                 protonStartInfo.Environment.Add("PROTON_USE_WINED3D", "1");
 
             protonStartInfo.FileName = protonPath;
@@ -105,7 +107,7 @@ namespace ChaosInitiative.SDKLauncher.Util
 
             return Process.Start(protonStartInfo);
         }
-        
+
         /// <summary>
         /// Finds or creates a proton prefix we can run tools from
         /// </summary>
@@ -117,7 +119,7 @@ namespace ChaosInitiative.SDKLauncher.Util
         {
             /* Determine our proton install path */
             if (!SteamApps.IsAppInstalled(ProtonAppId))
-                throw new ToolsLaunchException("Proton 5.13 is not installed");
+                throw new ToolsLaunchException($"{ProtonVersion} is not installed");
             proton_path = SteamApps.AppInstallDir(ProtonAppId);
             proton_path += "/proton";
             Console.WriteLine(proton_path);
@@ -133,39 +135,40 @@ namespace ChaosInitiative.SDKLauncher.Util
                 catch (UnauthorizedAccessException)
                 {
                     throw new ToolsLaunchException(
-                        $"Failed to create proton 5.13 prefix, access to '{directory}' not permitted.");
+                        $"Failed to create {ProtonVersion} prefix, access to '{directory}' not permitted.");
                 }
                 catch (Exception)
                 {
-                    throw new ToolsLaunchException($"Failed to create proton 5.13 prefix at '{directory}");
+                    throw new ToolsLaunchException($"Failed to create {ProtonVersion} prefix at '{directory}");
                 }
 
                 /* To do this, let's just run proton with xcopy /?, as a dummy. proton will automatically create the pfx for us */
                 var startInfo = new ProcessStartInfo();
                 startInfo.FileName = proton_path;
                 startInfo.Arguments = "run xcopy /?";
-                
+
                 Console.WriteLine(proton_path + " " + startInfo.Arguments);
-                
+
                 startInfo.Environment.Add("STEAM_COMPAT_DATA_PATH", directory);
                 startInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.steam");
-                
+
                 var process = Process.Start(startInfo);
 
                 /* Wait for 20 seconds. Seems a bit long, but crappy computers will probably take longer */
                 process.WaitForExit(20000);
 
                 if (!process.HasExited || process.ExitCode != 0)
-                    throw new ToolsLaunchException($"Failed to create proton 5.13 prefix at '{directory}'");
+                    throw new ToolsLaunchException($"Failed to create {ProtonVersion} prefix at '{directory}'");
 
                 /* Copy in steam DLLs because proton will NOT do this for us :( */
-                var steamDllPath = directory + "/pfx/drive_c/Program Files (x86)/Steam";
+                var steamDllPath = Path.Combine(directory, "pfx/drive_c/Program Files (x86)/Steam");
                 try
                 {
                     Console.WriteLine("Copying in Steam DLLs");
-                    File.Copy(SteamPath + "steamclient.dll", steamDllPath + "/steamclient.dll", overwrite: true);
-                    File.Copy(SteamPath + "steamclient64.dll", steamDllPath + "/steamclient64.dll", overwrite: true);
-                    File.Copy(SteamPath + "legacycompat/Steam.dll", steamDllPath + "/Steam.dll", overwrite: true);
+
+                    File.Copy(Path.Combine(SteamPath, "steamclient.dll"), Path.Combine(steamDllPath, "steamclient.dll"), overwrite: true);
+                    File.Copy(Path.Combine(SteamPath, "steamclient64.dll"), Path.Combine(steamDllPath, "steamclient64.dll"), overwrite: true);
+                    File.Copy(Path.Combine(SteamPath, "legacycompat/Steam.dll"), Path.Combine(steamDllPath, "Steam.dll"), overwrite: true);
                 }
                 catch (Exception)
                 {
