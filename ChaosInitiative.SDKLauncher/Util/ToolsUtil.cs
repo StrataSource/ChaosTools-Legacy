@@ -12,7 +12,7 @@ namespace ChaosInitiative.SDKLauncher.Util
     {
         public static AppId ProtonAppId = 1245040;
         public static string ProtonVersion = "Proton 5.13";
-        public static string SteamPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ".local/share/Steam/");
+        public static string SteamPathLinux = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), ".local/share/Steam/");
         
         /// <summary>
         /// Launches an arbitrary tool
@@ -166,9 +166,9 @@ namespace ChaosInitiative.SDKLauncher.Util
                 {
                     Console.WriteLine("Copying in Steam DLLs");
 
-                    File.Copy(Path.Combine(SteamPath, "steamclient.dll"), Path.Combine(steamDllPath, "steamclient.dll"), overwrite: true);
-                    File.Copy(Path.Combine(SteamPath, "steamclient64.dll"), Path.Combine(steamDllPath, "steamclient64.dll"), overwrite: true);
-                    File.Copy(Path.Combine(SteamPath, "legacycompat/Steam.dll"), Path.Combine(steamDllPath, "Steam.dll"), overwrite: true);
+                    File.Copy(Path.Combine(SteamPathLinux, "steamclient.dll"), Path.Combine(steamDllPath, "steamclient.dll"), overwrite: true);
+                    File.Copy(Path.Combine(SteamPathLinux, "steamclient64.dll"), Path.Combine(steamDllPath, "steamclient64.dll"), overwrite: true);
+                    File.Copy(Path.Combine(SteamPathLinux, "legacycompat/Steam.dll"), Path.Combine(steamDllPath, "Steam.dll"), overwrite: true);
                 }
                 catch (Exception)
                 {
