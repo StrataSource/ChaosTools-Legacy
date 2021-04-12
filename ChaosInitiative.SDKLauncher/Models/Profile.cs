@@ -38,7 +38,11 @@ namespace ChaosInitiative.SDKLauncher.Models
 
         public bool Equals(Profile other)
         {
-            return Equals(Mod, other.Mod) && 
+            if (other is null) return false;
+            if (other.Mod is null && Mod is null) return true;
+            if (other.AdditionalMount is null && AdditionalMount is null) return true;
+            
+            return Mod.Equals(other.Mod) && 
                    Name == other.Name && 
                    AdditionalMount.Equals(other.AdditionalMount);
         }
