@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
@@ -54,7 +51,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
             Activator = new ViewModelActivator();
             
-            this.WhenActivated((CompositeDisposable disposable) =>
+            this.WhenActivated(disposable =>
             {
                 Disposable.Create(() =>
                 {
@@ -121,6 +118,6 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         {
             
         }
-
+        
     }
 }
