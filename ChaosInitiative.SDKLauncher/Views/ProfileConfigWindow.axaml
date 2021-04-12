@@ -6,114 +6,122 @@
         xmlns:models="clr-namespace:ChaosInitiative.SDKLauncher.Models"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.ProfileConfigWindow"
-		Width="800"
-		SizeToContent="Height"
-		CanResize="False"
-		Icon="/Assets/p2ce_logo.png"
+        xmlns:userControls="clr-namespace:ChaosInitiative.SDKLauncher.Views.UserControls"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        Width="800"
+        SizeToContent="Height"
+        CanResize="False"
+        Icon="/Assets/p2ce_logo.png"
         Title="Profile Configuration">
-	
-	<Design.DataContext>
-		<viewModels:ProfileConfigViewModel/>
-	</Design.DataContext>
 
-	<StackPanel Orientation="Vertical">
+    <Design.DataContext>
+        <viewModels:ProfileConfigViewModel />
+    </Design.DataContext>
 
-		<TextBlock Text="Profile Name"/>
-		<TextBox Text="{Binding Profile.Name,Mode=TwoWay}" 
-				 Watermark="Name"/>
-		
-		<TextBlock Text="Mod"/>
-		<Border Classes="SectionBorder">
-			<Grid>
+    <DockPanel>
 
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="auto"/>
-				</Grid.ColumnDefinitions>
+	    <userControls:TitleBar DataContext="SDK Launcher" />
 
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-				</Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical">
 
-				<TextBlock Grid.Row="0"
-						   Grid.Column="0"
-						   Text="Steam App ID"/>
-				<NumericUpDown Grid.Row="1"
-				               Grid.Column="0"
-				               ShowButtonSpinner="False"
-				               AllowSpin="False"
-				               Minimum="0"
-				               Maximum="1000000"
-				               Increment="1"
-				               Value="{Binding Profile.Mod.Mount.AppId}"
-				               Watermark="App ID"
-				               Name="MountAppId"/>
+            <TextBlock Text="Profile Name" />
+            <TextBox Text="{Binding Profile.Name,Mode=TwoWay}"
+                     Watermark="Name" />
 
-				<TextBlock Grid.Row="0"
-						   Grid.Column="1"
-						   Text="MountPath"/>
-				<TextBox Grid.Row="1"
-						 Grid.Column="1"
-						 Text="{Binding Profile.Mod.Mount.MountPath}"
-						 Watermark="Path"
-						 Name="MountPath"
-						 IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}"/>
+            <TextBlock Text="Mod" />
+            <Border Classes="SectionBorder">
+                <Grid>
 
-				<Button Grid.Row="1"
-						Grid.Column="2"
-						x:Name="BrowseMountPathButton"
-						Classes="IconButton">
-					<Image Source="/Assets/browse_folder_16px.png"/>
-				</Button>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
 
-				<TextBlock Grid.Row="2"
-						   Grid.Column="0"
-						   Text="Primary SearchPath"/>
-				<ComboBox Grid.Row="3"
-						 Grid.Column="0"
-						 SelectedItem="{Binding Profile.Mod.Mount.PrimarySearchPath}"
-						 Items="{Binding Profile.Mod.Mount.AvailableSearchPaths}"/>
-				
-				<TextBlock Grid.Row="2" 
-				           Grid.Column="1" 
-				           Text="Executable Name"/>
-				<TextBox Grid.Row="3" 
-				         Grid.Column="1"
-				         Watermark="Executable Name (No extension) eg. chaos, portal2, hl2"
-				         Text="{Binding Profile.Mod.ExecutableName}"/>
-				
-				<TextBlock Grid.Row="4" 
-				           Grid.Column="0" 
-				           Text="Game Launch Arguments"/>
-				<TextBox Grid.Row="5" 
-				         Grid.Column="0"
-				         Watermark="Game Launch Arguments"
-				         Text="{Binding Profile.Mod.LaunchArguments}"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
 
-				
-				<TextBlock Grid.Row="4" 
-				           Grid.Column="1" 
-				           Text="Additional Mount"/>
-				<TextBox Grid.Row="5" 
-				         Grid.Column="1"
-				         Watermark="Additional Mount Path"
-				         Text="{Binding Profile.AdditionalMount.MountPath}"/>
-				<Button Grid.Row="5" 
-				        Grid.Column="2"
-				        x:Name="BrowseAdditionalMountButton"
-				        Classes="IconButton">
-					<Image Source="/Assets/browse_folder_16px.png"/>
-				</Button>
-			</Grid>
-		</Border>
-		
-		<!--
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Steam App ID" />
+                    <NumericUpDown Grid.Row="1"
+                                   Grid.Column="0"
+                                   ShowButtonSpinner="False"
+                                   AllowSpin="False"
+                                   Minimum="0"
+                                   Maximum="1000000"
+                                   Increment="1"
+                                   Value="{Binding Profile.Mod.Mount.AppId}"
+                                   Watermark="App ID"
+                                   Name="MountAppId" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="1"
+                               Text="MountPath" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Text="{Binding Profile.Mod.Mount.MountPath}"
+                             Watermark="Path"
+                             Name="MountPath"
+                             IsEnabled="{Binding !!!Text.Length, ElementName=MountAppId}" />
+
+                    <Button Grid.Row="1"
+                            Grid.Column="2"
+                            x:Name="BrowseMountPathButton"
+                            Classes="IconButton">
+                        <Image Source="/Assets/browse_folder_16px.png" />
+                    </Button>
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               Text="Primary SearchPath" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="0"
+                              SelectedItem="{Binding Profile.Mod.Mount.PrimarySearchPath}"
+                              Items="{Binding Profile.Mod.Mount.AvailableSearchPaths}" />
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               Text="Executable Name" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="1"
+                             Watermark="Executable Name (No extension) eg. chaos, portal2, hl2"
+                             Text="{Binding Profile.Mod.ExecutableName}" />
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               Text="Game Launch Arguments" />
+                    <TextBox Grid.Row="5"
+                             Grid.Column="0"
+                             Watermark="Game Launch Arguments"
+                             Text="{Binding Profile.Mod.LaunchArguments}" />
+
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="1"
+                               Text="Additional Mount" />
+                    <TextBox Grid.Row="5"
+                             Grid.Column="1"
+                             Watermark="Additional Mount Path"
+                             Text="{Binding Profile.AdditionalMount.MountPath}" />
+                    <Button Grid.Row="5"
+                            Grid.Column="2"
+                            x:Name="BrowseAdditionalMountButton"
+                            Classes="IconButton">
+                        <Image Source="/Assets/browse_folder_16px.png" />
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!--
 		
 			Keeping this commented out in case we want to re-use this layout somewhere else.
 		
@@ -198,11 +206,13 @@
 			</Grid>
 		</Border>
 		-->
-		
-		<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button x:Name="CloseButton">Done</Button>
-		</StackPanel>
 
-	</StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="CloseButton">Done</Button>
+            </StackPanel>
+
+        </StackPanel>
+
+    </DockPanel>
 
 </Window>
