@@ -5,6 +5,10 @@
         xmlns:viewModels="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.MainWindow"
+        xmlns:userControls="clr-namespace:ChaosInitiative.SDKLauncher.Views.UserControls"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
         Width="300"
         Height="450"
         CanResize="False"
@@ -18,118 +22,134 @@
     </Design.DataContext>
 
     <DockPanel>
-        <Grid DockPanel.Dock="Top"
-              VerticalAlignment="Top">
-            
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        
+        <userControls:TitleBar DataContext="SDK Launcher"/>
+        
+        <DockPanel DockPanel.Dock="Bottom">
 
-            <TextBlock Grid.Row="0" 
-                       Grid.Column="0" 
-                       Grid.ColumnSpan="2">Tools:</TextBlock>
-            <Button Grid.Row="1" 
-                    Grid.Column="0" 
-                    Grid.ColumnSpan="2" x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
-            
-            <Button Grid.Row="2" 
-                    Grid.Column="0" 
-                    Grid.ColumnSpan="2" x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
-            
-            <Button Grid.Row="3" 
-                    Grid.Column="0" 
-                    Command="{Binding OnClickLaunchGame}">Launch Game</Button>
-            <Button Grid.Row="3" 
-                    Grid.Column="1"
-                    Command="{Binding OnClickLaunchToolsMode}">Launch Tools Mode</Button>
-<!--
+            <Grid DockPanel.Dock="Top"
+                  VerticalAlignment="Top">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2">
+                    Tools:
+                </TextBlock>
+                <Button Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2" x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">
+                    Hammer World Editor
+                </Button>
+
+                <Button Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2" x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">
+                    Model Viewer
+                </Button>
+
+                <Button Grid.Row="3"
+                        Grid.Column="0"
+                        Command="{Binding OnClickLaunchGame}">
+                    Launch Game
+                </Button>
+                <Button Grid.Row="3"
+                        Grid.Column="1"
+                        Command="{Binding OnClickLaunchToolsMode}">
+                    Launch Tools Mode
+                </Button>
+                <!--
             <TextBlock>Mods:</TextBlock>
             <Button x:Name="CreateModButton" Command="{Binding OnClickCreateMod}">Create Mod</Button>
             -->
-        </Grid>
+            </Grid>
 
-        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+            <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0"
-                       Grid.ColumnSpan="4">
-                Workspace Profiles
-            </TextBlock>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="4">
+                    Workspace Profiles
+                </TextBlock>
 
-            <Button x:Name="CreateProfileButton"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Classes="IconButton"
-                    Command="{Binding OnClickCreateProfile}">
-                <Image Source="/Assets/plus_math_16px.png" Classes="IconImage"/>
-            </Button>
-            <Button x:Name="DeleteProfileButton"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Classes="IconButton"
-                    Command="{Binding OnClickDeleteProfile}">
-                <Image Source="/Assets/subtract_16px.png" Classes="IconImage"/>
-            </Button>
-            <Button x:Name="EditProfileButton"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Classes="IconButton"
-                    Command="{Binding OnClickEditProfile}">
-                <Image Source="/Assets/edit_16px.png" Classes="IconImage"/>
-            </Button>
-            <StackPanel Grid.Row="1"
-                        Grid.Column="3"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                
-                <Image Source="/Assets/checkmark_16px.png" 
-                       Classes="IconImage" 
-                       IsVisible="{Binding ShowSaveConfirmation}"
-                       Margin="0 0 6 0"/>
-                
-                <Button x:Name="SaveConfigButton"
+                <Button x:Name="CreateProfileButton"
+                        Grid.Row="1"
+                        Grid.Column="0"
                         Classes="IconButton"
-                        Command="{Binding OnClickSaveConfig}"
-                        IsVisible="{Binding !ShowSaveConfirmation}">
-                    <Image Source="/Assets/save_16px.png" Classes="IconImage"/>
+                        Command="{Binding OnClickCreateProfile}">
+                    <Image Source="/Assets/plus_math_16px.png" Classes="IconImage" />
                 </Button>
-            </StackPanel>
+                <Button x:Name="DeleteProfileButton"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Classes="IconButton"
+                        Command="{Binding OnClickDeleteProfile}">
+                    <Image Source="/Assets/subtract_16px.png" Classes="IconImage" />
+                </Button>
+                <Button x:Name="EditProfileButton"
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Classes="IconButton"
+                        Command="{Binding OnClickEditProfile}">
+                    <Image Source="/Assets/edit_16px.png" Classes="IconImage" />
+                </Button>
+                <StackPanel Grid.Row="1"
+                            Grid.Column="3"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
 
-            <ComboBox x:Name="ProfilesBox"
-                      Grid.Row="2"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="4"
-                      Items="{Binding Profiles}"
-                      SelectedIndex="{Binding CurrentProfileIndex}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                    <Image Source="/Assets/checkmark_16px.png"
+                           Classes="IconImage"
+                           IsVisible="{Binding ShowSaveConfirmation}"
+                           Margin="0 0 6 0" />
 
-        </Grid>
+                    <Button x:Name="SaveConfigButton"
+                            Classes="IconButton"
+                            Command="{Binding OnClickSaveConfig}"
+                            IsVisible="{Binding !ShowSaveConfirmation}">
+                        <Image Source="/Assets/save_16px.png" Classes="IconImage" />
+                    </Button>
+                </StackPanel>
+
+                <ComboBox x:Name="ProfilesBox"
+                          Grid.Row="2"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="4"
+                          Items="{Binding Profiles}"
+                          SelectedIndex="{Binding CurrentProfileIndex}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </Grid>
+        </DockPanel>
     </DockPanel>
 
 </Window>

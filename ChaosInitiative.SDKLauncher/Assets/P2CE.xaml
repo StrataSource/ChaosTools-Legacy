@@ -1,82 +1,88 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib">
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:usercontrols="clr-namespace:ChaosInitiative.SDKLauncher.Views.UserControls">
 
     <Design.PreviewWith>
-        <Grid Width="500"
-              Height="500">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-
-
-            <Button Grid.Column="0"
-                    Grid.Row="0">
-                Hi, I'm a Button! :)
-            </Button>
-            <TextBlock Grid.Column="1"
-                       Grid.Row="0"
-                       VerticalAlignment="Center">
-                I contain some Text
-            </TextBlock>
-
-            <TextBox Grid.Column="2"
-                     Grid.Row="0"
-                     Watermark="Watermark">
-            </TextBox>
-
-            <TextBox Grid.Column="0"
-                     Grid.Row="1">
-                More Text Boxes here!
-            </TextBox>
+        <DockPanel>
             
-            <ComboBox Grid.Column="1" Grid.Row="1" SelectedIndex="0">
-                <ComboBoxItem>Item1</ComboBoxItem>
-                <ComboBoxItem>Item2</ComboBoxItem>
-                <ComboBoxItem>Item3</ComboBoxItem>
-            </ComboBox>
-            
-            <NumericUpDown Grid.Column="2"
-                           Grid.Row="1"
-                           ShowButtonSpinner="False"
-                           AllowSpin="False"
-                           Minimum="0"
-                           Maximum="1000000"
-                           Increment="1" />
-            
-            <ComboBox Grid.Column="1" Grid.Row="3" SelectedIndex="0">
-            </ComboBox>
-            
-            <Button Grid.Column="0" 
-                    Grid.Row="3"
-                    Classes="IconButton">
-                <Image Source="/Assets/edit_16px.png" Classes="IconImage"></Image>
-            </Button>
-            
-            <StackPanel Grid.Column="0" 
-                   Grid.ColumnSpan="3"
-                   Grid.Row="4"
-                   Classes="StatusBar">
-                <TextBlock Text="This is a status bar."/>
-                <ProgressBar Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Value="50" MaxHeight="2"/>
-            </StackPanel>
-            
+            <usercontrols:TitleBar DataContext="Titlebar Text"/>
 
-        </Grid>
+            <Grid Width="500"
+                  Height="500">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+
+                <Button Grid.Column="0"
+                        Grid.Row="0">
+                    Hi, I'm a Button! :)
+                </Button>
+                <TextBlock Grid.Column="1"
+                           Grid.Row="0"
+                           VerticalAlignment="Center">
+                    I contain some Text
+                </TextBlock>
+
+                <TextBox Grid.Column="2"
+                         Grid.Row="0"
+                         Watermark="Watermark" />
+
+                <TextBox Grid.Column="0"
+                         Grid.Row="1">
+                    More Text Boxes here!
+                </TextBox>
+
+                <ComboBox Grid.Column="1" Grid.Row="1" SelectedIndex="0">
+                    <ComboBoxItem>Item1</ComboBoxItem>
+                    <ComboBoxItem>Item2</ComboBoxItem>
+                    <ComboBoxItem>Item3</ComboBoxItem>
+                </ComboBox>
+
+                <NumericUpDown Grid.Column="2"
+                               Grid.Row="1"
+                               ShowButtonSpinner="False"
+                               AllowSpin="False"
+                               Minimum="0"
+                               Maximum="1000000"
+                               Increment="1" />
+
+                <ComboBox Grid.Column="1" Grid.Row="3" SelectedIndex="0" />
+
+                <Button Grid.Column="0"
+                        Grid.Row="3"
+                        Classes="IconButton">
+                    <Image Source="/Assets/edit_16px.png" Classes="IconImage" />
+                </Button>
+
+                <StackPanel Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="4"
+                            Classes="StatusBar">
+                    <TextBlock Text="This is a status bar." />
+                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Value="50" MaxHeight="2" />
+                </StackPanel>
+
+
+            </Grid>
+
+        </DockPanel>
     </Design.PreviewWith>
 
     <Style>
@@ -101,7 +107,7 @@
             <Color x:Key="ThemeForegroundLowColor">#FF808080</Color>
 
             <Color x:Key="HighlightColor">#FFFF7B02</Color>
-            <Color x:Key="ErrorColor">#FFFF0000</Color>
+            <Color x:Key="ErrorColor">#A70000</Color>
             <Color x:Key="ErrorLowColor">#10FF0000</Color>
 
             <SolidColorBrush x:Key="ThemeBackgroundBrush" Color="{DynamicResource ThemeBackgroundColor}" />
@@ -150,32 +156,32 @@
         <Setter Property="Margin" Value="4" />
         <Setter Property="MaxHeight" Value="28" />
     </Style>
-    
+
     <Style Selector="TextBox, NumericUpDown">
-        <Setter Property="Background" Value="{DynamicResource ThemeControlLowBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeControlLowBrush}" />
     </Style>
-    
+
     <Style Selector="Button TextBlock,ComboBox TextBlock,NumericUpDown TextBox">
-        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Margin" Value="0" />
     </Style>
-    
+
     <Style Selector="ComboBox">
-        <Setter Property="MinHeight" Value="28"/>
-        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+        <Setter Property="MinHeight" Value="28" />
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}" />
     </Style>
-    
+
     <Style Selector="TextBox TextBlock">
-        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Margin" Value="0" />
     </Style>
-    
+
     <Style Selector="Button:pressed">
-        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}" />
     </Style>
-    
+
     <Style Selector="Button:hover">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
     </Style>
-    
+
     <Style Selector="Button.IconButton">
         <Setter Property="BorderBrush" Value="transparent" />
         <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
@@ -189,32 +195,53 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
-    
+
     <Style Selector="Button.IconButton:pointerover > ContentPresenter">
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidBrush}" />
     </Style>
 
     <Style Selector="Button.IconButton:pressed">
         <Setter Property="Background" Value="{DynamicResource ThemeControlHighlightMidBrush}" />
     </Style>
-    
+
     <Style Selector="StackPanel.StatusBar">
-        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ThemeControlHighBrush}" />
     </Style>
-    
+
     <Style Selector="StackPanel.StatusBar > TextBlock">
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Margin" Value="5 1 1 2"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Margin" Value="5 1 1 2" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
-    
+
     <Style Selector="StackPanel.StatusBar > ProgressBar:horizontal">
-        <Setter Property="MinHeight" Value="2"/>
+        <Setter Property="MinHeight" Value="2" />
     </Style>
-    
+
     <!-- Combo box needs a lot of adjustments -->
-    <Style Selector="ComboBox>Border>Grid>TextBlock">
+    <Style Selector="ComboBox>Border>Grid>TextBlock" />
+
+    
+    <Style Selector="Grid.TitleBar">
+        <Setter Property="Background" Value="{DynamicResource ThemeBorderLowBrush}"/>
+        <Setter Property="Height" Value="32"/>
+    </Style>
+    <Style Selector="Button.TitleBar_WindowControl">
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="MaxHeight" Value="32"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="8"/>
     </Style>
     
+    <Style Selector="Button.TitleBar_WindowControl:pointerover">
+        <Setter Property="Background" Value="{DynamicResource ThemeControlMidColor}" />
+    </Style>
+    <Style Selector="Button.TitleBar_Close:pointerover">
+        <Setter Property="Background" Value="{DynamicResource ErrorColor}" />
+    </Style>
+
 </Styles>

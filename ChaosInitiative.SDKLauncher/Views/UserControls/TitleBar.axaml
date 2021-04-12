@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
+             x:Class="ChaosInitiative.SDKLauncher.Views.UserControls.TitleBar"
+             DockPanel.Dock="Top">
+    <StackPanel Orientation="Vertical">
+        <Grid Classes="TitleBar">
+            <DockPanel Name="TitleBar">
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Left"
+                            Spacing="0">
+                    <Image Source="/Assets/p2ce_logo.png"
+                           Height="20"
+                           Width="20"
+                           VerticalAlignment="Center"
+                           Margin="5,0,3,0"
+                           Name="WindowIcon" />
+                    <NativeMenuBar DockPanel.Dock="Top"
+                                   HorizontalAlignment="Left"
+                                   Name="SeamlessMenuBar" />
+                    <TextBlock Text="{Binding}"
+                               d:DataContext="Design Text"
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Spacing="0">
+                    
+                    <Button Classes="TitleBar_WindowControl" x:Name="BtnMinimize">
+                        <Image Source="/Assets/subtract_32px_muted.png" IsHitTestVisible="False"/>
+                    </Button>
+                    
+                    <!-- None of our windows currently require maximize buttons. It's fully implemented, just disabled -->
+                    <Button Classes="TitleBar_WindowControl" x:Name="BtnMaximize" IsVisible="False">
+                        <Image Source="/Assets/maximize_button_32px_muted.png" IsHitTestVisible="False"/>
+                    </Button>
+
+                    <Button Classes="TitleBar_WindowControl TitleBar_Close" x:Name="BtnQuit">
+                        <Image Source="/Assets/multiply_32px_muted.png" IsHitTestVisible="False"/>
+                    </Button>
+
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

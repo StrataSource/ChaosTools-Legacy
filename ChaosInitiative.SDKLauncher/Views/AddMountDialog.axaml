@@ -5,84 +5,91 @@
         xmlns:vm="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
         mc:Ignorable="d"
         x:Class="ChaosInitiative.SDKLauncher.Views.AddMountDialog"
-		WindowStartupLocation="CenterOwner"
+        xmlns:userControls="clr-namespace:ChaosInitiative.SDKLauncher.Views.UserControls"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        WindowStartupLocation="CenterOwner"
         Width="320"
-		SizeToContent="Height"
-		CanResize="False"
-		Icon="/Assets/p2ce_logo.png"
+        SizeToContent="Height"
+        CanResize="False"
+        Icon="/Assets/p2ce_logo.png"
         Title="New Mount">
 
-	<Design.DataContext>
-		<vm:AddMountViewModel/>
-	</Design.DataContext>
-	
-	<StackPanel Orientation="Vertical">
-		
-		<CheckBox IsChecked="{Binding UseAppId}" Name="UseAppId">
-			Use App ID
-		</CheckBox>
-	
-		<TextBlock Text="Steam App ID"/>
-		<NumericUpDown Watermark="App ID"
-		               IsEnabled="{Binding IsChecked, ElementName=UseAppId}"
-		               ShowButtonSpinner="False"
-		               AllowSpin="False"
-		               Minimum="0"
-		               Maximum="1000000"
-		               Increment="1"
-		               Value="{Binding Mount.AppId}"/>
-		
-		<TextBlock Text="MountPath"/>
-		<TextBox Watermark="MountPath" 
-				 IsEnabled="{Binding !IsChecked, ElementName=UseAppId}"
-				 Text="{Binding Mount.MountPath}"/>
+    <Design.DataContext>
+        <vm:AddMountViewModel />
+    </Design.DataContext>
 
-		<Border Classes="SectionBorder">	
-		
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
+    <DockPanel>
+        <userControls:TitleBar DataContext="SDK Launcher" />
 
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-				</Grid.RowDefinitions>
-			
-				<ComboBox Grid.Row="0"
-						  Grid.Column="0"
-						  Grid.ColumnSpan="2" 
-						  Items="{Binding Mount.AvailableSearchPaths}"
-						  SelectedItem="{Binding SelectedSearchPath}"
-						  SelectedIndex="0"/>
+        <StackPanel Orientation="Vertical">
 
-				<StackPanel Grid.Row="1"
-							Grid.Column="0">
-					<Button Command="{Binding OnClickAdd}"
-							Classes="IconButton"
-							Margin="4">
-						<Image Source="/Assets/plus_math_16px.png"></Image>
-					</Button>
-					<Button Command="{Binding OnClickRemove}"
-							IsEnabled="{Binding !!Mount.SelectedSearchPaths.Count}"
-							Classes="IconButton"
-							Margin="4,0,4,4">
-						<Image Source="/Assets/subtract_16px.png"></Image>
-					</Button>
-				</StackPanel>
-			
-				<ListBox Grid.Row="1"
-						 Grid.Column="1"
-						 Items="{Binding Mount.SelectedSearchPaths}"
-						 SelectedItem="{Binding SelectedSearchPath}">
-				</ListBox>
-			</Grid>
-		
-		</Border>
-		
-		<Button Command="{Binding OnClickOk}">Ok</Button>
-	
-	</StackPanel>
-	
+            <CheckBox IsChecked="{Binding UseAppId}" Name="UseAppId">
+                Use App ID
+            </CheckBox>
+
+            <TextBlock Text="Steam App ID" />
+            <NumericUpDown Watermark="App ID"
+                           IsEnabled="{Binding IsChecked, ElementName=UseAppId}"
+                           ShowButtonSpinner="False"
+                           AllowSpin="False"
+                           Minimum="0"
+                           Maximum="1000000"
+                           Increment="1"
+                           Value="{Binding Mount.AppId}" />
+
+            <TextBlock Text="MountPath" />
+            <TextBox Watermark="MountPath"
+                     IsEnabled="{Binding !IsChecked, ElementName=UseAppId}"
+                     Text="{Binding Mount.MountPath}" />
+
+            <Border Classes="SectionBorder">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <ComboBox Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Items="{Binding Mount.AvailableSearchPaths}"
+                              SelectedItem="{Binding SelectedSearchPath}"
+                              SelectedIndex="0" />
+
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="0">
+                        <Button Command="{Binding OnClickAdd}"
+                                Classes="IconButton"
+                                Margin="4">
+                            <Image Source="/Assets/plus_math_16px.png" />
+                        </Button>
+                        <Button Command="{Binding OnClickRemove}"
+                                IsEnabled="{Binding !!Mount.SelectedSearchPaths.Count}"
+                                Classes="IconButton"
+                                Margin="4,0,4,4">
+                            <Image Source="/Assets/subtract_16px.png" />
+                        </Button>
+                    </StackPanel>
+
+                    <ListBox Grid.Row="1"
+                             Grid.Column="1"
+                             Items="{Binding Mount.SelectedSearchPaths}"
+                             SelectedItem="{Binding SelectedSearchPath}" />
+                </Grid>
+
+            </Border>
+
+            <Button Command="{Binding OnClickOk}">Ok</Button>
+
+        </StackPanel>
+    </DockPanel>
+
 </Window>
