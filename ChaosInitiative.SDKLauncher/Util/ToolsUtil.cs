@@ -84,8 +84,8 @@ namespace ChaosInitiative.SDKLauncher.Util
                 prefix = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChaosSDKLauncher");
             }
 
-            string protonPath = null;
-            if (!FindOrCreateProtonPrefix(ref protonPath, prefix))
+            string protonPath = FindOrCreateProtonPrefix(prefix);
+            if (string.IsNullOrWhiteSpace(protonPath))
                 throw new ToolsLaunchException("Failed to create the proton prefix");
 
             var protonStartInfo = new ProcessStartInfo();
@@ -111,18 +111,16 @@ namespace ChaosInitiative.SDKLauncher.Util
         /// <summary>
         /// Finds or creates a proton prefix we can run tools from
         /// </summary>
-        /// <param name="proton_path">Out parameter for the proton executable path</param>
         /// <param name="directory">Prefix directory</param>
         /// <returns></returns>
         /// <exception cref="ToolsLaunchException">Something failed</exception>
-        public static bool FindOrCreateProtonPrefix(ref string proton_path, string directory)
+        public static string FindOrCreateProtonPrefix(string directory)
         {
             /* Determine our proton install path */
             if (!SteamApps.IsAppInstalled(ProtonAppId))
                 throw new ToolsLaunchException($"{ProtonVersion} is not installed");
-            proton_path = SteamApps.AppInstallDir(ProtonAppId);
-            proton_path += "/proton";
-            Console.WriteLine(proton_path);
+
+            string protonPath = $"{SteamApps.AppInstallDir(ProtonAppId)}/proton";
 
             /* Create the prefix if it doesn't actually exist */
             if (!File.Exists(directory + "/version"))
@@ -144,10 +142,8 @@ namespace ChaosInitiative.SDKLauncher.Util
 
                 /* To do this, let's just run proton with xcopy /?, as a dummy. proton will automatically create the pfx for us */
                 var startInfo = new ProcessStartInfo();
-                startInfo.FileName = proton_path;
+                startInfo.FileName = protonPath;
                 startInfo.Arguments = "run xcopy /?";
-
-                Console.WriteLine(proton_path + " " + startInfo.Arguments);
 
                 startInfo.Environment.Add("STEAM_COMPAT_DATA_PATH", directory);
                 startInfo.Environment.Add("STEAM_COMPAT_CLIENT_INSTALL_PATH", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/.steam");
@@ -176,7 +172,7 @@ namespace ChaosInitiative.SDKLauncher.Util
                 }
             }
 
-            return true;
+            return protonPath;
         }
     }
 }
