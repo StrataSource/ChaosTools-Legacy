@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using ChaosInitiative.SDKLauncher.Util;
 using ReactiveUI;
 using Steamworks;
@@ -49,7 +47,7 @@ namespace ChaosInitiative.SDKLauncher.Models
             }
         }
         private int _appId;
-        public int AppId 
+        public int AppId
         {
             get => _appId;
             set
@@ -87,7 +85,7 @@ namespace ChaosInitiative.SDKLauncher.Models
             string.IsNullOrWhiteSpace(MountPath) ? new List<string>() :
                 Directory.GetDirectories(MountPath)                                                    // Get all subdirectories
                     .Where(MountUtil.IsValidSearchPath)                                                // That have a gameinfo
-                    .Where(d => !SelectedSearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already 
+                    .Where(d => !SelectedSearchPaths.Contains(Path.GetDirectoryName(d) ?? ""))       // Which are not already
                     .Select(d => d.Split(Path.DirectorySeparatorChar).Last())
                     .ToList();
 
@@ -95,7 +93,7 @@ namespace ChaosInitiative.SDKLauncher.Models
         {
             if (other is null)
                 return false;
-            
+
             return _mountPath == other._mountPath &&
                    _appId == other._appId &&
                    PrimarySearchPath == other.PrimarySearchPath &&
