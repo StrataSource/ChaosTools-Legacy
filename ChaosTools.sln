@@ -7,6 +7,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDKLauncher", "ChaosInitiat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosInitiative.SDKLauncher.Test", "ChaosInitiative.SDKLauncher.Test\ChaosInitiative.SDKLauncher.Test.csproj", "{25815175-FC5D-414C-B04D-325DE901180D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosInitiative.Carp", "ChaosInitiative.Carp\ChaosInitiative.Carp.csproj", "{633AA27E-DB93-49EA-A3AA-3BBF555B3E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosInitiative.Carp.Cli", "ChaosInitiative.Carp.Cli\ChaosInitiative.Carp.Cli.csproj", "{6D32B734-7484-4C07-8BE2-A18B3F5EA0C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChaosInitiative.Carp.Test", "ChaosInitiative.Carp.Test\ChaosInitiative.Carp.Test.csproj", "{51E29FDC-D16C-4FE6-B7AF-AF4203CD994C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Carp", "Carp", "{D965F184-276B-455E-9C88-F3C0E8DD28D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SDKLauncher", "SDKLauncher", "{C9AA76C7-0392-4A66-AAB5-39AB9D2567CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Other", "_Other", "{B1A46665-5B5E-438D-B4E9-60B3D02DE289}"
+ProjectSection(SolutionItems) = preProject
+	README.md = README.md
+	LICENSE = LICENSE
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +37,30 @@ Global
 		{25815175-FC5D-414C-B04D-325DE901180D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25815175-FC5D-414C-B04D-325DE901180D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25815175-FC5D-414C-B04D-325DE901180D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{633AA27E-DB93-49EA-A3AA-3BBF555B3E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{633AA27E-DB93-49EA-A3AA-3BBF555B3E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{633AA27E-DB93-49EA-A3AA-3BBF555B3E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{633AA27E-DB93-49EA-A3AA-3BBF555B3E9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D32B734-7484-4C07-8BE2-A18B3F5EA0C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D32B734-7484-4C07-8BE2-A18B3F5EA0C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D32B734-7484-4C07-8BE2-A18B3F5EA0C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D32B734-7484-4C07-8BE2-A18B3F5EA0C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E29FDC-D16C-4FE6-B7AF-AF4203CD994C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E29FDC-D16C-4FE6-B7AF-AF4203CD994C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E29FDC-D16C-4FE6-B7AF-AF4203CD994C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E29FDC-D16C-4FE6-B7AF-AF4203CD994C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9A0FF23-98FC-4F89-BACB-67B7995FA9F8}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{633AA27E-DB93-49EA-A3AA-3BBF555B3E9C} = {D965F184-276B-455E-9C88-F3C0E8DD28D2}
+		{6D32B734-7484-4C07-8BE2-A18B3F5EA0C0} = {D965F184-276B-455E-9C88-F3C0E8DD28D2}
+		{51E29FDC-D16C-4FE6-B7AF-AF4203CD994C} = {D965F184-276B-455E-9C88-F3C0E8DD28D2}
+		{7F49C9B9-B1ED-4F79-81D9-6ABABA7D636A} = {C9AA76C7-0392-4A66-AAB5-39AB9D2567CE}
+		{25815175-FC5D-414C-B04D-325DE901180D} = {C9AA76C7-0392-4A66-AAB5-39AB9D2567CE}
 	EndGlobalSection
 EndGlobal

@@ -1,9 +1,11 @@
 # Chaos Tools
 
-This repository contains several GUI tools.
+This repository contains several GUI and CLI tools.
 
 - SDK Launcher - SDK Launcher and workspace profile editor for [Portal 2: Community Edition](https://github.com/ChaosInitiative/Portal-2-Community-Edition)
-- CASUI - Config UI Editor for [CAS](https://github.com/ChaosInitiative/CAS)
+- Carp - Chaos Automation Release Program, Automates Source Engine build processes and SDK related jobs
+    - Carp Core - Library to embed into programs
+    - Carp Cli - The terminal application
 
 ## SDK Launcher
 
