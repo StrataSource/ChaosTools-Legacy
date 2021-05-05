@@ -1,0 +1,41 @@
+%YAML 1.2
+---
+
+# cas cas.yaml --buildType="dev"
+
+# ==== Command Line Parameters ====
+
+# --buildType       Any string, can be checked in the config
+# --modules         Only run these modules (comma separated string)
+# -d --dry          Only validate and show what would be done. Useful for testing
+# -i --info         Prints info about the config
+
+# cas -i
+# Name: ...
+# Description: ...
+# Modules:
+# - Maps
+# ...
+
+Config:
+  Name: "Main (P2CE)"
+  Description: "Main CAS Config for P2CE"
+
+  Constants:
+    ContentConfig: "content/content.yaml"
+
+Modules:
+- Maps
+  Steps:
+  - Build-Maps
+    Type: child
+    Args: 
+      Config: "{Config.Constants.ContentConfig}"
+      Modules: "Maps"
+
+  - Copy-BSPs
+    Type: shell
+    Parallel: true
+    After: "Build-Maps"
+    Args:
+      Run: "mv"

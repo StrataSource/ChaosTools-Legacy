@@ -1,0 +1,91 @@
+%YAML 1.2
+---
+
+Config:
+  Name: "Content (P2CE)"
+  Description: "Content Config for P2CE"
+
+  Constants:                       # Dictionary
+    SearchPath: "p2ce"
+    AppId: 440000
+  
+  Variables:
+  - Bin
+    Condition:
+      Platform: win
+    ValueTrue: "bin/win64"
+    ValueFalse: "bin/linux64"
+    
+  - VradFinalCompile
+    Condition:
+      BuildType: rel
+    ValueTrue: "-hdr -StaticPropLighting -final"
+    ValueFalse: "-hdr -StaticPropLighting"
+
+Modules:
+- FGD                           # Display Name
+  Templates:
+  - Base
+    Type: shell
+    Parallel: false
+    
+  Steps:
+  - Windows                     # Unique name for this step
+    Template: Base
+    Condition:
+      Platform: win
+    Args: 
+      Run: "build_hammer.bat"
+
+  - Linux
+    Template: Base              # Copies all the properties from the template and replaces the ones that are specified below
+    Condition:
+      Platform: linux
+    Args: 
+      Run: "build_hammer.sh"
+  
+  - Finalize
+    After: "Windows|Linux"      # StepCondition
+    Type: echo
+    Args:
+      Message: "Done!"
+      Type: success
+      Verbose: false
+    
+
+- Maps
+  Steps:
+  - Windows Dev
+    Type: mapbuild
+    Parallel: false
+    Condition:
+      Environment: win
+      BuildType: dev
+
+    # $file$: the file name that is compiled without extension
+    # $path$: the absolute path to the vmf that is compiled without the name of the file
+
+    Args:
+      MapSources:
+      - "{Config.Constants.SearchPath}/maps"
+      - "!{Config.Constants.SearchPath}/maps/*instances*"
+      - "!{Config.Constants.SearchPath}/maps/valve"
+      - "!{Config.Constants.SearchPath}/maps/templates"
+
+      Steps:
+      - vbsp
+        Run: "{Config.Variables.Bin}/vbsp"
+        Args: "-game {Config.SearchPath} $path$/$file$.vmf"
+      - postcompiler
+        Run: "{Config.Variables.Bin}/postcompiler/postcompiler"
+        Args: "--propcombine $path$/$file$"
+      - vvis
+        Run: "{Config.Variables.Bin}/vvis"
+        Args: "-game {Config.SearchPath} $path$/$file$.vmf"
+      - vrad
+        Run: "{Config.Variables.Bin}/vrad"
+        Args: "{Config.Variables.VradArgs} -game {Config.SearchPath}"
+    # - copy          Kinda of a dirty way of doing things. The content config shouldn't change stuff in other places
+    #   Run: "mv"carp
+    #  Args: "$path$/$file$.bsp ../game/{Config.SearchPath}/maps/$file$.bsp"
+    
