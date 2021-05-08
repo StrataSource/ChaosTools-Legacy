@@ -27,9 +27,9 @@ namespace ChaosInitiative.SDKLauncher.Views
                 var arguments = "";
 
                 var additionalMount = ViewModel.CurrentProfile.AdditionalMount;
-
+                
                 if (additionalMount is not null &&
-                    !string.IsNullOrWhiteSpace(additionalMount.BinDirectory))
+                    !string.IsNullOrWhiteSpace(additionalMount.PrimarySearchPathDirectory))
                 {
                     arguments = $"-mountmod \"{additionalMount.PrimarySearchPathDirectory}\"";
                 }
@@ -49,17 +49,22 @@ namespace ChaosInitiative.SDKLauncher.Views
 
             this.WhenActivated(disposables =>
             {
+                // This sets up all the correct paths to use to launch the tools and game
+                // Note: This looks like it won't work here, but it really does, I promise
+                //       Moving it outside this function crashes the application on load
+                InitializeSteamClient((uint)ViewModel.CurrentProfile.Mod.Mount.AppId);
+                
                 ViewModel.OnClickEditProfile.Subscribe(_ => EditProfile()).DisposeWith(disposables);
                 ViewModel.OnClickOpenHammer.Subscribe(_ => 
                     LaunchTool(
                         "hammer",
-                        HammerArguments
+                        Tools.Hammer
                     )
                 ).DisposeWith(disposables);
                 ViewModel.OnClickOpenModelViewer.Subscribe(_ =>
                     LaunchTool(
                         "hlmv",
-                        $"-game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}",
+                        Tools.ModelViewer,
                         true,
                         ViewModel.CurrentProfile.Mod.Mount.MountPath
                     )
@@ -67,19 +72,22 @@ namespace ChaosInitiative.SDKLauncher.Views
                 ViewModel.ShowNotification = ReactiveCommand.Create<string>(ShowNotification).DisposeWith(disposables);
 
                 ViewModel.OnClickLaunchGame.Subscribe(_ => LaunchGame());
-                
-                // This sets up all the correct paths to use to launch the tools and game
-                // Note: This looks like it won't work here, but it really does, I promise
-                InitializeSteamClient((uint)ViewModel.CurrentProfile.Mod.Mount.AppId);
             });
 
             Closing += OnClosing;
         }
 
-        private void LaunchTool(string executableName, string args = "", bool windowsOnly = false, string workingDir = null, string binDir = null)
+        private void LaunchTool(string executableName, Tools tool, bool windowsOnly = false, string workingDir = null, string binDir = null)
         {
             binDir ??= ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
             workingDir ??= binDir;
+
+            string args = tool switch
+            {
+                Tools.Hammer => HammerArguments,
+                Tools.ModelViewer => $"-game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}",
+                _ => ""
+            };
 
             try
             {
@@ -138,6 +146,12 @@ namespace ChaosInitiative.SDKLauncher.Views
                 Directory.CreateDirectory("logs");
                 File.WriteAllText($"logs/steam_error_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.log", e.Message);
             }
+        }
+
+        private enum Tools
+        {
+            Hammer,
+            ModelViewer
         }
     }
 }
