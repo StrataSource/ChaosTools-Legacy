@@ -20,23 +20,8 @@
 		</Style>
 	</Window.Styles>
 
-	<Grid>
-
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
-		
-		<Grid.RowDefinitions>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-		</Grid.RowDefinitions>
-
-
+	<Grid RowDefinitions="auto,auto" ColumnDefinitions="*,*">
 		<TextBox Grid.Row="0" Grid.Column="0" Watermark="Mod Name"/>
 		<TextBox Grid.Row="0" Grid.Column="1" Watermark="Namespace name"/>
-		
-	
 	</Grid>
-	
 </Window>

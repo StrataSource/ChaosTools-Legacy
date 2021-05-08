@@ -22,17 +22,14 @@
             
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Tools:</TextBlock>
             
-            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="OpenHammerButton"
+            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="OpenHammerButton"
                     Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
             
-            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="OpenModelViewerButton"
+            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="OpenModelViewerButton"
                     Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
             
-            <Button Grid.Row="3" Grid.Column="0" 
+            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="OpenGameButton"
                     Command="{Binding OnClickLaunchGame}">Launch Game</Button>
-            
-            <Button Grid.Row="3" Grid.Column="1"
-                    Command="{Binding OnClickLaunchToolsMode}">Launch Tools Mode</Button>
             <!--
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Mods:</TextBlock>
             <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CreateModButton"

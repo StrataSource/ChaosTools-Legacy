@@ -9,6 +9,7 @@
         MinWidth="200"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
+        Icon="/Assets/p2ce_logo.png"
         Title="Notification">
 
     <Design.DataContext>
