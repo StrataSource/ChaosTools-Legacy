@@ -17,9 +17,9 @@ namespace ChaosInitiative.SDKLauncher.Models
         
         public static Profile GetDefaultProfile()
         {
-            return new Profile
+            return new()
             {
-                Name = "P2CE - Default",
+                Name = "P2:CE - Default",
                 Mod = new Mod
                 {
                     Name = "Portal 2: Community Edition",

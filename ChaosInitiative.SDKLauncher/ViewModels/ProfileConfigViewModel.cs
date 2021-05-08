@@ -27,7 +27,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
             Profile = profile;
             
-            this.WhenActivated((CompositeDisposable disposable) =>
+            this.WhenActivated((disposable) =>
             {
                 Disposable.Create(() =>
                 {

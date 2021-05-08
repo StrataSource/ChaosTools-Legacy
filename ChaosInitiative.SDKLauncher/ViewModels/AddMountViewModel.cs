@@ -6,7 +6,11 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 {
     public class AddMountViewModel : ReactiveObject
     {
-        
+        public AddMountViewModel(ReactiveCommand<Unit, Unit> onClickAdd)
+        {
+            OnClickAdd = onClickAdd;
+        }
+
         public bool UseAppId { get; set; } = true;
         public Mount Mount { get; } = new ();
 

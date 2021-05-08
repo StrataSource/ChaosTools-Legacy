@@ -16,7 +16,6 @@ namespace ChaosInitiative.SDKLauncher.Views
 {
     public class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
-
         protected Button EditProfileButton => this.FindControl<Button>("EditProfileButton");
         protected Button OpenToolsModeButton => this.FindControl<Button>("OpenToolsModeButton");
         protected Button OpenGameButton => this.FindControl<Button>("OpenGameButton");
@@ -65,7 +64,10 @@ namespace ChaosInitiative.SDKLauncher.Views
 
                 ViewModel.OnClickLaunchGame.Subscribe(_ => LaunchGame(false));
                 ViewModel.OnClickLaunchToolsMode.Subscribe(_ => LaunchGame(true));
-
+                
+                // This sets up all the correct paths to use to launch the tools and game
+                // Note: This looks like it won't work here, but it really does, try it out
+                InitializeSteamClient((uint)ViewModel.CurrentProfile.Mod.Mount.AppId);
             });
 
             Closing += OnClosing;
@@ -88,8 +90,6 @@ namespace ChaosInitiative.SDKLauncher.Views
 
         private void LaunchGame(bool toolsMode)
         {
-            InitializeSteamClient((uint)ViewModel.CurrentProfile.Mod.Mount.AppId);
-
             string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
             string executableName = ViewModel.CurrentProfile.Mod.ExecutableName;
             string gameRootPath = ViewModel.CurrentProfile.Mod.Mount.MountPath;
@@ -136,12 +136,16 @@ namespace ChaosInitiative.SDKLauncher.Views
                            false,
                            gameRootPath,
                            binDir);
-            } catch(Exception) { }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
         private void ShowNotification(string message)
         {
-            NotificationDialog dialog = new NotificationDialog(message);
+            var dialog = new NotificationDialog(message);
             dialog.ShowDialog(this);
         }
 
@@ -152,16 +156,15 @@ namespace ChaosInitiative.SDKLauncher.Views
 
         private void EditProfile()
         {
-            ProfileConfigWindow profileConfigWindow = new ProfileConfigWindow
+            var profileConfigWindow = new ProfileConfigWindow
             {
                 DataContext = new ProfileConfigViewModel(ViewModel.CurrentProfile)
             };
             profileConfigWindow.ShowDialog(this);
         }
 
-        private void InitializeSteamClient(uint appId)
+        private static void InitializeSteamClient(uint appId)
         {
-            // Init steam stuff, with the specified app
             if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
             {
                 throw new Exception("Wrong application lifetime, contact a developer");
