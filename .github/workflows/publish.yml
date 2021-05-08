@@ -35,15 +35,17 @@ jobs:
     - name: Zip Setup
       uses: montudor/action-zip@v0.1.1
     - name: Zip Windows
-      run: zip -qq -r sdklauncher_win64.zip ChaosInitiative.SDKLauncher/bin/Publish/win64
+      run: zip -qq -r sdklauncher_win64.zip .
+      working-directory: ChaosInitiative.SDKLauncher/bin/Publish/win64
     - name: Zip Linux
-      run: zip -qq -r sdklauncher_linux64.zip ChaosInitiative.SDKLauncher/bin/Publish/linux64
+      run: zip -qq -r sdklauncher_linux64.zip .
+      working-directory: ChaosInitiative.SDKLauncher/bin/Publish/linux64
 
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions
         artifacts: "sdklauncher_win64.zip,sdklauncher_linux64.zip"
-        tag: "build$GITHUB_RUN_NUMBER"
+        tag: "RELEASE_TAG"
         draft: true
         prerelease: false
