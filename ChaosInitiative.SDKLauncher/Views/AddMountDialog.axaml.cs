@@ -1,6 +1,5 @@
 ﻿using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
-using ChaosInitiative.SDKLauncher.Models;
 using ChaosInitiative.SDKLauncher.ViewModels;
 
 namespace ChaosInitiative.SDKLauncher.Views

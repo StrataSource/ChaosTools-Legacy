@@ -4,11 +4,13 @@ using System.IO;
 using System.Reactive.Disposables;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ChaosInitiative.SDKLauncher.Util;
 using ChaosInitiative.SDKLauncher.ViewModels;
 using ReactiveUI;
+using Steamworks;
 
 namespace ChaosInitiative.SDKLauncher.Views
 {
@@ -27,7 +29,7 @@ namespace ChaosInitiative.SDKLauncher.Views
 
                 var additionalMount = ViewModel.CurrentProfile.AdditionalMount;
 
-                if (additionalMount is not null && 
+                if (additionalMount is not null &&
                     !string.IsNullOrWhiteSpace(additionalMount.BinDirectory))
                 {
                     arguments = $"-mountmod \"{additionalMount.PrimarySearchPathDirectory}\"";
@@ -39,8 +41,8 @@ namespace ChaosInitiative.SDKLauncher.Views
 
                 return arguments;
             }
-        } 
-        
+        }
+
         public MainWindow()
         {
             AvaloniaXamlLoader.Load(this);
@@ -49,14 +51,14 @@ namespace ChaosInitiative.SDKLauncher.Views
             this.WhenActivated(disposables =>
             {
                 ViewModel.OnClickEditProfile.Subscribe(_ => EditProfile()).DisposeWith(disposables);
-                ViewModel.OnClickOpenHammer.Subscribe(_ => LaunchTool("hammer", 
-                                                                      HammerArguments, 
+                ViewModel.OnClickOpenHammer.Subscribe(_ => LaunchTool("hammer",
+                                                                      HammerArguments,
                                                                       true))
                          .DisposeWith(disposables);
-                ViewModel.OnClickOpenModelViewer.Subscribe(_ => 
-                                                               LaunchTool("hlmv", 
-                                                                          $"-game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}", 
-                                                                          true, 
+                ViewModel.OnClickOpenModelViewer.Subscribe(_ =>
+                                                               LaunchTool("hlmv",
+                                                                          $"-game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}",
+                                                                          true,
                                                                           ViewModel.CurrentProfile.Mod.Mount.MountPath))
                          .DisposeWith(disposables);
                 ViewModel.ShowNotification = ReactiveCommand.Create<string>(ShowNotification).DisposeWith(disposables);
@@ -65,7 +67,7 @@ namespace ChaosInitiative.SDKLauncher.Views
                 ViewModel.OnClickLaunchToolsMode.Subscribe(_ => LaunchGame(true));
 
             });
-            
+
             Closing += OnClosing;
         }
 
@@ -73,7 +75,7 @@ namespace ChaosInitiative.SDKLauncher.Views
         {
             binDir ??= ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
             workingDir ??= binDir;
-            
+
             try
             {
                 var process = ToolsUtil.LaunchTool(binDir, executableName, args, windowsOnly, workingDir);
@@ -86,6 +88,8 @@ namespace ChaosInitiative.SDKLauncher.Views
 
         private void LaunchGame(bool toolsMode)
         {
+            InitializeSteamClient((uint)ViewModel.CurrentProfile.Mod.Mount.AppId);
+
             string binDir = ViewModel.CurrentProfile.Mod.Mount.BinDirectory;
             string executableName = ViewModel.CurrentProfile.Mod.ExecutableName;
             string gameRootPath = ViewModel.CurrentProfile.Mod.Mount.MountPath;
@@ -100,7 +104,7 @@ namespace ChaosInitiative.SDKLauncher.Views
             }
 
             string binPath = Path.Combine(binDir, executableName);
-            
+
             // See if the binary is in bin folder
             if (!File.Exists(binPath))
             {
@@ -114,7 +118,7 @@ namespace ChaosInitiative.SDKLauncher.Views
                     return;
                 }
             }
-            
+
             string args = $"{ViewModel.CurrentProfile.Mod.LaunchArguments} -game {ViewModel.CurrentProfile.Mod.Mount.PrimarySearchPath}";
             if (toolsMode)
             {
@@ -127,7 +131,7 @@ namespace ChaosInitiative.SDKLauncher.Views
 
             try
             {
-                LaunchTool(executableName, 
+                LaunchTool(executableName,
                            args,
                            false,
                            gameRootPath,
@@ -154,7 +158,30 @@ namespace ChaosInitiative.SDKLauncher.Views
             };
             profileConfigWindow.ShowDialog(this);
         }
-        
-        
+
+        private void InitializeSteamClient(uint appId)
+        {
+            // Init steam stuff, with the specified app
+            if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                throw new Exception("Wrong application lifetime, contact a developer");
+            }
+
+            try
+            {
+                SteamClient.Init(appId);
+            }
+            catch (Exception e)
+            {
+                if (!e.Message.Contains("Steam"))
+                    throw;
+
+                // TODO: This doesn't work well with i3wm
+                desktop.MainWindow = new NotificationDialog("Steam error. Please check that steam is running, and you own the intended app.");
+                Directory.CreateDirectory("logs");
+                File.WriteAllText($"logs/steam_error_{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.log",
+                    e.Message );
+            }
+        }
     }
 }

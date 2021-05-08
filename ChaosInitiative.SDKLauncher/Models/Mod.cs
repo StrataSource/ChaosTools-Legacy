@@ -13,7 +13,7 @@ namespace ChaosInitiative.SDKLauncher.Models
 
         public bool Equals(Mod other)
         {
-            return Name == other.Name && 
+            return Name == other.Name &&
                    ExecutableName == other.ExecutableName &&
                    LaunchArguments == other.LaunchArguments &&
                    Equals(Mount, other.Mount);
