@@ -7,7 +7,7 @@ namespace ChaosInitiative.SDKLauncher.Util
     {
         public static ReactiveCommand<Unit, Unit> CreateEmpty()
         {
-            return ReactiveCommand.Create(() => { });
+            return ReactiveCommand.Create(() => {});
         }
     }
 }

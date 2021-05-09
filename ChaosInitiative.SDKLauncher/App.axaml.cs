@@ -15,12 +15,12 @@ namespace ChaosInitiative.SDKLauncher
 
         public override void OnFrameworkInitializationCompleted()
         {
-            if (!(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop))
+            if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
                 return;
 
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainWindowViewModel()
             };
 
             base.OnFrameworkInitializationCompleted();

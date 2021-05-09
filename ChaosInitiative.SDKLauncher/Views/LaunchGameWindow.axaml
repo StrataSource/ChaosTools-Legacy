@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ChaosInitiative.SDKLauncher.ViewModels"
+        mc:Ignorable="d"
+        x:Class="ChaosInitiative.SDKLauncher.Views.LaunchGameWindow"
+		Width="300" Height="450"
+		CanResize="False"
+		Icon="/Assets/p2ce_logo.png"
+        Title="Launch Game">
+
+	<Design.DataContext>
+		<viewModels:LaunchGameWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="Button,ComboBox,TextBox,TextBlock">
+			<Setter Property="Margin" Value="4"/>
+		</Style>
+	</Window.Styles>
+
+	<Grid RowDefinitions="auto,auto,auto,auto,auto,auto,auto,*" ColumnDefinitions="*,*">
+		<TextBlock Grid.Row="0">Launch Options:</TextBlock>
+		<CheckBox Grid.Row="1" Grid.Column="0" x:Name="ToolsMode">Tools Mode</CheckBox>
+		<CheckBox Grid.Row="2" Grid.Column="0" x:Name="Console">Enable Console</CheckBox>
+		<CheckBox Grid.Row="3" Grid.Column="0" x:Name="DeveloperMode">Developer Mode</CheckBox>
+		<CheckBox Grid.Row="4" Grid.Column="0" x:Name="LegacyUi">Legacy UI</CheckBox>
+		<CheckBox Grid.Row="5" Grid.Column="0" x:Name="GraphicsApi">DirectX 11</CheckBox>
+		<Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="LaunchGameButton">Launch Game</Button>
+	</Grid>
+</Window>

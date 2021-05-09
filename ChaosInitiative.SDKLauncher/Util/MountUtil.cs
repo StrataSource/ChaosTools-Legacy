@@ -7,14 +7,12 @@ namespace ChaosInitiative.SDKLauncher.Util
 {
     public static class MountUtil
     {
-        
-
         public static bool IsValidSearchPath(string searchPath)
         {
             return File.Exists($"{searchPath}/gameinfo.txt");
         }
 
-        public static readonly FileDialogFilter GameInfoFileFilter = new FileDialogFilter()
+        public static readonly FileDialogFilter GameInfoFileFilter = new()
         {
             Name = "Game Info",
             Extensions = new List<string>
@@ -23,7 +21,7 @@ namespace ChaosInitiative.SDKLauncher.Util
             }
         };
 
-        private static Dictionary<PlatformID, string> PlatformNames = new()
+        private static readonly Dictionary<PlatformID, string> PlatformNames = new()
         {
             { PlatformID.Win32NT, "win" },
             { PlatformID.MacOSX, "osx" },

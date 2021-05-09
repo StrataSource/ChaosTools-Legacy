@@ -14,7 +14,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         {
             Activator = new ViewModelActivator();
             
-            this.WhenActivated((CompositeDisposable disposable) =>
+            this.WhenActivated((disposable) =>
             {
                 Disposable.Create(() =>
                 {

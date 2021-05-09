@@ -4,14 +4,11 @@ namespace ChaosInitiative.SDKLauncher.Util
 {
     public class ToolsLaunchException : Exception
     {
-
-        private string _message;
-        
         public ToolsLaunchException(string message)
         {
-            _message = message;
+            Message = message;
         }
 
-        public override string Message => _message;
+        public override string Message { get; }
     }
 }

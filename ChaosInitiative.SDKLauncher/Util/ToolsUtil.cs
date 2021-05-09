@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ChaosInitiative.SDKLauncher.Util
 {
-    public class ToolsUtil
+    public static class ToolsUtil
     {
         public static Process LaunchTool(string binDirectory, string executableName, string args = "", bool windowsOnly = false, string workingDir = null)
         {

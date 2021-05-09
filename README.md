@@ -13,7 +13,7 @@ The tool can be used to launch tools like hammer or the game itself and manage c
 
 ### Installation
 
-SDKLauncher is shipped with Portal 2: Community Edition on Steam. Since this is a standalone program in its own right, precompiled binaries can be downloaded in the GitHub Releases section
+SDKLauncher is shipped with Portal 2: Community Edition on Steam. Since this is a standalone program in its own right, precompiled binaries can be downloaded in the GitHub Releases section.
 
 ### Currently in-development!
 

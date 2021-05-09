@@ -18,108 +18,57 @@
     </Design.DataContext>
 
     <DockPanel>
-        <Grid DockPanel.Dock="Top"
-              VerticalAlignment="Top">
+        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto">
             
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Tools:</TextBlock>
             
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" 
-                       Grid.Column="0" 
-                       Grid.ColumnSpan="2">Tools:</TextBlock>
-            <Button Grid.Row="1" 
-                    Grid.Column="0" 
-                    Grid.ColumnSpan="2" x:Name="OpenHammerButton" Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
+            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="OpenHammerButton"
+                    Command="{Binding OnClickOpenHammer}">Hammer World Editor</Button>
             
-            <Button Grid.Row="2" 
-                    Grid.Column="0" 
-                    Grid.ColumnSpan="2" x:Name="OpenModelViewerButton" Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
+            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="OpenModelViewerButton"
+                    Command="{Binding OnClickOpenModelViewer}">Model Viewer</Button>
             
-            <Button Grid.Row="3" 
-                    Grid.Column="0" 
+            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" MinHeight="32" x:Name="OpenGameButton"
                     Command="{Binding OnClickLaunchGame}">Launch Game</Button>
-            <Button Grid.Row="3" 
-                    Grid.Column="1"
-                    Command="{Binding OnClickLaunchToolsMode}">Launch Tools Mode</Button>
-<!--
-            <TextBlock>Mods:</TextBlock>
-            <Button x:Name="CreateModButton" Command="{Binding OnClickCreateMod}">Create Mod</Button>
+            <!--
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">Mods:</TextBlock>
+            <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="CreateModButton"
+                    Command="{Binding OnClickCreateMod}">Create Mod</Button>
             -->
         </Grid>
 
-        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,Auto,Auto,*">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Grid.Row="0"
-                       Grid.Column="0"
-                       Grid.ColumnSpan="4">
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
                 Workspace Profiles
             </TextBlock>
 
-            <Button x:Name="CreateProfileButton"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Classes="IconButton"
+            <Button x:Name="CreateProfileButton" Grid.Row="1" Grid.Column="0" Classes="IconButton"
                     Command="{Binding OnClickCreateProfile}">
                 <Image Source="/Assets/plus_math_16px.png" Classes="IconImage"/>
             </Button>
-            <Button x:Name="DeleteProfileButton"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Classes="IconButton"
+            <Button x:Name="DeleteProfileButton" Grid.Row="1" Grid.Column="1" Classes="IconButton"
                     Command="{Binding OnClickDeleteProfile}">
                 <Image Source="/Assets/subtract_16px.png" Classes="IconImage"/>
             </Button>
-            <Button x:Name="EditProfileButton"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Classes="IconButton"
+            <Button x:Name="EditProfileButton" Grid.Row="1" Grid.Column="2" Classes="IconButton"
                     Command="{Binding OnClickEditProfile}">
                 <Image Source="/Assets/edit_16px.png" Classes="IconImage"/>
             </Button>
-            <StackPanel Grid.Row="1"
-                        Grid.Column="3"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                
-                <Image Source="/Assets/checkmark_16px.png" 
-                       Classes="IconImage" 
+            
+            <StackPanel Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Image Source="/Assets/checkmark_16px.png" Classes="IconImage" 
                        IsVisible="{Binding ShowSaveConfirmation}"
                        Margin="0 0 6 0"/>
                 
-                <Button x:Name="SaveConfigButton"
-                        Classes="IconButton"
+                <Button x:Name="SaveConfigButton" Classes="IconButton"
                         Command="{Binding OnClickSaveConfig}"
                         IsVisible="{Binding !ShowSaveConfirmation}">
                     <Image Source="/Assets/save_16px.png" Classes="IconImage"/>
                 </Button>
             </StackPanel>
 
-            <ComboBox x:Name="ProfilesBox"
-                      Grid.Row="2"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="4"
+            <ComboBox x:Name="ProfilesBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
                       Items="{Binding Profiles}"
                       SelectedIndex="{Binding CurrentProfileIndex}">
                 <ComboBox.ItemTemplate>
@@ -128,8 +77,6 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-
         </Grid>
     </DockPanel>
-
 </Window>

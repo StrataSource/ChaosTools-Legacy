@@ -38,8 +38,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
         public ReactiveCommand<Unit, Unit> OnClickOpenHammer { get; }
         public ReactiveCommand<Unit, Unit> OnClickOpenModelViewer { get; }
-        public ReactiveCommand<Unit, Unit> OnClickLaunchGame { get; }        
-        public ReactiveCommand<Unit, Unit> OnClickLaunchToolsMode { get; }        
+        public ReactiveCommand<Unit, Unit> OnClickLaunchGame { get; }    
         public ReactiveCommand<Unit, Unit> OnClickCreateMod { get; }
         public ReactiveCommand<Unit, Unit> OnClickEditProfile { get; }
         public ReactiveCommand<Unit, Unit> OnClickCreateProfile { get; }
@@ -53,7 +52,7 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
             Activator = new ViewModelActivator();
             
-            this.WhenActivated((CompositeDisposable disposable) =>
+            this.WhenActivated(disposable =>
             {
                 Disposable.Create(() =>
                 {
@@ -71,11 +70,10 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
             };
 
             OnClickCreateMod = ReactiveCommandUtil.CreateEmpty();
-            OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
+            OnClickOpenHammer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows() || OperatingSystem.IsLinux()));
             OnClickOpenModelViewer = ReactiveCommand.Create(() => { }, Observable.Return(OperatingSystem.IsWindows()));
 
             OnClickLaunchGame = ReactiveCommandUtil.CreateEmpty();
-            OnClickLaunchToolsMode = ReactiveCommandUtil.CreateEmpty();
             
             OnClickCreateProfile = ReactiveCommand.Create(CreateProfile);
             OnClickDeleteProfile = ReactiveCommand.Create(DeleteProfile);
@@ -92,10 +90,10 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
 
         public void CreateProfile()
         {
-            Profile profile = Profile.GetDefaultProfile();
+            var profile = Profile.GetDefaultProfile();
             
-            string profileName = "";
-            for (int i = 1; i <= 10; i++)
+            var profileName = "";
+            for (var i = 1; i <= 10; i++)
             {
                 if (i == 10)
                     return;
@@ -120,6 +118,5 @@ namespace ChaosInitiative.SDKLauncher.ViewModels
         {
             
         }
-
     }
 }

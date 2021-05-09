@@ -28,7 +28,7 @@ namespace ChaosInitiative.SDKLauncher.Views
 
             this.WhenActivated(disposable =>
             {
-                ViewModel.OnClickClose = ReactiveCommand.Create(Close).DisposeWith(disposable);
+                ViewModel.OnClickClose = ReactiveCommand.Create(Close);
 
                 this.BindCommand(ViewModel, 
                                  vm => vm.OnClickClose, 

@@ -10,7 +10,7 @@ namespace ChaosInitiative.SDKLauncher.Models
     {
         private const string ConfigName = "config.json";
 
-        private static readonly JsonSerializerOptions ConfigJsonSerializerOptions = new JsonSerializerOptions
+        private static readonly JsonSerializerOptions ConfigJsonSerializerOptions = new()
         {
             WriteIndented = true
         };
