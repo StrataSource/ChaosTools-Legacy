@@ -56,17 +56,17 @@ namespace ChaosInitiative.SDKLauncher.Models
         /// </summary>
         /// <returns>Whether or not config.json exists in working directory</returns>
         public static bool IsConfigSaved()
-		{
+        {
             try
-			{
+            {
                 LoadConfig();
                 return true;
-			}
-			catch
-			{
+            }
+            catch
+            {
                 return false;
-			}
-		}
+            }
+        }
 
         /// <summary>
         /// Deletes the config if the file exists
