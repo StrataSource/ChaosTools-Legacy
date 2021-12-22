@@ -29,9 +29,12 @@ namespace ChaosInitiative.SDKLauncher.Models
                 if (AppId == 0) return _mountPath;
                 try
                 {
-                    if (SteamApps.IsAppInstalled(AppId))
+                    if (AppConfig.IsConfigSaved())
                     {
-                        return SteamApps.AppInstallDir(AppId);
+                        if (SteamApps.IsAppInstalled(AppId))
+                        {
+                            return SteamApps.AppInstallDir(AppId);
+                        }
                     }
                 } catch(NullReferenceException) {}
 
